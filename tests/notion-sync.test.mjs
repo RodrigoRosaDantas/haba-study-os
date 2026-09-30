@@ -73,3 +73,16 @@ test("incomplete Notion questions are excluded with an explicit reason", () => {
 test("snapshot validator rejects truncated source material", () => {
   assert.throws(() => assertSnapshot({ studyDays: [], reviews: [], restDays: [], cycles: [] }), /esperados 75 dias/);
 });
+
+
+test("option parsing preserves semicolons inside code and accepts semicolon separators", () => {
+  assert.deepEqual(parseOptions('A) if (saldo < retirada) { aviso("Saldo insuficiente."); } | B) if (outro < limite) { aviso("Outro."); }'), [
+    { key: "A", text: 'if (saldo < retirada) { aviso("Saldo insuficiente."); }' },
+    { key: "B", text: 'if (outro < limite) { aviso("Outro."); }' }
+  ]);
+  assert.deepEqual(parseOptions("A) primeira; B) segunda;C) terceira"), [
+    { key: "A", text: "primeira" },
+    { key: "B", text: "segunda" },
+    { key: "C", text: "terceira" }
+  ]);
+});
