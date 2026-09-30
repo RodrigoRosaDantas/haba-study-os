@@ -92,24 +92,47 @@ function questionCoverageNotice(day) {
   const links = (set.unavailableItems || []).map(item => {
     const id = String(item.notionPageId || "").replaceAll("-", "");
     const label = e(item.questionId || "registro sem ID");
-    const link = /^[0-9a-f]{32}$/i.test(id) ? `<a href="https://www.notion.so/${e(id)}" target="_blank" rel="noopener noreferrer">${label}</a>` : label;
+    const link = /^[0-9a-f]{32}$/i.test(id) ? '<a href="https://www.notion.so/' + e(id) + '" target="_blank" rel="noopener noreferrer">' + label + '</a>' : label;
     const reasons = (item.reasons || []).map(reason => reasonLabels[reason] || reasonLabels.missing_answer_key).join("; ");
-    return `<li>${link}: ${e(reasons)}</li>`;
+    return "<li>" + link + ": " + e(reasons) + "</li>";
   }).join("");
   const pageId = String(set.pageId || "").replaceAll("-", "");
-  const notionLink = /^[0-9a-f]{32}$/i.test(pageId) ? `<a href="https://www.notion.so/${e(pageId)}" target="_blank" rel="noopener noreferrer">Abrir ${e(set.code)} no Notion ↗</a>` : "";
+  const notionLink = /^[0-9a-f]{32}$/i.test(pageId) ? '<a href="https://www.notion.so/' + e(pageId) + '" target="_blank" rel="noopener noreferrer">Abrir ' + e(set.code) + ' no Notion ↗</a>' : "";
   const missing = Number(set.missingCount || 0);
   const excluded = (set.unavailableItems || []).length;
-  return `<div class="notice notice-warning" role="status"><strong>${e(set.availableCount || 0)}/${e(day.questionGoal)} questões utilizáveis</strong><p>A interface só inclui registros com enunciado, alternativas, gabarito e fonte validados. O conteúdo ausente permanece sinalizado; nenhuma questão foi inventada.${missing ? ` ${missing} linha(s) planejada(s) ainda não estão mapeadas na fonte.` : ""}</p>${excluded ? `<details><summary>${excluded} registro(s) fora do player</summary><ul>${links}</ul></details>` : ""}${notionLink ? `<p>${notionLink}</p>` : ""}</div>`;
+  const details = excluded || missing || notionLink
+    ? '<details class="coverage-note-details"><summary>Ver pendências</summary><div class="coverage-note-detail-body"><p>O player inclui apenas itens com enunciado, alternativas, gabarito e fonte validados.</p>'
+      + (excluded ? "<p>" + excluded + " registro(s) fora do player.</p><ul>" + links + "</ul>" : "")
+      + (missing ? "<p>" + missing + " linha(s) ainda sem mapeamento oficial.</p>" : "")
+      + (notionLink ? "<p>" + notionLink + "</p>" : "")
+      + "</div></details>"
+    : "";
+  return '<aside class="coverage-note" role="status" aria-label="Cobertura editorial parcial">'
+    + '<span class="coverage-note-icon" aria-hidden="true">!</span>'
+    + '<div class="coverage-note-copy"><div class="coverage-note-title"><strong>' + e(set.availableCount || 0) + '/' + e(day.questionGoal) + ' questões utilizáveis</strong><span class="coverage-note-status">PARCIAL</span></div>'
+    + '<small>Banco em atualização · conteúdo incompleto fica fora do player</small></div>'
+    + details
+    + "</aside>";
 }
 
 function questionCoverageSummary(meta) {
   const coverage = meta?.questionCoverage;
   if (!coverage || coverage.status === "complete") return "";
   const sourceUrl = safeUrl(meta.sourceRootUrl);
-  return `<section class="notice notice-warning" role="status"><strong>Disponibilidade editorial de questões: parcial</strong><p>${e(coverage.completeSets)}/${e(coverage.totalSets)} baterias completas · ${e(coverage.usableQuestions)}/${e(coverage.plannedQuestions)} questões utilizáveis · ${e(coverage.excludedRows)} registros incompletos excluídos · ${e(coverage.missingRows)} sem mapeamento oficial.</p><p>Materiais, sequência, revisões e questões válidas continuam disponíveis. As lacunas aparecem em cada Qxx.</p>${sourceUrl ? `<a href="${e(sourceUrl)}" target="_blank" rel="noopener noreferrer">Abrir a fonte editorial no Notion ↗</a>` : ""}</section>`;
+  const metrics = [
+    ["BATERIAS COMPLETAS", e(coverage.completeSets) + "/" + e(coverage.totalSets)],
+    ["QUESTÕES UTILIZÁVEIS", e(coverage.usableQuestions) + "/" + e(coverage.plannedQuestions)],
+    ["INCOMPLETAS", e(coverage.excludedRows)],
+    ["SEM MAPEAMENTO", e(coverage.missingRows)]
+  ];
+  const metricCards = metrics.map(([label, value]) => '<div class="coverage-metric"><span>' + label + '</span><strong>' + value + "</strong></div>").join("");
+  return '<section class="coverage-overview" role="status" aria-label="Cobertura editorial das questões">'
+    + '<div class="coverage-overview-heading"><div class="eyebrow">DATA STATUS · QUESTION BANK</div><div class="coverage-title-line"><h2>Cobertura parcial</h2><span class="coverage-state-tag">PARCIAL</span></div><p>Materiais e revisões seguem disponíveis.</p></div>'
+    + '<div class="coverage-metrics">' + metricCards + "</div>"
+    + '<details class="coverage-overview-details"><summary>Ver contexto</summary><p>O player recebe apenas questões com enunciado, alternativas, gabarito e fonte validados. As pendências continuam registradas na origem editorial.</p>'
+    + (sourceUrl ? '<a href="' + e(sourceUrl) + '" target="_blank" rel="noopener noreferrer">Abrir fonte editorial ↗</a>' : "")
+    + "</details></section>";
 }
-
 function blockHost(blocks, className = "reader-document") {
   const host = document.createElement("div");
   host.className = className;
