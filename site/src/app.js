@@ -119,19 +119,16 @@ function questionCoverageSummary(meta) {
   const coverage = meta?.questionCoverage;
   if (!coverage || coverage.status === "complete") return "";
   const sourceUrl = safeUrl(meta.sourceRootUrl);
-  const metrics = [
-    ["BATERIAS COMPLETAS", e(coverage.completeSets) + "/" + e(coverage.totalSets)],
-    ["QUESTÕES UTILIZÁVEIS", e(coverage.usableQuestions) + "/" + e(coverage.plannedQuestions)],
-    ["INCOMPLETAS", e(coverage.excludedRows)],
-    ["SEM MAPEAMENTO", e(coverage.missingRows)]
-  ];
-  const metricCards = metrics.map(([label, value]) => '<div class="coverage-metric"><span>' + label + '</span><strong>' + value + "</strong></div>").join("");
-  return '<section class="coverage-overview" role="status" aria-label="Cobertura editorial das questões">'
-    + '<div class="coverage-overview-heading"><div class="eyebrow">DATA STATUS · QUESTION BANK</div><div class="coverage-title-line"><h2>Cobertura parcial</h2><span class="coverage-state-tag">PARCIAL</span></div><p>Materiais e revisões seguem disponíveis.</p></div>'
-    + '<div class="coverage-metrics">' + metricCards + "</div>"
-    + '<details class="coverage-overview-details"><summary>Ver contexto</summary><p>O player recebe apenas questões com enunciado, alternativas, gabarito e fonte validados. As pendências continuam registradas na origem editorial.</p>'
-    + (sourceUrl ? '<a href="' + e(sourceUrl) + '" target="_blank" rel="noopener noreferrer">Abrir fonte editorial ↗</a>' : "")
-    + "</details></section>";
+  return '<aside class="coverage-alert" role="status" aria-label="Disponibilidade editorial parcial">'
+    + '<span class="coverage-alert-edge" aria-hidden="true"></span>'
+    + '<div class="coverage-alert-copy"><strong class="coverage-alert-title">Disponibilidade editorial de questões: parcial</strong>'
+    + '<p class="coverage-alert-data">' + e(coverage.completeSets) + '/' + e(coverage.totalSets) + ' baterias completas · '
+    + e(coverage.usableQuestions) + '/' + e(coverage.plannedQuestions) + ' questões utilizáveis · '
+    + e(coverage.excludedRows) + ' registros incompletos excluídos · '
+    + e(coverage.missingRows) + ' sem mapeamento oficial.</p>'
+    + '<small class="coverage-alert-context">Materiais, sequência, revisões e questões válidas continuam disponíveis. As lacunas aparecem em cada Qxx.</small></div>'
+    + (sourceUrl ? '<a class="coverage-alert-link" href="' + e(sourceUrl) + '" target="_blank" rel="noopener noreferrer">Abrir a fonte editorial no Notion ↗</a>' : "")
+    + '</aside>';
 }
 function blockHost(blocks, className = "reader-document") {
   const host = document.createElement("div");
