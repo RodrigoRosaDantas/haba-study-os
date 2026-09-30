@@ -2,17 +2,17 @@
   "schemaVersion": 2,
   "rootPageId": "3dfcf5a2-6731-8119-9194-d4ab2ed5c26d",
   "meta": {
-    "generatedAt": "2026-09-30T20:16:55.860Z",
-    "sourceUpdatedAt": "2026-09-30T20:02:00.000Z",
+    "generatedAt": "2026-09-30T22:24:55.161Z",
+    "sourceUpdatedAt": "2026-09-30T22:02:00.000Z",
     "source": "Notion · HABA Study OS",
     "sourceRootUrl": "https://www.notion.so/3dfcf5a2673181199194d4ab2ed5c26d",
-    "contentVersion": "699ac8b070bd86cd6a428569c7f710f7aacc43486231b84982d6f052c7e0e5fc",
+    "contentVersion": "feaf502578a67e988def182454201835dc4375d54f00f58200c9c9ea2aabcfb0",
     "counts": {
       "studyDays": 75,
       "reviews": 15,
       "restDays": 15,
       "cycles": 5,
-      "questions": 110,
+      "questions": 113,
       "plannedQuestions": 1603,
       "completeQuestionSets": 2
     },
@@ -22,9 +22,9 @@
       "partialSets": 8,
       "unavailableSets": 65,
       "totalSets": 75,
-      "usableQuestions": 110,
+      "usableQuestions": 113,
       "plannedQuestions": 1603,
-      "excludedRows": 51,
+      "excludedRows": 48,
       "missingRows": 1442
     }
   },
@@ -28423,7 +28423,7 @@
         "code": "Q03",
         "pageId": "3dfcf5a2-6731-819e-aaa6-e0b649a5b289",
         "title": "Q03 — Questões | Engenharia de software I — processos, requisitos e UML + Inglês — leitura técnica",
-        "updatedAt": "2026-09-22T16:01:00.000Z",
+        "updatedAt": "2026-09-30T22:02:00.000Z",
         "composition": {
           "total": 15,
           "main": 11,
@@ -28431,7 +28431,7 @@
           "source": "regra-70-30"
         },
         "sourceStatus": "partial",
-        "availableCount": 5,
+        "availableCount": 8,
         "sourceRowCount": 15,
         "missingCount": 0,
         "extraCount": 0,
@@ -28441,24 +28441,6 @@
             "notionPageId": "3e3cf5a2-6731-819b-805a-c78fff2e4430",
             "title": "BNDES 2008 — Diagrama de atividades para fluxo de caso de uso",
             "reasons": [
-              "unusable_options"
-            ]
-          },
-          {
-            "questionId": "Q54547",
-            "notionPageId": "3e3cf5a2-6731-816a-aff9-fc2fea2c7736",
-            "title": "Petrobras 2010 — RUP: fases e iterações",
-            "reasons": [
-              "missing_answer_key",
-              "unusable_options"
-            ]
-          },
-          {
-            "questionId": "Q54554",
-            "notionPageId": "3e3cf5a2-6731-815d-aee7-fa8931d1bd65",
-            "title": "Petrobras 2010 — UP iterativo, incremental e baseado em componentes",
-            "reasons": [
-              "missing_answer_key",
               "unusable_options"
             ]
           },
@@ -28503,15 +28485,6 @@
             ]
           },
           {
-            "questionId": "Q1090441",
-            "notionPageId": "3e3cf5a2-6731-8194-830c-c9fc1863efec",
-            "title": "Transpetro 2018 — Componentes do diagrama de casos de uso",
-            "reasons": [
-              "missing_answer_key",
-              "unusable_options"
-            ]
-          },
-          {
             "questionId": "Q2383094",
             "notionPageId": "3e3cf5a2-6731-8151-9764-c7c6fc61d58f",
             "title": "IPEA 2024 — Validação de requisitos e critérios de aceitação",
@@ -28521,6 +28494,144 @@
           }
         ],
         "items": [
+          {
+            "questionId": "Q54547",
+            "occurrenceId": "Q03-002",
+            "ordinal": 2,
+            "notionPageId": "3e3cf5a2-6731-816a-aff9-fc2fea2c7736",
+            "setCode": "Q03",
+            "title": "Petrobras 2010 — RUP: fases e iterações",
+            "subject": "Engenharia de Software",
+            "topic": "Processo Unificado — fases e iterações",
+            "exam": "Petrobras 2010 — Analista de Sistemas Júnior — Engenharia de Software",
+            "board": "Cesgranrio",
+            "year": 2010,
+            "stem": "No RUP, avalie qual afirmação sobre fases e atividades está correta: concepção, requisitos/análise, artefatos e iterações são comparados nas alternativas.",
+            "optionsSummary": "A) a primeira fase corresponderia ao levantamento de requisitos e seria a concepção | B) a análise só começaria após requisitos estáveis e bem documentados | C) ao fim da concepção, produz-se um documento de visão refinado | D) na construção, a análise já estaria encerrada e restaria implementar | E) cada fase divide-se em uma ou mais iterações, com validação de artefatos ao fim de cada iteração",
+            "options": [
+              {
+                "key": "A",
+                "text": "a primeira fase corresponderia ao levantamento de requisitos e seria a concepção"
+              },
+              {
+                "key": "B",
+                "text": "a análise só começaria após requisitos estáveis e bem documentados"
+              },
+              {
+                "key": "C",
+                "text": "ao fim da concepção, produz-se um documento de visão refinado"
+              },
+              {
+                "key": "D",
+                "text": "na construção, a análise já estaria encerrada e restaria implementar"
+              },
+              {
+                "key": "E",
+                "text": "cada fase divide-se em uma ou mais iterações, com validação de artefatos ao fim de cada iteração"
+              }
+            ],
+            "answerText": "C — ao término da fase de concepção, um dos artefatos produzidos é um documento de visão refinado",
+            "answerKey": "C",
+            "commentary": "C. O RUP é iterativo: disciplinas como requisitos, análise e projeto atravessam fases em intensidades diferentes, portanto B e D tratam o processo como sequencial. A reduz indevidamente a Concepção a mero levantamento de requisitos. A alternativa C corresponde ao artefato de visão refinado ao final da Concepção. E generaliza de forma absoluta a validação necessária de artefatos ao fim de toda iteração.",
+            "sourceUrl": "https://www.qconcursos.com/questoes-de-concursos/questoes/d315b59c-82",
+            "sourceValidated": true,
+            "status": "Pronta para estudo",
+            "updatedAt": "2026-09-30T20:57:00.000Z",
+            "revision": 1,
+            "contentHash": "bb9ebf988d465a237cd095763c57ee8ade3bd412a494549d2eede0e13a7c2250"
+          },
+          {
+            "questionId": "Q54554",
+            "occurrenceId": "Q03-003",
+            "ordinal": 3,
+            "notionPageId": "3e3cf5a2-6731-815d-aee7-fa8931d1bd65",
+            "setCode": "Q03",
+            "title": "Petrobras 2010 — UP iterativo, incremental e baseado em componentes",
+            "subject": "Engenharia de Software",
+            "topic": "Processo Unificado — características",
+            "exam": "Petrobras 2010 — Analista de Sistemas Júnior — Engenharia de Software",
+            "board": "Cesgranrio",
+            "year": 2010,
+            "stem": "Sobre o Unified Process, avalie: I) funciona como framework baseado em componentes e modela o processo de forma iterativa e incremental; II) direciona o desenvolvimento e cria mecanismos, por exemplo, para validar a arquitetura; III) usa artefatos da construção para favorecer a reutilização de componentes. Quais atividades são necessárias à transformação dos requisitos do usuário em software?",
+            "optionsSummary": "A) III, apenas | B) I e II, apenas | C) I e III, apenas | D) II e III, apenas | E) I, II e III",
+            "options": [
+              {
+                "key": "A",
+                "text": "III, apenas"
+              },
+              {
+                "key": "B",
+                "text": "I e II, apenas"
+              },
+              {
+                "key": "C",
+                "text": "I e III, apenas"
+              },
+              {
+                "key": "D",
+                "text": "II e III, apenas"
+              },
+              {
+                "key": "E",
+                "text": "I, II e III"
+              }
+            ],
+            "answerText": "E — I, II e III",
+            "answerKey": "E",
+            "commentary": "E. As três afirmações são compatíveis com o Unified Process: desenvolvimento iterativo/incremental e baseado em componentes; atenção arquitetural ao longo do processo; e produção/uso de artefatos que favorecem construção e reutilização. Logo, I, II e III estão corretas.",
+            "sourceUrl": "https://www.qconcursos.com/questoes-de-concursos/provas/cesgranrio-2010-petrobras-analista-de-sistemas-junior-engenharia-de-software/questoes?discipline_ids%5B%5D=100",
+            "sourceValidated": true,
+            "status": "Pronta para estudo",
+            "updatedAt": "2026-09-30T20:57:00.000Z",
+            "revision": 1,
+            "contentHash": "e2e4ed0c59a1eed748d05573858f1b4f71a231e1c6f36ea299a16d7191de3146"
+          },
+          {
+            "questionId": "Q1090441",
+            "occurrenceId": "Q03-009",
+            "ordinal": 9,
+            "notionPageId": "3e3cf5a2-6731-8194-830c-c9fc1863efec",
+            "setCode": "Q03",
+            "title": "Transpetro 2018 — Componentes do diagrama de casos de uso",
+            "subject": "Engenharia de Software",
+            "topic": "UML — casos de uso e atores",
+            "exam": "Transpetro 2018 — Analista de Sistemas Júnior — SAP",
+            "board": "Cesgranrio",
+            "year": 2018,
+            "stem": "Em UML, o diagrama de casos de uso modela a interação entre o sistema e o ambiente. Qual descrição de um de seus componentes ou relacionamentos está correta?",
+            "optionsSummary": "A) ator: objeto de negócio interno ao sistema, descrevendo aspectos estruturais/estáticos | B) comunicação: ator troca informações com outro ator ou caso de uso | C) extensão: comportamento opcional entre dois atores com interações similares | D) generalização: permite a um caso de uso herdar características de um ator ou de outro caso de uso | E) inclusão: um caso de uso necessita, para sua execução, de uma sequência de operações de outro caso de uso",
+            "options": [
+              {
+                "key": "A",
+                "text": "ator: objeto de negócio interno ao sistema, descrevendo aspectos estruturais/estáticos"
+              },
+              {
+                "key": "B",
+                "text": "comunicação: ator troca informações com outro ator ou caso de uso"
+              },
+              {
+                "key": "C",
+                "text": "extensão: comportamento opcional entre dois atores com interações similares"
+              },
+              {
+                "key": "D",
+                "text": "generalização: permite a um caso de uso herdar características de um ator ou de outro caso de uso"
+              },
+              {
+                "key": "E",
+                "text": "inclusão: um caso de uso necessita, para sua execução, de uma sequência de operações de outro caso de uso"
+              }
+            ],
+            "answerText": "E — relacionamento de inclusão",
+            "answerKey": "E",
+            "commentary": "E. Em casos de uso, «include» representa comportamento obrigatório reutilizado: o caso de uso base incorpora uma sequência de comportamento de outro caso de uso. A está errada porque ator é externo ao sistema; C erra ao colocar extensão entre atores — «extend» ocorre entre casos de uso; D mistura tipos incompatíveis, pois generalização pode ocorrer entre atores ou entre casos de uso, não fazendo um caso de uso herdar de um ator. A alternativa E coincide com o gabarito oficial da prova Transpetro 2018.",
+            "sourceUrl": "https://www.qconcursos.com/questoes-de-concursos/questoes/5aaa7216-28",
+            "sourceValidated": true,
+            "status": "Pronta para estudo",
+            "updatedAt": "2026-09-30T22:02:00.000Z",
+            "revision": 1,
+            "contentHash": "408020a668ed6284e66cebb1c0110c2715a179a72fad651fc6287546ff0cb609"
+          },
           {
             "questionId": "Q2128610",
             "occurrenceId": "Q03-010",
@@ -28740,13 +28851,13 @@
             "contentHash": "17d539a8b6b566f64a4ec093dde5a443768ab53cb645b7a8136e5de7c4233895"
           }
         ],
-        "revision": 1,
-        "contentHash": "1d64a285b0aa5d70f03f7c0345dd51f55e4645145c734bb10a3a18430b3ed417"
+        "revision": 2,
+        "contentHash": "9676386f492eb0d0f920277e3e4e1217ddf51b080b4c69949f1fc0f0cab9251b"
       },
       "reviewCode": "R01",
       "reviewPageId": "3dfcf5a2673181369e09cd5716d2eae0",
-      "revision": 1,
-      "contentHash": "5eec3e028732c10e232c182912c84aeaac3d6fe9b27933ad015b43f33da47a1c"
+      "revision": 2,
+      "contentHash": "fac4ee7a59b90297bc2d7f0f27748034d995ede09cc98bee91ccb12a8ad42195"
     },
     {
       "code": "D04",
