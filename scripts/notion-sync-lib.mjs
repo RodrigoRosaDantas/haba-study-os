@@ -128,8 +128,9 @@ export function flattenBlockText(blocks = []) {
 
 export function parseOptions(summary) {
   const chunks = String(summary || "")
-    .replace(/\s+(?=[A-E]\s*[).:-]\s*)/gi, "\n")
-    .split(/\s*(?:\||;|\n)+\s*/).filter(Boolean);
+    .split(/\s*(?:\||\n)+\s*|;\s*(?=[A-E](?:\s*[).:-]|\s+))/gi)
+    .flatMap(chunk => chunk.replace(/\s+(?=[A-E]\s*[).:-]\s*)/gi, "\n").split(/\n+/))
+    .filter(Boolean);
   const parsed = [];
   for (const chunk of chunks) {
     const match = chunk.match(/^\s*([A-E])(?:\s*[).:-]|\s+)\s*(.*?)\s*$/i);
