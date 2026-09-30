@@ -575,8 +575,9 @@ async function retryQuestionSet(code) {
   const created = await createQuestionAttempt(day, attempts.length + 1);
   state.currentDay = created.day;
   state.currentAttempt = created.attempt;
+  const alreadyOnSet = location.hash === "#questions/" + encodeURIComponent(code);
   openRoute("questions", code);
-  await renderRoute();
+  if (alreadyOnSet) await renderRoute();
 }
 
 async function exportBackup() {
