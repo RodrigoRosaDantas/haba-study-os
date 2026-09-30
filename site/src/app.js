@@ -6,7 +6,7 @@ import {
   getAllRecords, getRecord, putRecord, updateErrorRecord
 } from "./storage.js";
 import {
-  buildMentorAdvice, calculateAnalytics, getNextMission, scoreQuestionSet, upsertError
+  buildMentorAdvice, calculateAnalytics, createQuestionSetSnapshot, getNextMission, scoreQuestionSet, upsertError
 } from "./core.js";
 
 const root = document.getElementById("view-root");
@@ -205,32 +205,73 @@ async function renderStudy(progress) {
   scheduleReadingSave();
 }
 
+async function getOrCreateQuestionSetVersion(day, createdAt) {
+  const candidate = createQuestionSetSnapshot(day, state.content.meta.contentVersion, createdAt);
+  const current = await getRecord("content_versions", candidate.entityId);
+  if (current) return current;
+  await putRecord("content_versions", candidate);
+  return candidate;
+}
+
+async function createQuestionAttempt(day, attemptNumber) {
+  const startedAt = new Date().toISOString();
+  const attemptId = day.questionSet.code + "-" + Date.now() + "-" + Math.random().toString(36).slice(2, 7);
+  const version = await getOrCreateQuestionSetVersion(day, startedAt);
+  const attempt = {
+    attemptId, questionSet: day.questionSet.code, dayCode: day.code, attemptNumber, startedAt,
+    completedAt: null, questionVersion: version.questionVersion, contentVersionId: version.entityId,
+    availableQuestionCount: day.questionSet.items.length, plannedQuestionCount: day.questionGoal,
+    coverageStatus: day.questionSet.sourceStatus, status: "IN_PROGRESS"
+  };
+  await putRecord("question_attempts", attempt);
+  await putRecord("progress", { id: "active-attempt:" + day.questionSet.code, attemptId, updatedAt: startedAt });
+  return { attempt, day: { ...day, ...version.daySnapshot, questionSet: version.questionSet } };
+}
+
+async function loadAttemptVersion(day, attempt) {
+  const answers = (await getAllRecords("question_answers")).filter(row => row.attemptId === attempt.attemptId);
+  let version = attempt.contentVersionId ? await getRecord("content_versions", attempt.contentVersionId) : null;
+  const currentVersion = String(day.questionSet.contentHash || state.content.meta.contentVersion || "");
+  if (!version && (!attempt.questionVersion || attempt.questionVersion === currentVersion)) {
+    version = await getOrCreateQuestionSetVersion(day, attempt.startedAt);
+    if (attempt.contentVersionId !== version.entityId || attempt.questionVersion !== version.questionVersion) {
+      attempt = { ...attempt, contentVersionId: version.entityId, questionVersion: version.questionVersion, updatedAt: attempt.updatedAt || attempt.startedAt };
+      await putRecord("question_attempts", attempt);
+    }
+  }
+  if (!version?.questionSet || !version?.daySnapshot) {
+    return { attempt, answers, day, versionUnavailable: !attempt.completedAt, versionMissing: true };
+  }
+  return {
+    attempt,
+    answers,
+    day: { ...day, ...version.daySnapshot, questionSet: version.questionSet },
+    versionUnavailable: false,
+    versionMissing: false
+  };
+}
+
 async function getAttemptAndAnswers(day) {
-  const key = `active-attempt:${day.questionSet.code}`;
+  const key = "active-attempt:" + day.questionSet.code;
   const pointer = await getRecord("progress", key);
   if (pointer?.attemptId) {
     const attempt = await getRecord("question_attempts", pointer.attemptId);
-    if (attempt && !attempt.completedAt) return { attempt, answers: (await getAllRecords("question_answers")).filter(row => row.attemptId === attempt.attemptId) };
+    if (attempt && !attempt.completedAt) return loadAttemptVersion(day, attempt);
   }
   const completed = (await getAllRecords("question_attempts"))
     .filter(row => row.questionSet === day.questionSet.code && row.completedAt)
     .sort((a, b) => Date.parse(b.completedAt) - Date.parse(a.completedAt))[0];
-  if (completed) return { attempt: completed, answers: (await getAllRecords("question_answers")).filter(row => row.attemptId === completed.attemptId) };
+  if (completed) return loadAttemptVersion(day, completed);
+  if (!day.questionSet.items?.length) return { attempt: null, answers: [], day };
   const attempts = (await getAllRecords("question_attempts")).filter(row => row.questionSet === day.questionSet.code);
-  const attemptNumber = attempts.length + 1;
-  const attemptId = `${day.questionSet.code}-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
-  const attempt = { attemptId, questionSet: day.questionSet.code, dayCode: day.code, attemptNumber, startedAt: new Date().toISOString(), completedAt: null, questionVersion: day.questionSet.contentHash || "", availableQuestionCount: day.questionSet.items.length, plannedQuestionCount: day.questionGoal, coverageStatus: day.questionSet.sourceStatus, status: "IN_PROGRESS" };
-  await putRecord("question_attempts", attempt);
-  await putRecord("progress", { id: key, attemptId, updatedAt: attempt.startedAt });
-  return { attempt, answers: [] };
+  const created = await createQuestionAttempt(day, attempts.length + 1);
+  return { ...created, answers: [], versionUnavailable: false, versionMissing: false };
 }
 
-function resultByField(items, answers, key) {
+function resultByField(answers, key) {
   const map = new Map();
-  for (const item of items) {
-    const answer = answers.find(row => row.questionId === item.questionId);
-    if (!answer) continue;
-    const name = item[key] || "Sem classificação";
+  for (const answer of answers) {
+    const name = answer[key] || "Sem classificação";
     const row = map.get(name) || { name, total: 0, correct: 0 };
     row.total += 1;
     if (answer.isCorrect) row.correct += 1;
@@ -241,26 +282,34 @@ function resultByField(items, answers, key) {
 
 async function renderQuestions(progress = []) {
   const code = state.parameter.startsWith("Q") ? state.parameter : currentMission(progress).day?.questionSet.code || missionDays().find(day => !progress.some(item => item.id === day.questionSet.code && item.completedAt))?.questionSet.code;
-  const day = dayForQuestion(code);
+  let day = dayForQuestion(code);
   if (!day) {
     root.innerHTML = `<div class="page-wrap">${heading("QUESTION ENGINE", "Questões oficiais", "As baterias são carregadas das páginas vinculadas ao Dxx.")}${questionCoverageSummary(state.content.meta)}<div class="module-list">${missionDays().map(item => `<button class="module-card" data-route="questions" data-parameter="${e(item.questionSet.code)}"><span class="module-code">${e(item.questionSet.code)}</span><span class="module-copy"><strong>${e(item.focus)}</strong><small>${e(item.questionSet.items.length)}/${e(item.questionGoal)} questões utilizáveis · vinculada a ${e(item.code)}</small></span><span class="module-trailing"><span class="tag ${item.questionSet.sourceStatus === "complete" ? "tag-green" : "tag-amber"}">${item.questionSet.sourceStatus === "complete" ? "COMPLETA" : item.questionSet.sourceStatus === "partial" ? "PARCIAL" : "INDISPONÍVEL"}</span></span></button>`).join("")}</div></div>`;
     return;
   }
+  const session = await getAttemptAndAnswers(day);
+  day = session.day || day;
   const set = day.questionSet;
-  if (!set.items?.length) {
-    root.innerHTML = `<div class="page-wrap">${heading("QUESTION ENGINE", code, day.focus)}${questionCoverageNotice(day)}${emptyState("Nenhuma questão utilizável", "A fonte oficial ainda não tem questões completas para esta bateria.")}</div>`;
+  if (session.versionUnavailable) {
+    root.innerHTML = '<div class="page-wrap">' + heading("QUESTIONS · " + code, "Versão anterior indisponível", "Esta tentativa não pode ser reaberta com segurança.") + '<div class="notice notice-warning"><strong>As respostas continuam preservadas no Histórico.</strong><p>O conteúdo editorial mudou e a versão antiga não tinha sido guardada neste dispositivo. Inicie uma nova tentativa para continuar com o conteúdo atual.</p><button class="button button-primary" data-action="retry-set" data-set="' + e(code) + '">Iniciar nova tentativa</button></div></div>';
     return;
   }
-  const session = await getAttemptAndAnswers(day);
+  if (!session.attempt) {
+    root.innerHTML = '<div class="page-wrap">' + heading("QUESTION ENGINE", code, day.focus) + questionCoverageNotice(day) + emptyState("Nenhuma questão utilizável", "A fonte oficial ainda não tem questões completas para esta bateria.") + '</div>';
+    return;
+  }
   state.currentDay = day;
   state.currentAttempt = session.attempt;
   const answeredMap = Object.fromEntries(session.answers.map(answer => [answer.questionId, answer.selected]));
   const completed = session.attempt.completedAt;
   if (completed) {
-    const score = session.attempt.score || scoreQuestionSet(set.items, answeredMap);
-    const subjects = resultByField(set.items, session.answers, "subject");
-    const topics = resultByField(set.items, session.answers, "topic");
-    root.innerHTML = `<div class="page-wrap">${heading(`${day.code} · ${day.cycle}`, `${code} · Resultado`, `${session.attempt.attemptNumber}ª tentativa · ${e(formatDate(session.attempt.completedAt, true))}`)}${questionCoverageNotice(day)}
+    const historicalItems = session.answers.map(answer => ({ questionId: answer.questionId, answerKey: answer.answerKey }));
+    const calculated = scoreQuestionSet(historicalItems, answeredMap);
+    const historicalTotal = Math.max(calculated.total, Number(session.attempt.availableQuestionCount) || 0);
+    const score = session.attempt.score || { ...calculated, total: historicalTotal, unanswered: Math.max(0, historicalTotal - calculated.answered) };
+    const subjects = resultByField(session.answers, "subject");
+    const topics = resultByField(session.answers, "topic");
+    root.innerHTML = `<div class="page-wrap">${heading(`${day.code} · ${day.cycle}`, `${code} · Resultado`, `${session.attempt.attemptNumber}ª tentativa · ${e(formatDate(session.attempt.completedAt, true))}`)}${session.versionMissing ? '<div class="notice notice-warning"><strong>Snapshot antigo indisponível neste dispositivo.</strong><p>O resultado e as respostas registradas foram preservados. A cópia exata da bateria usada nesta tentativa não estava arquivada localmente.</p></div>' : questionCoverageNotice(day)}
       <section class="result-banner"><div class="result-score">${score.accuracy == null ? "—" : `${score.accuracy}%`}</div><p>${score.correct} acertos · ${score.incorrect} erros · ${score.unanswered} sem resposta · ${score.total} questões</p></section>
       <div class="result-grid"><div><span class="tiny">ACERTOS</span><strong>${score.correct}</strong></div><div><span class="tiny">ERROS</span><strong>${score.incorrect}</strong></div><div><span class="tiny">TEMPO</span><strong>${e(formatDuration(session.attempt.durationSeconds || 0))}</strong></div></div>
       <div class="two-column"><section class="panel"><h2>Por matéria</h2>${subjects.length ? subjects.map(item => `<div class="result-breakdown"><span>${e(item.name)}</span><span>${item.correct}/${item.total} · ${item.accuracy}%</span></div>`).join("") : `<p class="muted">Sem respostas para analisar.</p>`}</section><section class="panel"><h2>Por assunto</h2>${topics.length ? topics.map(item => `<div class="result-breakdown"><span>${e(item.name)}</span><span>${item.correct}/${item.total} · ${item.accuracy}%</span></div>`).join("") : `<p class="muted">Sem respostas para analisar.</p>`}</section></div>
@@ -430,13 +479,12 @@ async function stopStudySession() {
   await renderRoute();
 }
 
-async function recordError(question, selected) {
+async function recordError(question, selected, attemptId) {
   const current = await getRecord("errors", question.questionId);
-  const error = upsertError(current, question, selected);
+  const error = upsertError(current, question, selected, undefined, attemptId);
   await putRecord("errors", error);
   return error;
 }
-
 async function selectAnswer(questionId, selected) {
   const day = state.currentDay;
   const attempt = state.currentAttempt;
@@ -457,7 +505,7 @@ async function selectAnswer(questionId, selected) {
     history, answeredAt: now, updatedAt: now, attemptNumber: attempt.attemptNumber
   };
   await putRecord("question_answers", response);
-  if (!isCorrect) await recordError({ ...question, dayCode: day.code, setCode: question.setCode, cycle: day.cycle, week: day.week }, selected);
+  if (!isCorrect) await recordError({ ...question, dayCode: day.code, setCode: question.setCode, cycle: day.cycle, week: day.week }, selected, attempt.attemptId);
   const questionIndex = day.questionSet.items.findIndex(item => item.questionId === questionId);
   state.questionIndex = questionIndex;
   history.replaceState(null, "", `#questions/${encodeURIComponent(day.questionSet.code)}/${questionIndex}`);
@@ -466,7 +514,7 @@ async function selectAnswer(questionId, selected) {
 }
 
 async function finishQuestionSet(setCode) {
-  const day = dayForQuestion(setCode);
+  const day = state.currentDay?.questionSet.code === setCode ? state.currentDay : dayForQuestion(setCode);
   const attempt = state.currentAttempt;
   if (!attempt || !day) return;
   const answers = (await getAllRecords("question_answers")).filter(row => row.attemptId === attempt.attemptId);
@@ -523,15 +571,14 @@ async function saveErrorForm(form) {
 
 async function retryQuestionSet(code) {
   const day = dayForQuestion(code);
-  if (!day) return;
+  if (!day || !day.questionSet.items?.length) return;
   const attempts = (await getAllRecords("question_attempts")).filter(row => row.questionSet === code);
-  const attemptNumber = attempts.length + 1;
-  const startedAt = new Date().toISOString();
-  const attemptId = `${code}-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
-  const attempt = { attemptId, questionSet: code, dayCode: day.code, attemptNumber, startedAt, completedAt: null, questionVersion: day.questionSet.contentHash || "", availableQuestionCount: day.questionSet.items.length, plannedQuestionCount: day.questionGoal, coverageStatus: day.questionSet.sourceStatus, status: "IN_PROGRESS" };
-  await putRecord("question_attempts", attempt);
-  await putRecord("progress", { id: `active-attempt:${code}`, attemptId, updatedAt: startedAt });
+  const created = await createQuestionAttempt(day, attempts.length + 1);
+  state.currentDay = created.day;
+  state.currentAttempt = created.attempt;
+  const alreadyOnSet = location.hash === "#questions/" + encodeURIComponent(code);
   openRoute("questions", code);
+  if (alreadyOnSet) await renderRoute();
 }
 
 async function exportBackup() {

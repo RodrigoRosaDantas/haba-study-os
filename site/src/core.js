@@ -41,12 +41,16 @@ export function scoreQuestionSet(items, answers = {}) {
   };
 }
 
-export function upsertError(current, question, selected, now = new Date().toISOString()) {
-  const count = (current?.errorCount || 0) + 1;
+export function upsertError(current, question, selected, now = new Date().toISOString(), attemptId = "") {
+  const attemptIds = Array.isArray(current?.attemptIds) ? [...new Set(current.attemptIds.map(String).filter(Boolean))] : [];
+  const hasAttemptId = typeof attemptId === "string" && attemptId.length > 0;
+  const firstErrorInAttempt = hasAttemptId && !attemptIds.includes(attemptId);
+  if (firstErrorInAttempt) attemptIds.push(attemptId);
+  const count = (Number(current?.errorCount) || 0) + (hasAttemptId ? Number(firstErrorInAttempt) : 1);
   const repeated = count > 1;
   return {
     questionId: question.questionId,
-    errorId: current?.errorId || `ERR-${question.questionId}`,
+    errorId: current?.errorId || "ERR-" + question.questionId,
     dayCode: question.dayCode,
     setCode: question.setCode,
     subject: question.subject || "",
@@ -60,6 +64,7 @@ export function upsertError(current, question, selected, now = new Date().toISOS
     firstErrorAt: current?.firstErrorAt || now,
     lastErrorAt: now,
     errorCount: count,
+    attemptIds,
     repeated,
     status: repeated ? "REPEATED" : (current?.status || "NEW_ERROR"),
     statusLabel: repeated ? "Reincidente" : (current?.statusLabel || "Novo erro"),
@@ -71,6 +76,29 @@ export function upsertError(current, question, selected, now = new Date().toISOS
     lastReviewedAt: current?.lastReviewedAt || null,
     source: "HABA Study OS · execução local",
     createdAt: current?.createdAt || now,
+    updatedAt: now
+  };
+}
+export function createQuestionSetSnapshot(day, contentVersion, now = new Date().toISOString()) {
+  const questionSet = JSON.parse(JSON.stringify(day.questionSet));
+  const questionVersion = String(questionSet.contentHash || contentVersion || "");
+  if (!questionSet.code || !questionVersion) throw new Error("Não foi possível identificar a versão desta bateria.");
+  return {
+    entityId: "question-set:" + questionSet.code + ":" + questionVersion,
+    questionSetCode: questionSet.code,
+    questionVersion,
+    questionSet,
+    daySnapshot: {
+      code: day.code,
+      title: day.title || "",
+      focus: day.focus || "",
+      complementary: day.complementary || "",
+      cycle: day.cycle || "",
+      week: Number(day.week) || 0,
+      weekday: day.weekday || "",
+      questionGoal: Number(day.questionGoal) || 0
+    },
+    createdAt: now,
     updatedAt: now
   };
 }

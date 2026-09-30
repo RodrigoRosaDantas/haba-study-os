@@ -37,8 +37,13 @@ if (!html.includes("connect-src 'self'") || html.includes("workers.dev") || !htm
 else ok("CSP com conexões locais e scripts próprios");
 if (/sync-config-form|sync-errors|api\/errors\/sync|fetch\s*\(/i.test(app) || !/não envia erros, notas ou revisões ao Notion/i.test(app)) fail("Error Lab deve permanecer local e sem endpoint de envio");
 else ok("Error Lab local, sem envio ao Notion");
-if (!sw.includes("haba-study-os-shell-v6") || !sw.includes("./styles.css?v=6") || !sw.includes("./src/app.js?v=6") || !html.includes("./styles.css?v=6") || !html.includes("./src/app.js?v=6") || sw.includes("./src/sync-queue.js") || !sw.includes("haba-study-os-content-v2") || !sw.includes("networkFirstContent") || !sw.includes("SKIP_WAITING") || !sw.includes("candidate?.schemaVersion === 2") || !sw.includes("candidate.studyDays.length === 75")) fail("service worker deve atualizar o shell v6, versionar CSS e app, preservar módulos offline, validar o schema 2 e esperar atualização explícita");
-else ok("service worker v6, assets atualizados e atualização controlada");
+const pwaShellVersion = sw.match(/haba-study-os-shell-v(\d+)/)?.[1];
+const pwaSwAppVersion = sw.match(/\.\/src\/app\.js\?v=(\d+)/)?.[1];
+const pwaHtmlAppVersion = html.match(/\.\/src\/app\.js\?v=(\d+)/)?.[1];
+const pwaSwCssVersion = sw.match(/\.\/styles\.css\?v=(\d+)/)?.[1];
+const pwaHtmlCssVersion = html.match(/\.\/styles\.css\?v=(\d+)/)?.[1];
+if (!pwaShellVersion || pwaShellVersion !== pwaSwAppVersion || pwaSwAppVersion !== pwaHtmlAppVersion || !pwaSwCssVersion || pwaSwCssVersion !== pwaHtmlCssVersion || sw.includes("./src/sync-queue.js") || !sw.includes("haba-study-os-content-v2") || !sw.includes("networkFirstContent") || !sw.includes("SKIP_WAITING") || !sw.includes("candidate?.schemaVersion === 2") || !sw.includes("candidate.studyDays.length === 75")) fail("service worker deve versionar shell, CSS e app de forma consistente, preservar módulos offline, validar o schema 2 e esperar atualização explícita");
+else ok("service worker local-first e atualização explicitamente controlada");
 
 const requiredStores = ["study_sessions", "question_attempts", "question_answers", "errors", "revisions", "progress", "reading_progress", "content_versions", "backups"];
 const storage = await readFile(resolve(root, "site/src/storage.js"), "utf8");
