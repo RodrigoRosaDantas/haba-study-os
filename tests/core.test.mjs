@@ -56,6 +56,22 @@ test("Error Lab upserts by stable Question ID and preserves first-error data", (
   assert.equal(Object.hasOwn(repeated, "syncStatus"), false);
 });
 
+test("Error Lab counts one wrong episode per attempt even when the selected option changes", () => {
+  const question = { questionId: "Q-456", setCode: "Q02", dayCode: "D02", answerKey: "B" };
+  const first = upsertError(null, question, "A", "2026-09-01T10:00:00Z", "attempt-1");
+  const changed = upsertError(first, question, "C", "2026-09-01T10:01:00Z", "attempt-1");
+  assert.equal(changed.selected, "C");
+  assert.equal(changed.errorCount, 1);
+  assert.equal(changed.repeated, false);
+  assert.deepEqual(changed.attemptIds, ["attempt-1"]);
+
+  const retry = upsertError(changed, question, "A", "2026-09-02T10:00:00Z", "attempt-2");
+  assert.equal(retry.errorCount, 2);
+  assert.equal(retry.repeated, true);
+  assert.equal(retry.status, "REPEATED");
+  assert.deepEqual(retry.attemptIds, ["attempt-1", "attempt-2"]);
+});
+
 test("analytics represent no data as unknown and withhold thin trends", () => {
   const empty = calculateAnalytics([], [], [], [{ code: "D01" }], []);
   assert.equal(empty.questionCount, 0);
