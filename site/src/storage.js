@@ -1,5 +1,5 @@
 export const DB_NAME = "haba-study-os";
-export const DB_VERSION = 1;
+export const DB_VERSION = 2;
 
 export const STORE_KEYS = Object.freeze({
   study_sessions: "sessionId",
@@ -9,7 +9,6 @@ export const STORE_KEYS = Object.freeze({
   revisions: "revisionId",
   progress: "id",
   reading_progress: "pageId",
-  sync_queue: "operationId",
   content_versions: "entityId",
   backups: "backupId"
 });
@@ -23,10 +22,11 @@ export function openDatabase() {
     const request = indexedDB.open(DB_NAME, DB_VERSION);
     request.onupgradeneeded = () => {
       const db = request.result;
+      const tx = request.transaction;
+      if (db.objectStoreNames.contains("sync_queue")) db.deleteObjectStore("sync_queue");
       for (const [name, keyPath] of Object.entries(STORE_KEYS)) {
         if (!db.objectStoreNames.contains(name)) db.createObjectStore(name, { keyPath });
       }
-      const tx = request.transaction;
       if (tx && tx.objectStoreNames.contains("question_answers")) {
         const answers = tx.objectStore("question_answers");
         if (!answers.indexNames.contains("attemptId")) answers.createIndex("attemptId", "attemptId", { unique: false });
@@ -40,10 +40,15 @@ export function openDatabase() {
         const errors = tx.objectStore("errors");
         if (!errors.indexNames.contains("status")) errors.createIndex("status", "status", { unique: false });
         if (!errors.indexNames.contains("nextReviewAt")) errors.createIndex("nextReviewAt", "nextReviewAt", { unique: false });
-      }
-      if (tx && tx.objectStoreNames.contains("sync_queue")) {
-        const queue = tx.objectStore("sync_queue");
-        if (!queue.indexNames.contains("status")) queue.createIndex("status", "status", { unique: false });
+        const cursorRequest = errors.openCursor();
+        cursorRequest.onsuccess = () => {
+          const cursor = cursorRequest.result;
+          if (!cursor) return;
+          const value = cursor.value;
+          for (const field of ["syncStatus", "notionPageId", "notionUpdatedAt", "questionRevision"]) delete value[field];
+          cursor.update(value);
+          cursor.continue();
+        };
       }
     };
     request.onsuccess = () => {
@@ -142,9 +147,10 @@ function timestampOf(record) {
 }
 
 export async function mergeIntoStores(stores) {
+  const names = Object.keys(STORE_KEYS).filter(name => Array.isArray(stores?.[name]));
+  if (!names.length) return 0;
   const db = await openDatabase();
   let merged = 0;
-  const names = Object.keys(STORE_KEYS).filter(name => Array.isArray(stores?.[name]));
   const tx = db.transaction(names, "readwrite");
   for (const name of names) {
     const keyPath = STORE_KEYS[name];
