@@ -2,29 +2,29 @@
   "schemaVersion": 2,
   "rootPageId": "3dfcf5a2-6731-8119-9194-d4ab2ed5c26d",
   "meta": {
-    "generatedAt": "2026-09-30T17:21:35.162Z",
-    "sourceUpdatedAt": "2026-09-22T23:00:00.000Z",
+    "generatedAt": "2026-09-30T19:25:47.628Z",
+    "sourceUpdatedAt": "2026-09-30T19:17:00.000Z",
     "source": "Notion · HABA Study OS",
     "sourceRootUrl": "https://www.notion.so/3dfcf5a2673181199194d4ab2ed5c26d",
-    "contentVersion": "767c32d2cc3e8865da3176e6af7c21c260dffbe541ec0b0f1c11f1ec81a028e9",
+    "contentVersion": "c18d45bbdd585eb3a45d023e9a796aa1e5debb993671382d6b9ebb4cf4582a7a",
     "counts": {
       "studyDays": 75,
       "reviews": 15,
       "restDays": 15,
       "cycles": 5,
-      "questions": 100,
+      "questions": 104,
       "plannedQuestions": 1603,
-      "completeQuestionSets": 1
+      "completeQuestionSets": 2
     },
     "questionCoverage": {
       "status": "partial",
-      "completeSets": 1,
-      "partialSets": 9,
+      "completeSets": 2,
+      "partialSets": 8,
       "unavailableSets": 65,
       "totalSets": 75,
-      "usableQuestions": 100,
+      "usableQuestions": 104,
       "plannedQuestions": 1603,
-      "excludedRows": 61,
+      "excludedRows": 57,
       "missingRows": 1442
     }
   },
@@ -9378,36 +9378,19 @@
         "code": "Q01",
         "pageId": "3dfcf5a2-6731-8120-84bb-cccef8c689d7",
         "title": "Q01 — Questões | Lógica de programação + Português — interpretação",
-        "updatedAt": "2026-09-22T14:12:00.000Z",
+        "updatedAt": "2026-09-30T19:17:00.000Z",
         "composition": {
           "main": 8,
           "complementary": 4,
           "total": 12,
           "source": "notion"
         },
-        "sourceStatus": "partial",
-        "availableCount": 10,
+        "sourceStatus": "complete",
+        "availableCount": 12,
         "sourceRowCount": 12,
         "missingCount": 0,
         "extraCount": 0,
-        "unavailableItems": [
-          {
-            "questionId": "Q1824902",
-            "notionPageId": "3dfcf5a2-6731-81f5-ba58-dbbef8267d1c",
-            "title": "BB 2021 — Busca sequencial otimizada",
-            "reasons": [
-              "unusable_options"
-            ]
-          },
-          {
-            "questionId": "Q2495477",
-            "notionPageId": "3dfcf5a2-6731-81a7-a2a2-c2b28a775a79",
-            "title": "CAIXA 2024 — Algoritmos de ordenação",
-            "reasons": [
-              "unusable_options"
-            ]
-          }
-        ],
+        "unavailableItems": [],
         "items": [
           {
             "questionId": "Q1824897",
@@ -9421,7 +9404,7 @@
             "exam": "BB 2021 — Agente de Tecnologia",
             "board": "Cesgranrio",
             "year": 2021,
-            "stem": "Dado um laço Swift com atualização numérica e switch por intervalos, qual frase é produzida após três iterações?",
+            "stem": "Considere o código Swift: var num:Int=0; var frase:String=\"\". Para i em 1...3, execute num = num + 1 + i*2; depois um switch atribui texto conforme num: 2...6 → \"a \"; 7...9 → \"casa \"; 10...13 → \"carro \"; 14...16 → \"eh \"; 17...20 → \"o \"; 21...23 → \"forte \"; default → \"não eh \". Ao fim de cada iteração, faça frase = frase + texto e, após o laço, imprima frase. Qual saída é produzida?",
             "optionsSummary": "A) o carro eh | B) a casa eh | C) o carro não eh | D) a casa eh forte | E) o carro eh forte",
             "options": [
               {
@@ -9447,13 +9430,59 @@
             ],
             "answerText": "B — a casa eh",
             "answerKey": "B",
-            "commentary": "A execução acumula os textos correspondentes aos valores 3, 8 e 15, resultando em “a casa eh”.",
+            "commentary": "B. Rastreamento: i=1 → num=0+1+2=3 → faixa 2...6 → 'a '; i=2 → num=3+1+4=8 → faixa 7...9 → 'casa '; i=3 → num=8+1+6=15 → faixa 14...16 → 'eh '. Como num é acumulativo e frase concatena os textos, a saída é 'a casa eh'.",
             "sourceUrl": "https://www.qconcursos.com/questoes-de-concursos/provas/cesgranrio-2021-banco-do-brasil-agente-de-tecnologia/questoes?page=3",
             "sourceValidated": true,
             "status": "Pronta para estudo",
-            "updatedAt": "2026-09-22T13:53:00.000Z",
+            "updatedAt": "2026-09-30T19:16:00.000Z",
+            "revision": 2,
+            "contentHash": "0796ded1129350bab1a1bcb340d23e31d77407ca4ad682518fdc59afb4ab0afc"
+          },
+          {
+            "questionId": "Q1824902",
+            "occurrenceId": "Q01-002",
+            "ordinal": 2,
+            "notionPageId": "3dfcf5a2-6731-81f5-ba58-dbbef8267d1c",
+            "setCode": "Q01",
+            "title": "BB 2021 — Busca sequencial otimizada",
+            "subject": "Algoritmos e Estrutura de Dados",
+            "topic": "Busca sequencial — sequência ordenada",
+            "exam": "BB 2021 — Agente de Tecnologia",
+            "board": "Cesgranrio",
+            "year": 2021,
+            "stem": "Busca-se a senha 52 da esquerda para a direita com busca sequencial otimizada. Em sequência crescente, a busca pode parar assim que encontra valor maior que 52; em sequência desordenada, não pode usar essa antecipação. Em qual alternativa o resultado é conhecido com o menor número de comparações?",
+            "optionsSummary": "A) crescente: 23, 45, 81, 97, 112, 138, 154 | B) crescente: 13, 25, 37, 44, 52, 78, 83, 91 | C) crescente: 17, 28, 32, 49, 67, 85, 94, 103 | D) desordenada: 27, 95, 148, 117, 33, 59, 52 | E) desordenada: 32, 48, 12, 55, 93, 27, 66",
+            "options": [
+              {
+                "key": "A",
+                "text": "crescente: 23, 45, 81, 97, 112, 138, 154"
+              },
+              {
+                "key": "B",
+                "text": "crescente: 13, 25, 37, 44, 52, 78, 83, 91"
+              },
+              {
+                "key": "C",
+                "text": "crescente: 17, 28, 32, 49, 67, 85, 94, 103"
+              },
+              {
+                "key": "D",
+                "text": "desordenada: 27, 95, 148, 117, 33, 59, 52"
+              },
+              {
+                "key": "E",
+                "text": "desordenada: 32, 48, 12, 55, 93, 27, 66"
+              }
+            ],
+            "answerText": "A",
+            "answerKey": "A",
+            "commentary": "A. Como a sequência A é crescente, as comparações são 23, 45 e 81. Ao encontrar 81>52, a busca encerra com segurança após 3 comparações. Em B são necessárias 5 para achar 52; em C são 5 para ultrapassá-la (67); em sequências desordenadas D/E não se pode encerrar só por encontrar valor maior.",
+            "sourceUrl": "https://www.qconcursos.com/questoes-de-concursos/provas/cesgranrio-2021-banco-do-brasil-agente-de-tecnologia/questoes?discipline_ids%5B%5D=98",
+            "sourceValidated": true,
+            "status": "Pronta para estudo",
+            "updatedAt": "2026-09-30T19:16:00.000Z",
             "revision": 1,
-            "contentHash": "22953fa74cb9490b612848c0cb624034d8a8d3ab3860be186eda8a7d1cb62985"
+            "contentHash": "1f46cdcc731212dcf3f103ae6974e488a9b394d1e37a213dc01183bf1093f347"
           },
           {
             "questionId": "Q1824908",
@@ -9559,7 +9588,7 @@
             "exam": "BB 2023 — Agente de Tecnologia",
             "board": "Cesgranrio",
             "year": 2023,
-            "stem": "Uma busca binária procura o valor 78 em um vetor ordenado com 14 elementos e imprime cada valor visitado. Qual sequência de elementos é visitada até concluir que o valor não está presente?",
+            "stem": "Considere o array ordenado [5, 18, 27, 33, 44, 49, 54, 67, 69, 72, 79, 86, 87, 92]. Uma busca binária procura o valor 78 e imprime cada elemento visitado. Qual sequência é exibida até concluir que 78 não está presente?",
             "optionsSummary": "A) 54, 79, 69, 72 | B) 49, 72, 86, 79 | C) 54, 86, 69, 72, 79 | D) 67, 86, 72, 79 | E) 54, 79, 67, 69, 72",
             "options": [
               {
@@ -9585,13 +9614,59 @@
             ],
             "answerText": "A — 54, 79, 69, 72",
             "answerKey": "A",
-            "commentary": "A cada passo, a busca reduz pela metade o intervalo. Com índices iniciais 0..13, visita 54, depois 79, depois 69 e por fim 72.",
+            "commentary": "A. Com intervalo inicial 0..13, o meio é índice 6 → 54. Como 78>54, busca 7..13; meio 10 → 79. Como 78<79, busca 7..9; meio 8 → 69. Como 78>69, busca 9..9; visita 72. Depois o intervalo fica vazio. Sequência: 54, 79, 69, 72.",
             "sourceUrl": "https://www.qconcursos.com/questoes-de-concursos/provas/cesgranrio-2023-banco-do-brasil-agente-de-tecnologia-microrregiao-158-ti/questoes?page=4",
             "sourceValidated": true,
             "status": "Pronta para estudo",
-            "updatedAt": "2026-09-22T18:44:00.000Z",
+            "updatedAt": "2026-09-30T19:16:00.000Z",
+            "revision": 2,
+            "contentHash": "73fb30db79d9f02c13db93d94a667da9f889df62ede669869212d508892738b8"
+          },
+          {
+            "questionId": "Q2495477",
+            "occurrenceId": "Q01-006",
+            "ordinal": 6,
+            "notionPageId": "3dfcf5a2-6731-81a7-a2a2-c2b28a775a79",
+            "setCode": "Q01",
+            "title": "CAIXA 2024 — Algoritmos de ordenação",
+            "subject": "Algoritmos e Estruturas de Dados",
+            "topic": "Insertion, Bubble e Selection Sort",
+            "exam": "CAIXA 2024 — TBN/TI",
+            "board": "Cesgranrio",
+            "year": 2024,
+            "stem": "A questão apresenta três descrições de algoritmos de ordenação: estabilidade, comparação repetida de vizinhos com trocas e construção progressiva de uma parte ordenada. É preciso associar cada característica ao algoritmo correspondente.",
+            "optionsSummary": "A) inserção, bolha, seleção | B) inserção, seleção, bolha | C) seleção, bolha, inserção | D) seleção, inserção, bolha | E) bolha, seleção, inserção",
+            "options": [
+              {
+                "key": "A",
+                "text": "inserção, bolha, seleção"
+              },
+              {
+                "key": "B",
+                "text": "inserção, seleção, bolha"
+              },
+              {
+                "key": "C",
+                "text": "seleção, bolha, inserção"
+              },
+              {
+                "key": "D",
+                "text": "seleção, inserção, bolha"
+              },
+              {
+                "key": "E",
+                "text": "bolha, seleção, inserção"
+              }
+            ],
+            "answerText": "A — inserção, bolha e seleção",
+            "answerKey": "A",
+            "commentary": "A. I corresponde ao método por inserção (estável); II descreve Bubble Sort, que compara e eventualmente troca elementos vizinhos repetidamente; III descreve Selection Sort, que mantém uma região ordenada e seleciona elementos da parte ainda não ordenada. Logo: inserção, bolha, seleção.",
+            "sourceUrl": "https://www.qconcursos.com/questoes-de-concursos/provas/cesgranrio-2024-caixa-tecnico-bancario-novo-tecnologia-da-informacao/questoes?discipline_ids%5B%5D=98",
+            "sourceValidated": true,
+            "status": "Pronta para estudo",
+            "updatedAt": "2026-09-30T19:16:00.000Z",
             "revision": 1,
-            "contentHash": "15fff832039a57b4c4f73a8a2a5bdaf4b250da23fc5ea2751e664500b5a13cd0"
+            "contentHash": "8d09611bda613365edd77feb84c2d01da6ffd5b39ac5eaaad641b55ed8dd01e6"
           },
           {
             "questionId": "Q2495488",
@@ -9605,39 +9680,39 @@
             "exam": "CAIXA 2024 — TBN/TI",
             "board": "Cesgranrio",
             "year": 2024,
-            "stem": "Uma função deve avisar quando o saldo é menor que o valor de uma retirada. Qual sintaxe representa corretamente essa decisão em C#?",
-            "optionsSummary": "A) estilo Python | B) if (condição) { comando; } | C) sintaxe com $ e << | D) estilo Visual Basic | E) estilo Pascal",
+            "stem": "Em C#, uma função deve chamar aviso(\"Saldo insuficiente.\") quando saldo < retirada. Qual trecho usa a sintaxe correta de decisão em C#?",
+            "optionsSummary": "A) if saldo < retirada: aviso(\"Saldo insuficiente.\") | B) if (saldo < retirada) { aviso(\"Saldo insuficiente.\"); } | C) if ($saldo < $retirada) { aviso << \"Saldo insuficiente.\"; } | D) If saldo < retirada Then aviso(\"Saldo insuficiente.\") End If | E) if saldo < retirada then begin aviso('Saldo insuficiente.'); end;",
             "options": [
               {
                 "key": "A",
-                "text": "estilo Python"
+                "text": "if saldo < retirada: aviso(\"Saldo insuficiente.\")"
               },
               {
                 "key": "B",
-                "text": "if (condição) { comando"
+                "text": "if (saldo < retirada) { aviso(\"Saldo insuficiente.\")"
               },
               {
                 "key": "C",
-                "text": "sintaxe com $ e <<"
+                "text": "if ($saldo < $retirada) { aviso << \"Saldo insuficiente.\""
               },
               {
                 "key": "D",
-                "text": "estilo Visual Basic"
+                "text": "If saldo < retirada Then aviso(\"Saldo insuficiente.\") End If"
               },
               {
                 "key": "E",
-                "text": "estilo Pascal"
+                "text": "if saldo < retirada then begin aviso('Saldo insuficiente.')"
               }
             ],
             "answerText": "B — if (saldo < retirada) { ... }",
             "answerKey": "B",
-            "commentary": "C# usa parênteses na condição e chaves para delimitar o bloco, com ponto e vírgula ao final das instruções.",
+            "commentary": "B. Em C#, a condição do if fica entre parênteses; o bloco pode ser delimitado por chaves; e a chamada de método termina com ponto e vírgula. A lembra Python; C mistura sintaxes de outras linguagens; D é estilo Visual Basic; E é estilo Pascal.",
             "sourceUrl": "https://www.qconcursos.com/questoes-de-concursos/provas/cesgranrio-2024-caixa-tecnico-bancario-novo-tecnologia-da-informacao/questoes?discipline_ids%5B%5D=160",
             "sourceValidated": true,
             "status": "Pronta para estudo",
-            "updatedAt": "2026-09-22T13:47:00.000Z",
-            "revision": 1,
-            "contentHash": "03b9ccd1c18cb0c81928e64f3479d1833aab7e724445659c64d1f0e5f49ba865"
+            "updatedAt": "2026-09-30T19:16:00.000Z",
+            "revision": 2,
+            "contentHash": "599d740cfb13c98e5bacd9eb741894c4a1399b4ebefabc9e539343baf8c0fec8"
           },
           {
             "questionId": "Q3048782",
@@ -9697,39 +9772,39 @@
             "exam": "CAIXA 2024 — TBN/TI — Rio Grande do Sul",
             "board": "Cesgranrio",
             "year": 2024,
-            "stem": "Depois de abordar o papel dos fornecedores de serviços financeiros, o texto passa a destacar qual agente/ação na promoção da cidadania financeira?",
-            "optionsSummary": "A) ampliação histórica do conceito | B) pilares gerais da cidadania financeira | C) papel do cidadão ao denunciar abusos | D) papel fiscalizador do Estado | E) contraste com a Grécia antiga",
+            "stem": "No texto-base sobre cidadania financeira, a progressão temática passa por: origem histórica do conceito → dimensões atuais da cidadania financeira → responsabilidades dos fornecedores de serviços financeiros → atuação do cidadão diante de abusos → atuação do Estado. Qual ideia aparece imediatamente depois do bloco sobre fornecedores?",
+            "optionsSummary": "A) ampliação histórica do conceito de cidadania | B) enumeração das dimensões da cidadania financeira | C) papel do cidadão ao denunciar/comunicar condutas abusivas | D) papel do Estado na proteção e supervisão | E) contraste entre cidadania atual e Grécia antiga",
             "options": [
               {
                 "key": "A",
-                "text": "ampliação histórica do conceito"
+                "text": "ampliação histórica do conceito de cidadania"
               },
               {
                 "key": "B",
-                "text": "pilares gerais da cidadania financeira"
+                "text": "enumeração das dimensões da cidadania financeira"
               },
               {
                 "key": "C",
-                "text": "papel do cidadão ao denunciar abusos"
+                "text": "papel do cidadão ao denunciar/comunicar condutas abusivas"
               },
               {
                 "key": "D",
-                "text": "papel fiscalizador do Estado"
+                "text": "papel do Estado na proteção e supervisão"
               },
               {
                 "key": "E",
-                "text": "contraste com a Grécia antiga"
+                "text": "contraste entre cidadania atual e Grécia antiga"
               }
             ],
             "answerText": "C — papel do cidadão diante de condutas abusivas",
             "answerKey": "C",
-            "commentary": "A questão cobra sequência de ideias, não apenas tema geral. É preciso localizar o trecho imediatamente posterior ao bloco sobre fornecedores.",
+            "commentary": "C. A questão cobra ordem de exposição. Depois das responsabilidades dos fornecedores, o texto passa ao papel do cidadão diante de condutas abusivas; somente depois entra a atuação estatal.",
             "sourceUrl": "https://www.qconcursos.com/questoes-de-concursos/provas/cesgranrio-2024-caixa-tecnico-bancario-novo-tecnologia-da-informacao-rio-grande-do-sul/questoes?discipline_ids%5B%5D=1",
             "sourceValidated": true,
             "status": "Pronta para estudo",
-            "updatedAt": "2026-09-22T18:00:00.000Z",
-            "revision": 1,
-            "contentHash": "4ccffdce24cd61fa0449ebc79c6669c0dbb2504615d49bd8219d00c86ba2c917"
+            "updatedAt": "2026-09-30T19:16:00.000Z",
+            "revision": 2,
+            "contentHash": "d88a371d09160fcec28a354ae1f0b2b459abbac69a3552c8d3ea9b2c9b2860f0"
           },
           {
             "questionId": "Q3048785",
@@ -9743,31 +9818,39 @@
             "exam": "CAIXA 2024 — TBN/TI — Rio Grande do Sul",
             "board": "Cesgranrio",
             "year": 2024,
-            "stem": "A questão apresenta expressões referenciais de um texto sobre cidadania financeira e pede identificar qual antecedente foi corretamente explicitado.",
-            "optionsSummary": "A) pronome relativo ligado a cidadãos | B) 'desse grupo' ligado aos integrantes de uma elite | C) possessivo ligado à cidadania | D/E) pronomes ligados a referentes incorretos",
+            "stem": "Em um texto sobre cidadania financeira, avalie qual associação entre uma expressão referencial e seu antecedente está correta.",
+            "optionsSummary": "A) 'que/eles', no trecho sobre a elite, → cidadãos em geral | B) 'desse grupo' → integrantes da elite | C) 'suas necessidades' → cidadania financeira | D) 'ele', no trecho sobre uso consciente de recursos, → varejistas | E) 'essa gestão' → condutas abusivas",
             "options": [
               {
                 "key": "A",
-                "text": "pronome relativo ligado a cidadãos"
+                "text": "'que/eles', no trecho sobre a elite, → cidadãos em geral"
               },
               {
                 "key": "B",
-                "text": "'desse grupo' ligado aos integrantes de uma elite"
+                "text": "'desse grupo' → integrantes da elite"
               },
               {
                 "key": "C",
-                "text": "possessivo ligado à cidadania"
+                "text": "'suas necessidades' → cidadania financeira"
+              },
+              {
+                "key": "D",
+                "text": "'ele', no trecho sobre uso consciente de recursos, → varejistas"
+              },
+              {
+                "key": "E",
+                "text": "'essa gestão' → condutas abusivas"
               }
             ],
             "answerText": "B — 'desse grupo' retoma os integrantes da elite",
             "answerKey": "B",
-            "commentary": "O demonstrativo retoma o grupo citado imediatamente antes: os integrantes da elite que participavam das decisões.",
+            "commentary": "B. 'Desse grupo' retoma diretamente o grupo mencionado antes: os integrantes da elite. As demais associações atribuem o pronome ou expressão a um referente que não é o antecedente textual correspondente.",
             "sourceUrl": "https://www.qconcursos.com/questoes-de-concursos/provas/cesgranrio-2024-caixa-tecnico-bancario-novo-tecnologia-da-informacao-rio-grande-do-sul/questoes?discipline_ids%5B%5D=1",
             "sourceValidated": true,
             "status": "Pronta para estudo",
-            "updatedAt": "2026-09-22T18:00:00.000Z",
-            "revision": 1,
-            "contentHash": "4ed62e29ab5efb558c88259bef694eb5e99c6b298334d5e610d1a64866fb7fbf"
+            "updatedAt": "2026-09-30T19:16:00.000Z",
+            "revision": 2,
+            "contentHash": "3c001f57240fce7a87dce1ae5640657450029b5a233312d267510e7211a3deef"
           },
           {
             "questionId": "Q3048786",
@@ -9827,48 +9910,48 @@
             "exam": "CAIXA 2024 — TBN/TI — Rio Grande do Sul",
             "board": "Cesgranrio",
             "year": 2024,
-            "stem": "Qual trecho em Python/NumPy cria corretamente uma matriz 3×3 com os inteiros de 1 a 9, imprime a matriz e depois imprime a média dos seus elementos?",
-            "optionsSummary": "A) matriz 1×9 + max | B) np.matrix com linhas separadas por ; + mean | C) sem import + std | D) lista Python + mean inexistente | E) lista + soma",
+            "stem": "Em Python com NumPy, deve-se criar uma matriz 3×3 contendo 1 a 9 em ordem, exibir a matriz e depois imprimir a média dos nove valores. Qual trecho faz exatamente isso?",
+            "optionsSummary": "A) import numpy as np; m=np.matrix('1 2 3 4 5 6 7 8 9'); print(m); print(m.max()) | B) import numpy as np; m=np.matrix('1 2 3;4 5 6;7 8 9'); print(m); print(m.mean()) | C) m=matrix('1 2 3;4 5 6;7 8 9'); print(m); print(m.std()) | D) m=[[1,2,3],[4,5,6],[7,8,9]]; print(m); import numpy as np; print(m.mean()) | E) m=[1,2,3,4,5,6,7,8,9]; print(m); print(soma manual dos nove itens)",
             "options": [
               {
                 "key": "A",
-                "text": "matriz 1×9 + max"
+                "text": "import numpy as np"
               },
               {
                 "key": "B",
-                "text": "np.matrix com linhas separadas por"
+                "text": "import numpy as np"
               },
               {
                 "key": "C",
-                "text": "sem import + std"
+                "text": "m=matrix('1 2 3"
               },
               {
                 "key": "D",
-                "text": "lista Python + mean inexistente"
+                "text": "m=[[1,2,3],[4,5,6],[7,8,9]]"
               },
               {
                 "key": "E",
-                "text": "lista + soma"
+                "text": "m=[1,2,3,4,5,6,7,8,9]"
               }
             ],
             "answerText": "B — np.matrix('1 2 3;4 5 6;7 8 9') e m.mean()",
             "answerKey": "B",
-            "commentary": "Na sintaxe mostrada, ponto e vírgula separa linhas da matriz e mean() retorna a média dos valores.",
+            "commentary": "B. Em np.matrix, os espaços separam colunas e ';' separa linhas, formando 3×3. Depois m.mean() calcula a média. A cria uma única linha e ainda usa max(); C não referencia np e calcula desvio-padrão; D cria uma lista Python, que não possui método mean(); E cria vetor 1D e imprime uma soma, não a média.",
             "sourceUrl": "https://www.qconcursos.com/questoes-de-concursos/disciplinas/tecnologia-da-informacao-programacao/questoes?page=119",
             "sourceValidated": true,
             "status": "Pronta para estudo",
-            "updatedAt": "2026-09-22T17:59:00.000Z",
-            "revision": 1,
-            "contentHash": "aa7ac0949d33b23c7984b9c0376379d4e3a18629292f4627ad13967d299d8700"
+            "updatedAt": "2026-09-30T19:16:00.000Z",
+            "revision": 2,
+            "contentHash": "6bf1322a07e8690421c65ba14d39f7cba4f286cb15971677db5bd6f3dc79a2ec"
           }
         ],
-        "revision": 1,
-        "contentHash": "b410bb737392e9858e4b5004dee498da14bfcebb586051a1cba9f20c04507ecb"
+        "revision": 2,
+        "contentHash": "0ad635e92a20ef8c82c92345ea45736c4280be4a3ab5fc810b199991475411b8"
       },
       "reviewCode": "R01",
       "reviewPageId": "3dfcf5a2673181369e09cd5716d2eae0",
-      "revision": 1,
-      "contentHash": "cf8f5164f6c4cecc6fa2b1f108e0ab7263dbc782f97fb2d0162956ffed6831cb"
+      "revision": 2,
+      "contentHash": "7e2911d2d79640e9749cadc2590b85b57a2618567c376f6567fca186fd7494b5"
     },
     {
       "code": "D02",
@@ -47223,39 +47306,39 @@
             "exam": "CAIXA 2024 — TBN/TI — Rio Grande do Sul",
             "board": "Cesgranrio",
             "year": 2024,
-            "stem": "Depois de abordar o papel dos fornecedores de serviços financeiros, o texto passa a destacar qual agente/ação na promoção da cidadania financeira?",
-            "optionsSummary": "A) ampliação histórica do conceito | B) pilares gerais da cidadania financeira | C) papel do cidadão ao denunciar abusos | D) papel fiscalizador do Estado | E) contraste com a Grécia antiga",
+            "stem": "No texto-base sobre cidadania financeira, a progressão temática passa por: origem histórica do conceito → dimensões atuais da cidadania financeira → responsabilidades dos fornecedores de serviços financeiros → atuação do cidadão diante de abusos → atuação do Estado. Qual ideia aparece imediatamente depois do bloco sobre fornecedores?",
+            "optionsSummary": "A) ampliação histórica do conceito de cidadania | B) enumeração das dimensões da cidadania financeira | C) papel do cidadão ao denunciar/comunicar condutas abusivas | D) papel do Estado na proteção e supervisão | E) contraste entre cidadania atual e Grécia antiga",
             "options": [
               {
                 "key": "A",
-                "text": "ampliação histórica do conceito"
+                "text": "ampliação histórica do conceito de cidadania"
               },
               {
                 "key": "B",
-                "text": "pilares gerais da cidadania financeira"
+                "text": "enumeração das dimensões da cidadania financeira"
               },
               {
                 "key": "C",
-                "text": "papel do cidadão ao denunciar abusos"
+                "text": "papel do cidadão ao denunciar/comunicar condutas abusivas"
               },
               {
                 "key": "D",
-                "text": "papel fiscalizador do Estado"
+                "text": "papel do Estado na proteção e supervisão"
               },
               {
                 "key": "E",
-                "text": "contraste com a Grécia antiga"
+                "text": "contraste entre cidadania atual e Grécia antiga"
               }
             ],
             "answerText": "C — papel do cidadão diante de condutas abusivas",
             "answerKey": "C",
-            "commentary": "A questão cobra sequência de ideias, não apenas tema geral. É preciso localizar o trecho imediatamente posterior ao bloco sobre fornecedores.",
+            "commentary": "C. A questão cobra ordem de exposição. Depois das responsabilidades dos fornecedores, o texto passa ao papel do cidadão diante de condutas abusivas; somente depois entra a atuação estatal.",
             "sourceUrl": "https://www.qconcursos.com/questoes-de-concursos/provas/cesgranrio-2024-caixa-tecnico-bancario-novo-tecnologia-da-informacao-rio-grande-do-sul/questoes?discipline_ids%5B%5D=1",
             "sourceValidated": true,
             "status": "Pronta para estudo",
-            "updatedAt": "2026-09-22T18:00:00.000Z",
-            "revision": 1,
-            "contentHash": "9f4104c0c1d044244ae2c1db41b0a97c6688fe487db7f119b239804ee4fc7bb5"
+            "updatedAt": "2026-09-30T19:16:00.000Z",
+            "revision": 2,
+            "contentHash": "0bbfaa9607a6c31cd06a449a783d2059a3b4d75f7a7bec2ad7d0e41328645223"
           },
           {
             "questionId": "Q3048784",
@@ -47315,31 +47398,39 @@
             "exam": "CAIXA 2024 — TBN/TI — Rio Grande do Sul",
             "board": "Cesgranrio",
             "year": 2024,
-            "stem": "A questão apresenta expressões referenciais de um texto sobre cidadania financeira e pede identificar qual antecedente foi corretamente explicitado.",
-            "optionsSummary": "A) pronome relativo ligado a cidadãos | B) 'desse grupo' ligado aos integrantes de uma elite | C) possessivo ligado à cidadania | D/E) pronomes ligados a referentes incorretos",
+            "stem": "Em um texto sobre cidadania financeira, avalie qual associação entre uma expressão referencial e seu antecedente está correta.",
+            "optionsSummary": "A) 'que/eles', no trecho sobre a elite, → cidadãos em geral | B) 'desse grupo' → integrantes da elite | C) 'suas necessidades' → cidadania financeira | D) 'ele', no trecho sobre uso consciente de recursos, → varejistas | E) 'essa gestão' → condutas abusivas",
             "options": [
               {
                 "key": "A",
-                "text": "pronome relativo ligado a cidadãos"
+                "text": "'que/eles', no trecho sobre a elite, → cidadãos em geral"
               },
               {
                 "key": "B",
-                "text": "'desse grupo' ligado aos integrantes de uma elite"
+                "text": "'desse grupo' → integrantes da elite"
               },
               {
                 "key": "C",
-                "text": "possessivo ligado à cidadania"
+                "text": "'suas necessidades' → cidadania financeira"
+              },
+              {
+                "key": "D",
+                "text": "'ele', no trecho sobre uso consciente de recursos, → varejistas"
+              },
+              {
+                "key": "E",
+                "text": "'essa gestão' → condutas abusivas"
               }
             ],
             "answerText": "B — 'desse grupo' retoma os integrantes da elite",
             "answerKey": "B",
-            "commentary": "O demonstrativo retoma o grupo citado imediatamente antes: os integrantes da elite que participavam das decisões.",
+            "commentary": "B. 'Desse grupo' retoma diretamente o grupo mencionado antes: os integrantes da elite. As demais associações atribuem o pronome ou expressão a um referente que não é o antecedente textual correspondente.",
             "sourceUrl": "https://www.qconcursos.com/questoes-de-concursos/provas/cesgranrio-2024-caixa-tecnico-bancario-novo-tecnologia-da-informacao-rio-grande-do-sul/questoes?discipline_ids%5B%5D=1",
             "sourceValidated": true,
             "status": "Pronta para estudo",
-            "updatedAt": "2026-09-22T18:00:00.000Z",
-            "revision": 1,
-            "contentHash": "8a8dfbae958fe492600fc317861afafe164542a4d1bd7d8656856a4019e182b5"
+            "updatedAt": "2026-09-30T19:16:00.000Z",
+            "revision": 2,
+            "contentHash": "0c5e7ea5e6870c80a9997a97a12fdb5f210f83333ae86e3c68b05ba2d6232e50"
           },
           {
             "questionId": "Q3048786",
@@ -47388,13 +47479,13 @@
             "contentHash": "75c81f6848e7df40eb77cbd40621ac242ef04b566056d66535b102278816f609"
           }
         ],
-        "revision": 1,
-        "contentHash": "e5e547397ba83d5a08a6d65793251d26a7d488b08b27c4edbc550440e4dc9b9b"
+        "revision": 2,
+        "contentHash": "b873f1da3c052dcd8db07c6727ebe1ad7e9e25e7b5a9867005a6c706cc73ff76"
       },
       "reviewCode": "R01",
       "reviewPageId": "3dfcf5a2673181369e09cd5716d2eae0",
-      "revision": 1,
-      "contentHash": "33cca06d08d8e9db704d517d49d7f20d5a4f7f34e46478afb6695fb6381ca1b6"
+      "revision": 2,
+      "contentHash": "dc5552391101c641c6ab87de7a3d293f65153f08c1d8d750215e1ab663c07f14"
     },
     {
       "code": "D06",
@@ -56406,7 +56497,7 @@
           "source": "regra-70-30"
         },
         "sourceStatus": "partial",
-        "availableCount": 10,
+        "availableCount": 12,
         "sourceRowCount": 15,
         "missingCount": 0,
         "extraCount": 0,
@@ -56428,25 +56519,9 @@
             ]
           },
           {
-            "questionId": "Q1824902",
-            "notionPageId": "3dfcf5a2-6731-81f5-ba58-dbbef8267d1c",
-            "title": "BB 2021 — Busca sequencial otimizada",
-            "reasons": [
-              "unusable_options"
-            ]
-          },
-          {
             "questionId": "Q1824907",
             "notionPageId": "3dfcf5a2-6731-814c-976d-cd76227e8412",
             "title": "BB 2021 — Operações em pilha",
-            "reasons": [
-              "unusable_options"
-            ]
-          },
-          {
-            "questionId": "Q2495477",
-            "notionPageId": "3dfcf5a2-6731-81a7-a2a2-c2b28a775a79",
-            "title": "CAIXA 2024 — Algoritmos de ordenação",
             "reasons": [
               "unusable_options"
             ]
@@ -56536,6 +56611,52 @@
             "updatedAt": "2026-09-22T18:44:00.000Z",
             "revision": 1,
             "contentHash": "090efe0030cf9fd0cbfd5b895ad0b25ce248d3835ef0c4ce1fcc81c6345fa9d2"
+          },
+          {
+            "questionId": "Q1824902",
+            "occurrenceId": "Q06-005",
+            "ordinal": 5,
+            "notionPageId": "3dfcf5a2-6731-81f5-ba58-dbbef8267d1c",
+            "setCode": "Q06",
+            "title": "BB 2021 — Busca sequencial otimizada",
+            "subject": "Algoritmos e Estrutura de Dados",
+            "topic": "Busca sequencial — sequência ordenada",
+            "exam": "BB 2021 — Agente de Tecnologia",
+            "board": "Cesgranrio",
+            "year": 2021,
+            "stem": "Busca-se a senha 52 da esquerda para a direita com busca sequencial otimizada. Em sequência crescente, a busca pode parar assim que encontra valor maior que 52; em sequência desordenada, não pode usar essa antecipação. Em qual alternativa o resultado é conhecido com o menor número de comparações?",
+            "optionsSummary": "A) crescente: 23, 45, 81, 97, 112, 138, 154 | B) crescente: 13, 25, 37, 44, 52, 78, 83, 91 | C) crescente: 17, 28, 32, 49, 67, 85, 94, 103 | D) desordenada: 27, 95, 148, 117, 33, 59, 52 | E) desordenada: 32, 48, 12, 55, 93, 27, 66",
+            "options": [
+              {
+                "key": "A",
+                "text": "crescente: 23, 45, 81, 97, 112, 138, 154"
+              },
+              {
+                "key": "B",
+                "text": "crescente: 13, 25, 37, 44, 52, 78, 83, 91"
+              },
+              {
+                "key": "C",
+                "text": "crescente: 17, 28, 32, 49, 67, 85, 94, 103"
+              },
+              {
+                "key": "D",
+                "text": "desordenada: 27, 95, 148, 117, 33, 59, 52"
+              },
+              {
+                "key": "E",
+                "text": "desordenada: 32, 48, 12, 55, 93, 27, 66"
+              }
+            ],
+            "answerText": "A",
+            "answerKey": "A",
+            "commentary": "A. Como a sequência A é crescente, as comparações são 23, 45 e 81. Ao encontrar 81>52, a busca encerra com segurança após 3 comparações. Em B são necessárias 5 para achar 52; em C são 5 para ultrapassá-la (67); em sequências desordenadas D/E não se pode encerrar só por encontrar valor maior.",
+            "sourceUrl": "https://www.qconcursos.com/questoes-de-concursos/provas/cesgranrio-2021-banco-do-brasil-agente-de-tecnologia/questoes?discipline_ids%5B%5D=98",
+            "sourceValidated": true,
+            "status": "Pronta para estudo",
+            "updatedAt": "2026-09-30T19:16:00.000Z",
+            "revision": 1,
+            "contentHash": "02a476fd30ce9425c97349ea92dbd628233916b12cf3b68082a7c4b0ea3e0521"
           },
           {
             "questionId": "Q1824903",
@@ -56733,7 +56854,7 @@
             "exam": "BB 2023 — Agente de Tecnologia",
             "board": "Cesgranrio",
             "year": 2023,
-            "stem": "Uma busca binária procura o valor 78 em um vetor ordenado com 14 elementos e imprime cada valor visitado. Qual sequência de elementos é visitada até concluir que o valor não está presente?",
+            "stem": "Considere o array ordenado [5, 18, 27, 33, 44, 49, 54, 67, 69, 72, 79, 86, 87, 92]. Uma busca binária procura o valor 78 e imprime cada elemento visitado. Qual sequência é exibida até concluir que 78 não está presente?",
             "optionsSummary": "A) 54, 79, 69, 72 | B) 49, 72, 86, 79 | C) 54, 86, 69, 72, 79 | D) 67, 86, 72, 79 | E) 54, 79, 67, 69, 72",
             "options": [
               {
@@ -56759,13 +56880,13 @@
             ],
             "answerText": "A — 54, 79, 69, 72",
             "answerKey": "A",
-            "commentary": "A cada passo, a busca reduz pela metade o intervalo. Com índices iniciais 0..13, visita 54, depois 79, depois 69 e por fim 72.",
+            "commentary": "A. Com intervalo inicial 0..13, o meio é índice 6 → 54. Como 78>54, busca 7..13; meio 10 → 79. Como 78<79, busca 7..9; meio 8 → 69. Como 78>69, busca 9..9; visita 72. Depois o intervalo fica vazio. Sequência: 54, 79, 69, 72.",
             "sourceUrl": "https://www.qconcursos.com/questoes-de-concursos/provas/cesgranrio-2023-banco-do-brasil-agente-de-tecnologia-microrregiao-158-ti/questoes?page=4",
             "sourceValidated": true,
             "status": "Pronta para estudo",
-            "updatedAt": "2026-09-22T18:44:00.000Z",
-            "revision": 1,
-            "contentHash": "41b82572a6065060cf7e9e58f16c2c1d1ff9a46df53b9fda51a1b0844002a818"
+            "updatedAt": "2026-09-30T19:16:00.000Z",
+            "revision": 2,
+            "contentHash": "e4c59b40209c96df57d0ec9093141f455c5fd60880a8c2f8353ad457e0dcc33c"
           },
           {
             "questionId": "Q2495369",
@@ -56860,6 +56981,52 @@
             "contentHash": "1dbf4bb5cc7796c2e558049380dd757e4e77987a34b869d9db55c10f66bedf27"
           },
           {
+            "questionId": "Q2495477",
+            "occurrenceId": "Q06-014",
+            "ordinal": 14,
+            "notionPageId": "3dfcf5a2-6731-81a7-a2a2-c2b28a775a79",
+            "setCode": "Q06",
+            "title": "CAIXA 2024 — Algoritmos de ordenação",
+            "subject": "Algoritmos e Estruturas de Dados",
+            "topic": "Insertion, Bubble e Selection Sort",
+            "exam": "CAIXA 2024 — TBN/TI",
+            "board": "Cesgranrio",
+            "year": 2024,
+            "stem": "A questão apresenta três descrições de algoritmos de ordenação: estabilidade, comparação repetida de vizinhos com trocas e construção progressiva de uma parte ordenada. É preciso associar cada característica ao algoritmo correspondente.",
+            "optionsSummary": "A) inserção, bolha, seleção | B) inserção, seleção, bolha | C) seleção, bolha, inserção | D) seleção, inserção, bolha | E) bolha, seleção, inserção",
+            "options": [
+              {
+                "key": "A",
+                "text": "inserção, bolha, seleção"
+              },
+              {
+                "key": "B",
+                "text": "inserção, seleção, bolha"
+              },
+              {
+                "key": "C",
+                "text": "seleção, bolha, inserção"
+              },
+              {
+                "key": "D",
+                "text": "seleção, inserção, bolha"
+              },
+              {
+                "key": "E",
+                "text": "bolha, seleção, inserção"
+              }
+            ],
+            "answerText": "A — inserção, bolha e seleção",
+            "answerKey": "A",
+            "commentary": "A. I corresponde ao método por inserção (estável); II descreve Bubble Sort, que compara e eventualmente troca elementos vizinhos repetidamente; III descreve Selection Sort, que mantém uma região ordenada e seleciona elementos da parte ainda não ordenada. Logo: inserção, bolha, seleção.",
+            "sourceUrl": "https://www.qconcursos.com/questoes-de-concursos/provas/cesgranrio-2024-caixa-tecnico-bancario-novo-tecnologia-da-informacao/questoes?discipline_ids%5B%5D=98",
+            "sourceValidated": true,
+            "status": "Pronta para estudo",
+            "updatedAt": "2026-09-30T19:16:00.000Z",
+            "revision": 1,
+            "contentHash": "e0e51d513dc8c6f038e4e52e7182f29efa6e66a5a5a6a6af3f57fa47bd71655c"
+          },
+          {
             "questionId": "Q3048813",
             "occurrenceId": "Q06-015",
             "ordinal": 15,
@@ -56906,13 +57073,13 @@
             "contentHash": "d030fe56ed5992b368c3f8468f745249ca350d38234191ad0f4b3a1da06e59cb"
           }
         ],
-        "revision": 1,
-        "contentHash": "680e5cdec1cf4e34858674af82dc930adddbc0599c7af8d1f3d68bf7d10ee986"
+        "revision": 2,
+        "contentHash": "dff7f1dab673bd6157f0bb1d09aef9b6bc204090ecf4882bafb81ca6a11d3aba"
       },
       "reviewCode": "R02",
       "reviewPageId": "3dfcf5a26731815ca529c2248038e987",
-      "revision": 1,
-      "contentHash": "35240857271a0e561fa1a2b77193c6ae636a800e166d519e7d6b8d2c718f621e"
+      "revision": 2,
+      "contentHash": "fd0ddbaa5690aace15a66a4b165ecaffe26d4d5a13e79e9513fc94ee50c45163"
     },
     {
       "code": "D07",
