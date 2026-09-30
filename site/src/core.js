@@ -41,12 +41,16 @@ export function scoreQuestionSet(items, answers = {}) {
   };
 }
 
-export function upsertError(current, question, selected, now = new Date().toISOString()) {
-  const count = (current?.errorCount || 0) + 1;
+export function upsertError(current, question, selected, now = new Date().toISOString(), attemptId = "") {
+  const attemptIds = Array.isArray(current?.attemptIds) ? [...new Set(current.attemptIds.map(String).filter(Boolean))] : [];
+  const hasAttemptId = typeof attemptId === "string" && attemptId.length > 0;
+  const firstErrorInAttempt = hasAttemptId && !attemptIds.includes(attemptId);
+  if (firstErrorInAttempt) attemptIds.push(attemptId);
+  const count = (Number(current?.errorCount) || 0) + (hasAttemptId ? Number(firstErrorInAttempt) : 1);
   const repeated = count > 1;
   return {
     questionId: question.questionId,
-    errorId: current?.errorId || `ERR-${question.questionId}`,
+    errorId: current?.errorId || "ERR-" + question.questionId,
     dayCode: question.dayCode,
     setCode: question.setCode,
     subject: question.subject || "",
@@ -60,6 +64,7 @@ export function upsertError(current, question, selected, now = new Date().toISOS
     firstErrorAt: current?.firstErrorAt || now,
     lastErrorAt: now,
     errorCount: count,
+    attemptIds,
     repeated,
     status: repeated ? "REPEATED" : (current?.status || "NEW_ERROR"),
     statusLabel: repeated ? "Reincidente" : (current?.statusLabel || "Novo erro"),
@@ -74,7 +79,6 @@ export function upsertError(current, question, selected, now = new Date().toISOS
     updatedAt: now
   };
 }
-
 export function calculateAnalytics(attempts = [], answers = [], sessions = [], studyDays = [], progress = []) {
   const totalAnswers = answers.length;
   const correct = answers.filter(answer => answer.isCorrect === true).length;
