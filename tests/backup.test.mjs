@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { validateBackup } from "../site/src/backup.js";
 import { STORE_KEYS } from "../site/src/storage.js";
-import { mergeIntoStores } from "../site/src/storage.js";
+import { deduplicateRecords, mergeIntoStores } from "../site/src/storage.js";
 
 const emptyStores = () => Object.fromEntries(Object.keys(STORE_KEYS).map(name => [name, []]));
 
@@ -28,4 +28,13 @@ test("backup rejects unsupported versions and records without stable keys", () =
   const value = { kind: "haba-study-os-backup", schemaVersion: 1, stores: emptyStores() };
   value.stores.errors.push({ note: "sem questionId" });
   assert.throws(() => validateBackup(value), /registros inválidos em errors/);
+});
+
+test("backup merge keeps the newest duplicate record regardless of file order", () => {
+  const rows = [
+    { questionId: "Q01-1", lastErrorAt: "2026-09-02T10:00:00Z", note: "mais recente" },
+    { questionId: "Q01-1", lastErrorAt: "2026-09-01T10:00:00Z", note: "antigo" }
+  ];
+  assert.deepEqual(deduplicateRecords(rows, "questionId"), [rows[0]]);
+  assert.deepEqual(deduplicateRecords([...rows].reverse(), "questionId"), [rows[0]]);
 });
