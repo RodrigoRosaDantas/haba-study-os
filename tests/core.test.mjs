@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {
-  buildMentorAdvice, calculateAnalytics, calculateComposition, getNextMission,
+  buildMentorAdvice, calculateAnalytics, calculateComposition, createQuestionSetSnapshot, getNextMission,
   mergeRecords, scoreQuestionSet, upsertError
 } from "../site/src/core.js";
 
@@ -70,6 +70,20 @@ test("Error Lab counts one wrong episode per attempt even when the selected opti
   assert.equal(retry.repeated, true);
   assert.equal(retry.status, "REPEATED");
   assert.deepEqual(retry.attemptIds, ["attempt-1", "attempt-2"]);
+});
+
+test("question set snapshots keep the exact editorial version used by an attempt", () => {
+  const day = {
+    code: "D01", title: "D01 · Redes", focus: "Redes", complementary: "Segurança",
+    cycle: "C01", week: 1, weekday: "Segunda", questionGoal: 2,
+    questionSet: { code: "Q01", contentHash: "rev-a", items: [{ questionId: "Q-1", stem: "Original" }] }
+  };
+  const snapshot = createQuestionSetSnapshot(day, "snapshot-x", "2026-09-30T10:00:00Z");
+  day.questionSet.items[0].stem = "Editado na fonte";
+  assert.equal(snapshot.entityId, "question-set:Q01:rev-a");
+  assert.equal(snapshot.questionVersion, "rev-a");
+  assert.equal(snapshot.questionSet.items[0].stem, "Original");
+  assert.equal(snapshot.daySnapshot.questionGoal, 2);
 });
 
 test("analytics represent no data as unknown and withhold thin trends", () => {
