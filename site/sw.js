@@ -1,8 +1,8 @@
-const SHELL_CACHE = "haba-study-os-shell-v7";
+const SHELL_CACHE = "haba-study-os-shell-v8";
 const CONTENT_CACHE = "haba-study-os-content-v2";
 const SHELL_FILES = [
-  "./", "./index.html", "./styles.css?v=6", "./manifest.webmanifest", "./icons/favicon.svg",
-  "./icons/icon-192.png", "./icons/icon-512.png", "./src/app.js?v=7", "./src/backup.js",
+  "./", "./index.html", "./styles.css?v=7", "./manifest.webmanifest", "./icons/favicon.svg",
+  "./icons/icon-192.png", "./icons/icon-512.png", "./src/app.js?v=8", "./src/backup.js",
   "./src/content.js", "./src/core.js", "./src/preferences.js", "./src/storage.js", "./src/ui.js"
 ];
 
