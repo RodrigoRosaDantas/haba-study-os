@@ -1,9 +1,9 @@
-const SHELL_CACHE = "haba-study-os-shell-v3";
+const SHELL_CACHE = "haba-study-os-shell-v4";
 const CONTENT_CACHE = "haba-study-os-content-v2";
 const SHELL_FILES = [
   "./", "./index.html", "./styles.css", "./manifest.webmanifest", "./icons/favicon.svg",
   "./icons/icon-192.png", "./icons/icon-512.png", "./src/app.js", "./src/backup.js",
-  "./src/content.js", "./src/core.js", "./src/preferences.js", "./src/storage.js", "./src/sync-queue.js", "./src/ui.js"
+  "./src/content.js", "./src/core.js", "./src/preferences.js", "./src/storage.js", "./src/ui.js"
 ];
 
 self.addEventListener("install", event => {
