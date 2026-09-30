@@ -3,21 +3,18 @@ import { readPreferences, savePreferences } from "./preferences.js";
 import { downloadBackup, restoreBackupText } from "./backup.js";
 import { escapeHtml, formatDate, formatDuration, renderBlocks, safeUrl, setLoadingError, toast } from "./ui.js";
 import {
-  getAllRecords, getRecord, putRecord, deleteRecord, updateErrorRecord
+  getAllRecords, getRecord, putRecord, updateErrorRecord
 } from "./storage.js";
 import {
   buildMentorAdvice, calculateAnalytics, getNextMission, scoreQuestionSet, upsertError
 } from "./core.js";
-import { deferFailedOperation, isQueueItemDue, isSameSyncOperation, millisecondsUntilQueueDue } from "./sync-queue.js";
 
 const root = document.getElementById("view-root");
 const state = { content: null, route: "today", parameter: "", questionIndex: null, currentDay: null, currentAttempt: null, preferences: readPreferences(), activeSession: null, timer: null, error: null };
 let deferredInstallPrompt = null;
 let readingSaveTimer = null;
-let errorSyncTimer = null;
-let errorSyncPromise = null;
-let errorSyncScheduleGeneration = 0;
 let questionStartedAt = Date.now();
+try { sessionStorage.removeItem("haba:sync-config"); } catch { /* Sessões privadas podem bloquear o sessionStorage. */ }
 const byId = id => document.getElementById(id);
 const e = value => escapeHtml(value ?? "");
 const localDateValue = value => value ? new Date(value).toLocaleString("sv-SE", { timeZone: "America/Sao_Paulo" }).replace(" ", "T").slice(0, 16) : "";
@@ -28,27 +25,6 @@ const missionReviews = () => state.content?.reviews || [];
 function routeFromHash() {
   const parts = location.hash.replace(/^#\/?/, "").split("/").filter(Boolean);
   return { route: parts[0] || "today", parameter: parts[1] || "", questionIndex: parts[2] === undefined ? null : Number(parts[2]) };
-}
-
-function readSyncConfig() {
-  try {
-    const value = JSON.parse(sessionStorage.getItem("haba:sync-config") || "{}");
-    return { endpoint: typeof value.endpoint === "string" ? value.endpoint : "", token: typeof value.token === "string" ? value.token : "" };
-  } catch { return { endpoint: "", token: "" }; }
-}
-
-function normalizeSyncEndpoint(endpoint) {
-  const parsed = new URL(endpoint);
-  const localDevelopment = ["localhost", "127.0.0.1"].includes(parsed.hostname) && location.hostname === parsed.hostname;
-  if (parsed.protocol !== "https:" && !(localDevelopment && parsed.protocol === "http:")) throw new Error("O endpoint deve usar HTTPS.");
-  if (parsed.username || parsed.password || parsed.search || parsed.hash || parsed.pathname !== "/") throw new Error("Informe somente a URL base do Worker, sem credenciais, parâmetros ou caminho.");
-  return parsed.href.replace(/\/+$/, "");
-}
-
-function saveSyncConfig(endpoint, token) {
-  const normalizedEndpoint = normalizeSyncEndpoint(endpoint);
-  if (!token || token.length < 24) throw new Error("A chave de acesso do backend precisa ter pelo menos 24 caracteres.");
-  sessionStorage.setItem("haba:sync-config", JSON.stringify({ endpoint: normalizedEndpoint, token }));
 }
 
 function openRoute(route, parameter = "") {
@@ -302,30 +278,16 @@ async function renderReviews(progress, errors) {
   root.innerHTML = `<div class="page-wrap">${heading("REVISION ENGINE", "Revisões oficiais + erros", "R01–R15 mantidas na sequência do Notion. Erros e reincidências continuam locais.")}<div class="review-calendar">${cards}</div><section class="panel revision-error-panel"><div class="section-head"><div><div class="eyebrow">ERROR LAB</div><h2>Erros para revisar</h2></div><button class="button button-quiet button-small" data-route="errors">Abrir caderno</button></div>${currentErrors.length ? currentErrors.slice(0, 8).map(error => `<div class="result-breakdown"><span>${e(error.questionId)} · ${e(error.topic || error.subject)}</span><span>${e(error.statusLabel || error.status)} <button class="inline-button" data-action="review-error" data-id="${e(error.questionId)}">Marcar em revisão</button></span></div>`).join("") : `<p class="muted">Nenhum erro local pendente.</p>`}</section></div>`;
 }
 
-function errorCard(error, queueItem = null) {
+function errorCard(error) {
   const statuses = ["NEW_ERROR", "REPEATED", "UNDER_REVIEW", "STABILIZING", "MASTERED"];
   const labels = { NEW_ERROR: "Novo erro", REPEATED: "Reincidente", UNDER_REVIEW: "Em revisão", STABILIZING: "Em consolidação", MASTERED: "Consolidado" };
-  const queueState = error.syncStatus === "SYNCED" && !queueItem
-    ? "sincronizado"
-    : queueItem?.attempts
-      ? `${queueItem.attempts} tentativa(s) · próxima em ${formatDate(queueItem.nextAttemptAt, true)}`
-      : "pendente · aguardando envio seguro";
-  const queueError = queueItem?.lastError ? ` · ${queueItem.lastError}` : "";
   return `<article class="error-card"><div class="error-card-top"><span class="tag ${error.status === "MASTERED" ? "tag-green" : error.repeated ? "tag-red" : "tag-amber"}">${e(labels[error.status] || error.statusLabel || "Novo erro")}</span><span class="mono">${e(error.questionId)}</span></div><h3>${e(error.title || error.topic || "Questão")}</h3><p>${e(error.dayCode)} · ${e(error.setCode)} · ${e(error.subject)} · ${e(error.topic)}</p><p>Marcada: <strong>${e(error.selected || "—")}</strong> · gabarito: <strong>${e(error.answerKey || "—")}</strong> · ${Number(error.errorCount || 0)} erro(s)</p>
-    <form class="error-edit-form" data-error-form="${e(error.questionId)}"><div class="error-card-grid"><div class="form-row"><label for="status-${e(error.questionId)}">Status</label><select class="field" id="status-${e(error.questionId)}" name="status">${statuses.map(status => `<option value="${status}" ${error.status === status ? "selected" : ""}>${labels[status]}</option>`).join("")}</select></div><div class="form-row"><label for="category-${e(error.questionId)}">Categoria</label><select class="field" id="category-${e(error.questionId)}" name="reasonCategory">${["Conteúdo", "Interpretação", "Distração", "Cálculo", "Confusão conceitual", "Chute"].map(value => `<option value="${e(value)}" ${error.reasonCategory === value ? "selected" : ""}>${e(value)}</option>`).join("")}</select></div></div><div class="error-card-grid"><div class="form-row"><label for="reason-${e(error.questionId)}">Motivo</label><textarea class="field" id="reason-${e(error.questionId)}" name="reason">${e(error.reason)}</textarea></div><div class="form-row"><label for="mnemonic-${e(error.questionId)}">Macete / correção</label><textarea class="field" id="mnemonic-${e(error.questionId)}" name="mnemonic">${e(error.mnemonic)}</textarea></div></div><div class="form-row"><label for="note-${e(error.questionId)}">Observação pessoal</label><textarea class="field" id="note-${e(error.questionId)}" name="note">${e(error.note)}</textarea></div><div class="form-row"><label for="next-review-${e(error.questionId)}">Próxima revisão</label><input class="field" id="next-review-${e(error.questionId)}" name="nextReviewAt" type="datetime-local" value="${e(localDateValue(error.nextReviewAt))}"></div><div class="error-card-actions"><span class="tiny">Primeiro erro ${e(formatDate(error.firstErrorAt))} · último ${e(formatDate(error.lastErrorAt))}</span><button class="button button-quiet button-small" type="submit">Salvar no dispositivo</button></div></form>
-    <div class="tiny sync-queue-state">Fila local: ${e(queueState)}${e(queueError)}</div></article>`;
+    <div class="tiny local-data-state">Salvo neste dispositivo · incluído no backup manual</div></article>`;
 }
 
-async function renderErrors(errors) {
+function renderErrors(errors) {
   const sorted = [...errors].sort((a, b) => Date.parse(b.lastErrorAt || b.updatedAt) - Date.parse(a.lastErrorAt || a.updatedAt));
-  const sync = readSyncConfig();
-  const queue = (await getAllRecords("sync_queue")).filter(item => item.status === "PENDING");
-  const queueByQuestion = new Map(queue.map(item => [item.entityId, item]));
-  const pending = queue.length;
-  const syncControl = sync.endpoint && sync.token
-    ? `<button class="button button-primary button-small" data-action="sync-errors">Sincronizar ${pending} pendência(s)</button>`
-    : `<span class="tag tag-amber">BACKEND NÃO CONFIGURADO</span>`;
-  root.innerHTML = `<div class="page-wrap">${heading("ERROR LAB", "Caderno de erros", "Um erro por Question ID. Tentativas, contadores e notas são salvos localmente.", syncControl)}<div class="notice notice-warning"><strong>${sync.token ? "Acesso de sincronização disponível nesta sessão." : "Sincronização com Notion ainda não conectada."}</strong><p>Erros e edições entram na fila local. O token de escrita do Notion permanece no backend; o navegador só envia operações ao endpoint HTTPS configurado. Sem endpoint e chave de sessão, nenhum dado sai deste dispositivo.</p><p>${pending} operação(ões) aguardam confirmação. A fila tenta novamente sozinha quando a conexão estiver disponível; você também pode pedir uma tentativa imediata.</p></div><div class="error-card-grid">${sorted.map(error => errorCard(error, queueByQuestion.get(error.questionId))).join("") || emptyState("Ainda não há erros", "Respostas incorretas entrarão automaticamente neste caderno.")}</div></div>`;
+  root.innerHTML = `<div class="page-wrap">${heading("ERROR LAB", "Caderno de erros", "Um erro por Question ID. Tentativas, contadores e notas são salvos localmente.")}<div class="notice notice-warning"><strong>Seus erros ficam neste dispositivo.</strong><p>O Error Lab não envia erros, notas ou revisões ao Notion. Exporte um backup manual para levar esses dados a outro dispositivo.</p></div><div class="error-card-grid">${sorted.map(error => errorCard(error)).join("") || emptyState("Ainda não há erros", "Respostas incorretas entrarão automaticamente neste caderno.")}</div></div>`;
 }
 
 async function renderAnalytics(progress, errors, attempts, sessions, answers) {
@@ -355,13 +317,11 @@ async function renderHistory(attempts, answers, sessions, progress) {
 
 async function renderSettings() {
   const prefs = state.preferences;
-  const sync = readSyncConfig();
-  const queueCount = (await getAllRecords("sync_queue")).filter(item => item.status === "PENDING").length;
   root.innerHTML = `<div class="page-wrap">${heading("CONFIGURAÇÕES", "Preferências e continuidade", "Preferências leves no localStorage; dados de estudo no IndexedDB.")}
     <div class="two-column"><section class="panel"><div class="panel-kicker">INTERFACE</div><form id="preferences-form"><div class="form-row"><label for="pref-theme">Tema</label><select class="field" id="pref-theme" name="theme"><option value="dark" ${prefs.theme === "dark" ? "selected" : ""}>Escuro</option><option value="light" ${prefs.theme === "light" ? "selected" : ""}>Claro</option></select></div><div class="form-row"><label for="pref-font">Tamanho de leitura</label><select class="field" id="pref-font" name="fontSize"><option value="normal" ${prefs.fontSize === "normal" ? "selected" : ""}>Normal</option><option value="large" ${prefs.fontSize === "large" ? "selected" : ""}>Grande</option></select></div><div class="form-row"><label for="pref-width">Largura de leitura</label><select class="field" id="pref-width" name="readerWidth"><option value="wide" ${prefs.readerWidth === "wide" ? "selected" : ""}>Ampla</option><option value="narrow" ${prefs.readerWidth === "narrow" ? "selected" : ""}>Estreita</option></select></div><label class="check-row"><input type="checkbox" name="focusMode" ${prefs.focusMode ? "checked" : ""}> Modo foco</label><button class="button button-primary" type="submit">Salvar preferências</button></form></section>
-    <section class="panel"><div class="panel-kicker">BACKUP LOCAL</div><p>Exportar ou mesclar sessões, respostas, progresso, erros, revisões e preferências. Os registros mais recentes vencem quando o mesmo ID aparece nos dois arquivos.</p><div class="settings-actions"><button class="button button-primary" data-action="export-backup">Exportar backup</button><label class="button button-quiet file-button">Restaurar backup<input type="file" id="backup-file" accept="application/json,.json" hidden></label></div><p class="tiny">Backup JSON · até 20 MB · compatibilidade schema ${1}</p></section>
+    <section class="panel"><div class="panel-kicker">BACKUP LOCAL</div><p>O backup inclui sessões, respostas, progresso, erros, revisões e preferências. Os registros mais recentes vencem quando o mesmo ID aparece nos dois arquivos. Erros e notas do Error Lab não são enviados ao Notion.</p><div class="settings-actions"><button class="button button-primary" data-action="export-backup">Exportar backup</button><label class="button button-quiet file-button">Restaurar backup<input type="file" id="backup-file" accept="application/json,.json" hidden></label></div><p class="tiny">Backup JSON · até 20 MB · compatibilidade schema ${1}</p></section>
     <section class="panel"><div class="panel-kicker">SINCRONIZAÇÃO EDITORIAL</div><p>Fonte: Notion · snapshot versionado: <code>${e(state.content.meta.contentVersion.slice(0, 12))}</code></p><p>Gerado ${e(formatDate(state.content.meta.generatedAt, true))} · fonte alterada ${e(formatDate(state.content.meta.sourceUpdatedAt, true))}</p><a class="button button-quiet" href="https://github.com/RodrigoRosaDantas/haba-study-os/actions/workflows/sync-notion.yml" target="_blank" rel="noopener noreferrer">Executar sincronização do Notion ↗</a></section>
-    <section class="panel"><div class="panel-kicker">SYNC DE ERROS · NOTION</div><p>Fila pendente: ${queueCount} operação(ões). A chave do navegador não é a credencial Notion; o backend precisa guardar uma integração separada com escrita.</p><form id="sync-config-form"><div class="form-row"><label for="sync-endpoint">Endpoint HTTPS do Worker</label><input class="field" id="sync-endpoint" name="endpoint" type="url" inputmode="url" autocomplete="url" placeholder="https://seu-worker.workers.dev" value="${e(sync.endpoint)}" required></div><div class="form-row"><label for="sync-token">Chave de acesso do backend ${sync.token ? "(deixe vazio para manter nesta sessão)" : ""}</label><input class="field" id="sync-token" name="token" type="password" autocomplete="new-password" placeholder="Não é o token do Notion" ${sync.token ? "" : "required"}></div><div class="settings-actions"><button class="button button-primary" type="submit">Salvar e sincronizar</button><button class="button button-quiet" type="button" data-action="clear-sync-config">Desconectar</button></div></form><p class="tiny">A chave fica no sessionStorage desta aba e não entra em backup nem localStorage. Se ainda não implantou o Worker, veja <code>backend/README.md</code>.</p><button class="button button-quiet" data-route="errors">Abrir Error Lab</button></section></div></div>`;
+    <section class="panel"><div class="panel-kicker">ERROR LAB LOCAL</div><p>Erros, tentativas, revisões e notas ficam no IndexedDB deste dispositivo. Use o backup para transportá-los. O Notion continua como fonte editorial somente de leitura.</p><button class="button button-quiet" data-route="errors">Abrir Error Lab</button></section></div></div>`;
 }
 
 function renderMore() {
@@ -445,164 +405,11 @@ async function stopStudySession() {
   await renderRoute();
 }
 
-async function enqueueErrorSync(error) {
-  const operationId = `ERROR-${error.questionId}`;
-  const previous = await getRecord("sync_queue", operationId);
-  const updatedAt = error.updatedAt || new Date().toISOString();
-  await putRecord("sync_queue", { operationId, entityId: error.questionId, entityType: "error", action: "upsert", payload: error, status: "PENDING", createdAt: previous?.createdAt || error.createdAt || updatedAt, updatedAt, attempts: 0, lastAttemptAt: null, lastError: "", nextAttemptAt: null });
-  scheduleErrorSync();
-}
-
 async function recordError(question, selected) {
   const current = await getRecord("errors", question.questionId);
-  let error = upsertError(current, question, selected);
-  error = { ...error, questionRevision: question.contentHash || "", notionPageId: question.notionPageId || "", syncStatus: "PENDING" };
+  const error = upsertError(current, question, selected);
   await putRecord("errors", error);
-  await enqueueErrorSync(error);
   return error;
-}
-
-async function scheduleErrorSync() {
-  const generation = ++errorSyncScheduleGeneration;
-  clearTimeout(errorSyncTimer);
-  const config = readSyncConfig();
-  if (!config.endpoint || !config.token || navigator.onLine === false) return;
-  const queue = await getAllRecords("sync_queue");
-  if (generation !== errorSyncScheduleGeneration) return;
-  const delay = millisecondsUntilQueueDue(queue);
-  if (delay === null) return;
-  errorSyncTimer = setTimeout(() => syncErrors({ quiet: true }), delay === 0 ? 1_200 : delay);
-}
-
-async function deferQueueOperation(attempted, reason) {
-  const current = await getRecord("sync_queue", attempted.operationId);
-  if (!isSameSyncOperation(current, attempted)) return;
-  await putRecord("sync_queue", deferFailedOperation(current, reason));
-}
-
-async function acknowledgeQueueOperation(attempted, operation) {
-  const queued = await getRecord("sync_queue", attempted.operationId);
-  if (queued && isSameSyncOperation(queued, attempted)) await deleteRecord("sync_queue", attempted.operationId);
-  const latestQueue = await getRecord("sync_queue", attempted.operationId);
-  const current = await getRecord("errors", attempted.entityId);
-  if (current && !latestQueue && current.updatedAt === attempted.payload?.updatedAt) {
-    await putRecord("errors", { ...current, syncStatus: "SYNCED", notionPageId: operation.notionPageId, notionUpdatedAt: operation.notionUpdatedAt, updatedAt: current.updatedAt });
-  }
-  return !latestQueue;
-}
-
-async function mergeRemoteErrors(records = []) {
-  for (const remote of records) {
-    if (!remote?.questionId) continue;
-    const local = await getRecord("errors", remote.questionId);
-    if (!local) {
-      await putRecord("errors", { ...remote, syncStatus: "SYNCED" });
-      continue;
-    }
-    const queueId = `ERROR-${remote.questionId}`;
-    const queued = await getRecord("sync_queue", queueId);
-    const remoteTime = Date.parse(remote.notionUpdatedAt || remote.updatedAt || "") || 0;
-    const localTime = Date.parse(local.updatedAt || local.lastErrorAt || "") || 0;
-    const localWins = Boolean(queued) || localTime > remoteTime;
-    const personal = localWins ? local : remote;
-    const count = Math.max(1, Number(local.errorCount) || Number(remote.errorCount) || 1);
-    const mastered = personal.status === "MASTERED";
-    const status = mastered ? "MASTERED" : count > 1 ? "REPEATED" : (personal.status || "NEW_ERROR");
-    const labels = { NEW_ERROR: "Novo erro", REPEATED: "Reincidente", UNDER_REVIEW: "Em revisão", STABILIZING: "Em consolidação", MASTERED: "Consolidado" };
-    const merged = {
-      ...remote,
-      ...local,
-      questionId: remote.questionId,
-      errorId: local.errorId || remote.errorId || `ERR-${remote.questionId}`,
-      subject: remote.subject || local.subject,
-      topic: remote.topic || local.topic,
-      board: remote.board || local.board,
-      dayCode: remote.dayCode || local.dayCode,
-      setCode: remote.setCode || local.setCode,
-      errorCount: local.errorCount || remote.errorCount || 1,
-      repeated: count > 1,
-      firstErrorAt: local.firstErrorAt || remote.firstErrorAt,
-      lastErrorAt: local.lastErrorAt || remote.lastErrorAt,
-      reasonCategory: personal.reasonCategory || "Conteúdo",
-      reason: personal.reason || "",
-      note: personal.note || "",
-      mnemonic: personal.mnemonic || "",
-      nextReviewAt: personal.nextReviewAt || null,
-      lastReviewedAt: personal.lastReviewedAt || remote.lastReviewedAt || null,
-      status,
-      statusLabel: labels[status] || personal.statusLabel || status,
-      updatedAt: localWins ? local.updatedAt : remote.updatedAt,
-      notionPageId: remote.notionPageId,
-      notionUpdatedAt: remote.notionUpdatedAt,
-      syncStatus: queued ? "PENDING" : "SYNCED"
-    };
-    await putRecord("errors", merged);
-  }
-}
-
-async function syncErrors({ quiet = false, force = false } = {}) {
-  if (errorSyncPromise) return errorSyncPromise;
-  errorSyncPromise = (async () => {
-    const config = readSyncConfig();
-    if (!config.endpoint || !config.token) {
-      if (!quiet) toast("Configure o endpoint HTTPS e a chave de acesso do backend em Configurações.");
-      return false;
-    }
-    if (navigator.onLine === false) {
-      if (!quiet) toast("Sem conexão. As operações continuam na fila local.");
-      return false;
-    }
-    let activeBatch = [];
-    try {
-      config.endpoint = normalizeSyncEndpoint(config.endpoint);
-      const now = Date.now();
-      const queue = (await getAllRecords("sync_queue")).filter(item => force ? item.status === "PENDING" : isQueueItemDue(item, now));
-      const batches = [];
-      for (let index = 0; index < queue.length; index += 10) batches.push(queue.slice(index, index + 10));
-      if (!batches.length) batches.push([]);
-      let remoteRecords = [];
-      let failed = 0;
-      let readWarning = "";
-      for (const batch of batches) {
-        activeBatch = batch;
-        const response = await fetch(`${config.endpoint}/api/errors/sync`, {
-          method: "POST",
-          mode: "cors",
-          credentials: "omit",
-          headers: { "Content-Type": "application/json", Authorization: `Bearer ${config.token}` },
-          body: JSON.stringify({ operations: batch.map(item => ({ operationId: item.operationId, action: "upsert", error: item.payload })) }),
-          signal: AbortSignal.timeout(25_000)
-        });
-        const result = await response.json().catch(() => ({}));
-        if (!response.ok) throw new Error(result.error || `Backend respondeu ${response.status}.`);
-        const results = new Map((result.results || []).map(operation => [operation.operationId, operation]));
-        for (const item of batch) {
-          const operation = results.get(item.operationId);
-          if (operation?.status === "SYNCED") {
-            if (!await acknowledgeQueueOperation(item, operation)) failed += 1;
-          } else {
-            await deferQueueOperation(item, operation?.status || "confirmação ausente");
-            failed += 1;
-          }
-        }
-        if (Array.isArray(result.records)) remoteRecords = result.records;
-        if (result.readWarning) readWarning = String(result.readWarning).slice(0, 180);
-        activeBatch = [];
-      }
-      await mergeRemoteErrors(remoteRecords);
-      if (!quiet) toast(failed ? `Sync parcial: ${failed} item(ns) aguardam nova tentativa.` : readWarning ? `Erros enviados; não foi possível atualizar a lista remota agora.` : `Sync concluído: ${remoteRecords.length} registro(s) recebidos do Notion.`);
-      await renderRoute();
-      scheduleErrorSync();
-      return failed === 0 && !readWarning;
-    } catch (error) {
-      for (const item of activeBatch) await deferQueueOperation(item, error.message || "falha de conexão");
-      if (!quiet) toast(`Sync pendente: ${error.message || "falha de conexão"}. A fila foi preservada.`);
-      scheduleErrorSync();
-      return false;
-    }
-  })();
-  try { return await errorSyncPromise; }
-  finally { errorSyncPromise = null; }
 }
 
 async function selectAnswer(questionId, selected) {
@@ -669,9 +476,8 @@ async function completeReview(code) {
 
 async function reviewError(questionId) {
   const now = new Date().toISOString();
-  const updated = await updateErrorRecord(questionId, current => ({ ...current, status: "UNDER_REVIEW", statusLabel: "Em revisão", lastReviewedAt: now, updatedAt: now, syncStatus: "PENDING" }));
-  await enqueueErrorSync(updated);
-  toast("Erro movido para Em revisão.");
+  await updateErrorRecord(questionId, current => ({ ...current, status: "UNDER_REVIEW", statusLabel: "Em revisão", lastReviewedAt: now, updatedAt: now }));
+  toast("Erro movido para Em revisão e salvo neste dispositivo.");
   await renderRoute();
 }
 
@@ -684,10 +490,9 @@ async function saveErrorForm(form) {
     const status = String(values.get("status") || current.status);
     const labels = { NEW_ERROR: "Novo erro", REPEATED: "Reincidente", UNDER_REVIEW: "Em revisão", STABILIZING: "Em consolidação", MASTERED: "Consolidado" };
     const reviewInput = String(values.get("nextReviewAt") || "");
-    return { ...current, status, statusLabel: labels[status] || status, reasonCategory: String(values.get("reasonCategory") || "Conteúdo"), reason: String(values.get("reason") || ""), mnemonic: String(values.get("mnemonic") || ""), note: String(values.get("note") || ""), nextReviewAt: reviewInput ? new Date(reviewInput).toISOString() : null, updatedAt: now, syncStatus: "PENDING" };
+    return { ...current, status, statusLabel: labels[status] || status, reasonCategory: String(values.get("reasonCategory") || "Conteúdo"), reason: String(values.get("reason") || ""), mnemonic: String(values.get("mnemonic") || ""), note: String(values.get("note") || ""), nextReviewAt: reviewInput ? new Date(reviewInput).toISOString() : null, updatedAt: now };
   });
-  await enqueueErrorSync(updated);
-  toast("Alterações salvas no dispositivo e na fila local.");
+  toast("Alterações salvas neste dispositivo. Exporte um backup para levá-las a outro dispositivo.");
   await renderRoute();
 }
 
@@ -740,8 +545,6 @@ async function onClick(event) {
     else if (action === "review-error") await reviewError(button.dataset.id);
     else if (action === "resume-reading") window.scrollTo({ top: Number(button.dataset.scroll) || 0, behavior: "smooth" });
     else if (action === "export-backup") await exportBackup();
-    else if (action === "sync-errors") await syncErrors({ force: true });
-    else if (action === "clear-sync-config") { sessionStorage.removeItem("haba:sync-config"); ++errorSyncScheduleGeneration; clearTimeout(errorSyncTimer); toast("Conexão do backend removida desta sessão."); await renderRoute(); }
     else if (action === "set-focus") { state.preferences = savePreferences({ focusMode: !state.preferences.focusMode }); await renderRoute(); }
   } catch (error) { toast(error.message || "A ação não foi concluída."); }
 }
@@ -749,16 +552,7 @@ async function onClick(event) {
 async function onSubmit(event) {
   const form = event.target;
   if (!(form instanceof HTMLFormElement)) return;
-  if (form.id === "sync-config-form") {
-    event.preventDefault();
-    try {
-      const values = new FormData(form);
-      const token = String(values.get("token") || readSyncConfig().token);
-      saveSyncConfig(String(values.get("endpoint") || ""), token);
-      toast("Endpoint e chave salvos nesta sessão.");
-      await syncErrors({ force: true });
-    } catch (error) { toast(error.message || "Configuração de sincronização inválida."); }
-  } else if (form.id === "preferences-form") {
+  if (form.id === "preferences-form") {
     event.preventDefault();
     const values = new FormData(form);
     state.preferences = savePreferences({ theme: values.get("theme"), fontSize: values.get("fontSize"), readerWidth: values.get("readerWidth"), focusMode: values.get("focusMode") === "on" });
@@ -794,7 +588,7 @@ document.addEventListener("click", onClick);
 document.addEventListener("submit", onSubmit);
 document.addEventListener("change", onChange);
 window.addEventListener("hashchange", () => { renderRoute(); });
-window.addEventListener("online", () => { renderRoute(); scheduleErrorSync(); });
+window.addEventListener("online", () => renderRoute());
 window.addEventListener("offline", () => renderRoute());
 
 async function initialize() {
@@ -819,7 +613,6 @@ async function initialize() {
     state.activeSession = sessions.filter(item => item.status === "IN_PROGRESS").sort((a, b) => Date.parse(b.startedAt) - Date.parse(a.startedAt))[0] || null;
     if (state.activeSession) startSessionClock();
     await renderRoute();
-    scheduleErrorSync();
   } catch (error) {
     setLoadingError(root, error.message || "Falha ao carregar o snapshot de conteúdo.");
   }
