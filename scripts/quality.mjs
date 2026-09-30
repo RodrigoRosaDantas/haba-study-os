@@ -51,6 +51,10 @@ for (const workflow of workflows) {
 }
 if (allWorkflows) ok("arquivos dos quatro workflows presentes");
 
+const notionWorkflow = await readFile(resolve(root, ".github/workflows/sync-notion.yml"), "utf8");
+if (!notionWorkflow.includes("git fetch origin main") || !notionWorkflow.includes("git rebase origin/main")) fail("sync editorial precisa rebasear o snapshot gerado antes do push");
+else ok("sync editorial integra alterações concorrentes antes do push");
+
 const sourceFiles = [
   "scripts/notion-sync-lib.mjs", "scripts/sync-notion.mjs", "scripts/quality.mjs", "backend/worker.mjs",
   "site/src/app.js", "site/src/backup.js", "site/src/content.js", "site/src/core.js",

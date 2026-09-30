@@ -3,8 +3,10 @@ name: Sync Notion content
 on:
   push:
     branches: [main]
-    paths-ignore:
-      - site/data/content.json
+    paths:
+      - .github/workflows/sync-notion.yml
+      - scripts/notion-sync-lib.mjs
+      - scripts/sync-notion.mjs
   workflow_dispatch:
   repository_dispatch:
     types: [notion-content-updated]
@@ -50,5 +52,7 @@ jobs:
             echo "Snapshot sem alteração editorial; nada para publicar."
           else
             git commit -m "chore(content): sync validated Notion snapshot"
+            git fetch origin main
+            git rebase origin/main
             git push origin HEAD:main
           fi
