@@ -1,0 +1,54 @@
+name: Sync Notion content
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - site/data/content.json
+  workflow_dispatch:
+  repository_dispatch:
+    types: [notion-content-updated]
+  workflow_call:
+    secrets:
+      HABA_STUDY_OS_LEITURA:
+        required: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: notion-content-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      HABA_STUDY_OS_LEITURA: ${{ secrets.HABA_STUDY_OS_LEITURA }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          ref: main
+      - name: Set up Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: 22
+      - name: Validate application
+        run: |
+          npm test
+          npm run quality
+      - name: Fetch, normalize, and validate Notion content
+        run: node scripts/sync-notion.mjs
+      - name: Commit snapshot only when content changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f site/data/content.json
+          if git diff --cached --quiet; then
+            echo "Snapshot sem alteração editorial; nada para publicar."
+          else
+            git commit -m "chore(content): sync validated Notion snapshot"
+            git push origin HEAD:main
+          fi
