@@ -430,13 +430,12 @@ async function stopStudySession() {
   await renderRoute();
 }
 
-async function recordError(question, selected) {
+async function recordError(question, selected, attemptId) {
   const current = await getRecord("errors", question.questionId);
-  const error = upsertError(current, question, selected);
+  const error = upsertError(current, question, selected, undefined, attemptId);
   await putRecord("errors", error);
   return error;
 }
-
 async function selectAnswer(questionId, selected) {
   const day = state.currentDay;
   const attempt = state.currentAttempt;
@@ -457,7 +456,7 @@ async function selectAnswer(questionId, selected) {
     history, answeredAt: now, updatedAt: now, attemptNumber: attempt.attemptNumber
   };
   await putRecord("question_answers", response);
-  if (!isCorrect) await recordError({ ...question, dayCode: day.code, setCode: question.setCode, cycle: day.cycle, week: day.week }, selected);
+  if (!isCorrect) await recordError({ ...question, dayCode: day.code, setCode: question.setCode, cycle: day.cycle, week: day.week }, selected, attempt.attemptId);
   const questionIndex = day.questionSet.items.findIndex(item => item.questionId === questionId);
   state.questionIndex = questionIndex;
   history.replaceState(null, "", `#questions/${encodeURIComponent(day.questionSet.code)}/${questionIndex}`);
