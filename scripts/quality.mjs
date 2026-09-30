@@ -33,15 +33,19 @@ else ok("shell HTML e entrypoint");
 if (/@import\s+url\(/i.test(css)) fail("CSS contém import remoto");
 else ok("CSS sem dependência externa");
 if (/style-src[^;]*unsafe-inline/i.test(html) || /\bstyle\s*=|\.style\./i.test(`${html}\n${app}`)) fail("shell usa estilo inline incompatível com a CSP");
-if (!html.includes("https://*.workers.dev") || !html.includes("script-src 'self'")) fail("CSP não permite o Worker configurável ou enfraquece scripts");
-else ok("CSP para script próprio e backend HTTPS");
-if (!sw.includes("haba-study-os-shell-v3") || !sw.includes("./src/sync-queue.js") || !sw.includes("haba-study-os-content-v2") || !sw.includes("networkFirstContent") || !sw.includes("SKIP_WAITING") || !sw.includes("candidate?.schemaVersion === 2") || !sw.includes("candidate.studyDays.length === 75")) fail("service worker deve cachear o shell v3, incluir os módulos offline, validar o schema 2 e esperar atualização explícita");
+if (!html.includes("connect-src 'self'") || html.includes("workers.dev") || !html.includes("script-src 'self'")) fail("CSP deve limitar conexões à própria origem e manter scripts locais");
+else ok("CSP com conexões locais e scripts próprios");
+if (/sync-config-form|sync-errors|api\/errors\/sync|fetch\s*\(/i.test(app) || !/não envia erros, notas ou revisões ao Notion/i.test(app)) fail("Error Lab deve permanecer local e sem endpoint de envio");
+else ok("Error Lab local, sem envio ao Notion");
+if (!sw.includes("haba-study-os-shell-v4") || sw.includes("./src/sync-queue.js") || !sw.includes("haba-study-os-content-v2") || !sw.includes("networkFirstContent") || !sw.includes("SKIP_WAITING") || !sw.includes("candidate?.schemaVersion === 2") || !sw.includes("candidate.studyDays.length === 75")) fail("service worker deve cachear o shell v4, incluir os módulos offline, validar o schema 2 e esperar atualização explícita");
 else ok("service worker offline e atualização controlada");
 
-const requiredStores = ["study_sessions", "question_attempts", "question_answers", "errors", "revisions", "progress", "reading_progress", "sync_queue", "content_versions", "backups"];
+const requiredStores = ["study_sessions", "question_attempts", "question_answers", "errors", "revisions", "progress", "reading_progress", "content_versions", "backups"];
 const storage = await readFile(resolve(root, "site/src/storage.js"), "utf8");
 for (const store of requiredStores) if (!storage.includes(`${store}:`)) fail(`IndexedDB sem store ${store}`);
 if (requiredStores.every(store => storage.includes(`${store}:`))) ok("stores operacionais IndexedDB");
+if (!storage.includes("DB_VERSION = 2") || !storage.includes('deleteObjectStore("sync_queue")')) fail("migração deve remover a fila antiga de envio sem apagar os registros locais de erros");
+else ok("migração local remove apenas a fila antiga de envio");
 
 const workflows = ["quality.yml", "sync-notion.yml", "deploy-pages.yml", "scheduled-sync.yml"];
 let allWorkflows = true;
@@ -56,9 +60,9 @@ if (!notionWorkflow.includes("git fetch origin main") || !notionWorkflow.include
 else ok("sync editorial integra alterações concorrentes antes do push");
 
 const sourceFiles = [
-  "scripts/notion-sync-lib.mjs", "scripts/sync-notion.mjs", "scripts/quality.mjs", "backend/worker.mjs",
+  "scripts/notion-sync-lib.mjs", "scripts/sync-notion.mjs", "scripts/quality.mjs",
   "site/src/app.js", "site/src/backup.js", "site/src/content.js", "site/src/core.js",
-  "site/src/preferences.js", "site/src/storage.js", "site/src/sync-queue.js", "site/src/ui.js", "site/sw.js"
+  "site/src/preferences.js", "site/src/storage.js", "site/src/ui.js", "site/sw.js"
 ];
 for (const file of sourceFiles) {
   const result = spawnSync(process.execPath, ["--check", resolve(root, file)], { encoding: "utf8" });
