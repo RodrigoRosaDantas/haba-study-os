@@ -301,7 +301,8 @@ async function renderQuestions(progress = []) {
   state.currentDay = day;
   state.currentAttempt = session.attempt;
   const answeredMap = Object.fromEntries(session.answers.map(answer => [answer.questionId, answer.selected]));
-  const completed = session.attempt.completedAt;  if (completed) {
+  const completed = session.attempt.completedAt;
+  if (completed) {
     const historicalItems = session.answers.map(answer => ({ questionId: answer.questionId, answerKey: answer.answerKey }));
     const calculated = scoreQuestionSet(historicalItems, answeredMap);
     const historicalTotal = Math.max(calculated.total, Number(session.attempt.availableQuestionCount) || 0);
