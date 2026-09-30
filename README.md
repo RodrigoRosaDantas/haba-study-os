@@ -7,7 +7,7 @@ Study OS local-first para a trilha BB + CAIXA TI do Habacuque, publicado como si
 - **Notion:** fonte editorial. A sequência vem de `Estudo dia a dia — D01 a D75 | Habacuque`, ordenada por `Ordem`; revisões e descansos vêm da `Trilha semanal oficial — C01 a C05`.
 - **GitHub Actions:** busca o Notion com a credencial somente leitura `HABA_STUDY_OS_LEITURA`, valida o conteúdo e atualiza `site/data/content.json` de forma atômica.
 - **GitHub Pages:** publica a aplicação estática. Nenhuma resposta, erro, sessão ou progresso pessoal é publicado.
-- **IndexedDB:** sessões, tentativas, respostas, progresso, erros, revisões, fila de sincronização e backups.
+- **IndexedDB:** sessões, tentativas, respostas, progresso, erros, revisões e backups.
 - **localStorage:** apenas preferências de interface.
 
 ## Desenvolvimento local
@@ -28,15 +28,9 @@ No GitHub, configure o segredo `HABA_STUDY_OS_LEITURA` com o token da integraç�
 
 O botão de atualização do app abre esse workflow para execução manual. A sincronização agendada roda a cada seis horas.
 
-## Escrita de erros no Notion
+## Dados pessoais do Error Lab
 
-Tentativas, erros e observações funcionam localmente. O backend em `backend/worker.mjs` implementa leitura e upsert autenticados no banco existente **Caderno de erros — Habacuque**; ele não altera o schema do Notion. O navegador envia dados somente depois que um endpoint HTTPS e sua chave de acesso forem configurados nesta sessão.
-
-O Worker ainda precisa ser implantado com uma integração Notion separada que tenha permissão de escrita no Caderno de erros. A integração `HABA_STUDY_OS_LEITURA` continua restrita ao GitHub Actions e nunca é usada para escrever. Instruções e variáveis necessárias estão em [`backend/README.md`](backend/README.md). Sem o Worker configurado, a fila permanece no IndexedDB e entra no backup.
-
-Quando uma tentativa falha, a operação continua na fila e recebe nova tentativa automática com espera crescente, até seis horas entre tentativas. Se uma edição mais recente ocorrer enquanto a anterior está sendo enviada, a confirmação antiga não remove a versão nova da fila. O Error Lab mostra o estado e o horário da próxima tentativa; o botão permite tentar imediatamente.
-
-O token de escrita do Notion fica em segredo do Worker. A chave de acesso do Worker fica apenas no `sessionStorage` da aba; não entra no localStorage, IndexedDB ou backup. O endpoint valida origem, autenticação, tamanho do payload, formato dos IDs, deduplicação e limite por IP.
+Erros, revisões, motivos, macetes e observações ficam somente no IndexedDB do dispositivo atual. Eles não são enviados ao Notion nem publicados no GitHub Pages. Para levar os registros a outro dispositivo, exporte e restaure o backup JSON em **Configurações**. A sincronização do Notion continua restrita à leitura de conteúdo editorial pelo GitHub Actions.
 
 ## Publicação
 

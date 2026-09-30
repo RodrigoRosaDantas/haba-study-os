@@ -330,7 +330,7 @@ body.large-type { --reader-size: 1.12rem; }
 .inline-button { margin-left: 5px; padding: 3px 6px; border: 1px solid var(--line); border-radius: 6px; background: transparent; color: var(--cyan); cursor: pointer; font-size: .62rem; }
 .error-card-top, .error-card-actions { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
 .error-card-actions { margin-top: 10px; }
-.sync-queue-state { margin-top: 12px; color: var(--amber); }
+.local-data-state { margin-top: 12px; color: var(--muted); }
 .revision-error-panel { margin-top: 18px; }
 .page-heading { align-items: start; }
 .page-heading h1 { overflow-wrap: anywhere; }

@@ -70,7 +70,6 @@ export function upsertError(current, question, selected, now = new Date().toISOS
     nextReviewAt: current?.nextReviewAt || null,
     lastReviewedAt: current?.lastReviewedAt || null,
     source: "HABA Study OS · execução local",
-    syncStatus: current?.syncStatus || "PENDING",
     createdAt: current?.createdAt || now,
     updatedAt: now
   };
