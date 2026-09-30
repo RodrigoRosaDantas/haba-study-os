@@ -2,11 +2,11 @@
   "schemaVersion": 2,
   "rootPageId": "3dfcf5a2-6731-8119-9194-d4ab2ed5c26d",
   "meta": {
-    "generatedAt": "2026-09-30T19:25:47.628Z",
+    "generatedAt": "2026-09-30T19:43:38.518Z",
     "sourceUpdatedAt": "2026-09-30T19:17:00.000Z",
     "source": "Notion · HABA Study OS",
     "sourceRootUrl": "https://www.notion.so/3dfcf5a2673181199194d4ab2ed5c26d",
-    "contentVersion": "c18d45bbdd585eb3a45d023e9a796aa1e5debb993671382d6b9ebb4cf4582a7a",
+    "contentVersion": "9da601b85b453a76686eb6eb70d2d0b9f44954a0e16bd5fe1cc29cae9c881fa6",
     "counts": {
       "studyDays": 75,
       "reviews": 15,
@@ -9689,11 +9689,11 @@
               },
               {
                 "key": "B",
-                "text": "if (saldo < retirada) { aviso(\"Saldo insuficiente.\")"
+                "text": "if (saldo < retirada) { aviso(\"Saldo insuficiente.\"); }"
               },
               {
                 "key": "C",
-                "text": "if ($saldo < $retirada) { aviso << \"Saldo insuficiente.\""
+                "text": "if ($saldo < $retirada) { aviso << \"Saldo insuficiente.\"; }"
               },
               {
                 "key": "D",
@@ -9701,7 +9701,7 @@
               },
               {
                 "key": "E",
-                "text": "if saldo < retirada then begin aviso('Saldo insuficiente.')"
+                "text": "if saldo < retirada then begin aviso('Saldo insuficiente.'); end;"
               }
             ],
             "answerText": "B — if (saldo < retirada) { ... }",
@@ -9711,8 +9711,8 @@
             "sourceValidated": true,
             "status": "Pronta para estudo",
             "updatedAt": "2026-09-30T19:16:00.000Z",
-            "revision": 2,
-            "contentHash": "599d740cfb13c98e5bacd9eb741894c4a1399b4ebefabc9e539343baf8c0fec8"
+            "revision": 3,
+            "contentHash": "8a99a2ca7b00e092b60fa43b72e7a5ea0be333c1d0428b3fa70db39b82e68fcf"
           },
           {
             "questionId": "Q3048782",
@@ -9915,23 +9915,23 @@
             "options": [
               {
                 "key": "A",
-                "text": "import numpy as np"
+                "text": "import numpy as np; m=np.matrix('1 2 3 4 5 6 7 8 9'); print(m); print(m.max())"
               },
               {
                 "key": "B",
-                "text": "import numpy as np"
+                "text": "import numpy as np; m=np.matrix('1 2 3;4 5 6;7 8 9'); print(m); print(m.mean())"
               },
               {
                 "key": "C",
-                "text": "m=matrix('1 2 3"
+                "text": "m=matrix('1 2 3;4 5 6;7 8 9'); print(m); print(m.std())"
               },
               {
                 "key": "D",
-                "text": "m=[[1,2,3],[4,5,6],[7,8,9]]"
+                "text": "m=[[1,2,3],[4,5,6],[7,8,9]]; print(m); import numpy as np; print(m.mean())"
               },
               {
                 "key": "E",
-                "text": "m=[1,2,3,4,5,6,7,8,9]"
+                "text": "m=[1,2,3,4,5,6,7,8,9]; print(m); print(soma manual dos nove itens)"
               }
             ],
             "answerText": "B — np.matrix('1 2 3;4 5 6;7 8 9') e m.mean()",
@@ -9941,17 +9941,17 @@
             "sourceValidated": true,
             "status": "Pronta para estudo",
             "updatedAt": "2026-09-30T19:16:00.000Z",
-            "revision": 2,
-            "contentHash": "6bf1322a07e8690421c65ba14d39f7cba4f286cb15971677db5bd6f3dc79a2ec"
+            "revision": 3,
+            "contentHash": "074b69af085bf930e02880525ec8bbb52efecf6a4e7b78051345932f4843c5ac"
           }
         ],
-        "revision": 2,
-        "contentHash": "0ad635e92a20ef8c82c92345ea45736c4280be4a3ab5fc810b199991475411b8"
+        "revision": 3,
+        "contentHash": "208bd2695100fa914da6001b3e4bf8b8fca63c27c36017a943a4dcc434162b89"
       },
       "reviewCode": "R01",
       "reviewPageId": "3dfcf5a2673181369e09cd5716d2eae0",
-      "revision": 2,
-      "contentHash": "7e2911d2d79640e9749cadc2590b85b57a2618567c376f6567fca186fd7494b5"
+      "revision": 3,
+      "contentHash": "1ca12c65264980c94eb393010f651b97c0fc7aa53025a7db9913ef09b2e711f7"
     },
     {
       "code": "D02",
@@ -78615,7 +78615,7 @@
             "options": [
               {
                 "key": "A",
-                "text": "Scrum usa iterações temporais fixas"
+                "text": "Scrum usa iterações temporais fixas; Kanban não exige timebox fixo"
               },
               {
                 "key": "B",
@@ -78629,8 +78629,8 @@
             "sourceValidated": true,
             "status": "Pronta para estudo",
             "updatedAt": "2026-09-22T20:00:00.000Z",
-            "revision": 1,
-            "contentHash": "b80228a9cf7eb8254902bd3a59f5c56829cb25ca26e39e1eec401eca62f65bb8"
+            "revision": 2,
+            "contentHash": "bbdf8ebbd9a2fe027d95d893846fe6035e4a33ddc308a38cd3466d2e8c3e1a1f"
           },
           {
             "questionId": "Q2495351",
@@ -79047,13 +79047,13 @@
             "contentHash": "93d5b8d1aabc860143880bd1baba7a1a301be1741379970b7f9317188c64e824"
           }
         ],
-        "revision": 1,
-        "contentHash": "969739d9a9221ea70043001abaa8f1b51b24fd67803ea63c9c61066e0aa90500"
+        "revision": 2,
+        "contentHash": "c35621370a87c31bc549b93cf2be47033930df350655c93efd387558fe5e35dc"
       },
       "reviewCode": "R02",
       "reviewPageId": "3dfcf5a26731815ca529c2248038e987",
-      "revision": 1,
-      "contentHash": "e2e020472b4ecfa747feca40024de1c1c08673d235caa7696f4600ff957eb21d"
+      "revision": 2,
+      "contentHash": "07ee8223099c18e2808d49157d24720264582318ac8d7b92a0093d2b437f33b5"
     },
     {
       "code": "D09",
