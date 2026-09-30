@@ -8,6 +8,7 @@ import {
 import {
   buildMentorAdvice, calculateAnalytics, getNextMission, scoreQuestionSet, upsertError
 } from "./core.js";
+import { deferFailedOperation, isQueueItemDue, isSameSyncOperation, millisecondsUntilQueueDue } from "./sync-queue.js";
 
 const root = document.getElementById("view-root");
 const state = { content: null, route: "today", parameter: "", questionIndex: null, currentDay: null, currentAttempt: null, preferences: readPreferences(), activeSession: null, timer: null, error: null };
@@ -15,6 +16,7 @@ let deferredInstallPrompt = null;
 let readingSaveTimer = null;
 let errorSyncTimer = null;
 let errorSyncPromise = null;
+let errorSyncScheduleGeneration = 0;
 let questionStartedAt = Date.now();
 const byId = id => document.getElementById(id);
 const e = value => escapeHtml(value ?? "");
@@ -300,22 +302,30 @@ async function renderReviews(progress, errors) {
   root.innerHTML = `<div class="page-wrap">${heading("REVISION ENGINE", "Revisões oficiais + erros", "R01–R15 mantidas na sequência do Notion. Erros e reincidências continuam locais.")}<div class="review-calendar">${cards}</div><section class="panel revision-error-panel"><div class="section-head"><div><div class="eyebrow">ERROR LAB</div><h2>Erros para revisar</h2></div><button class="button button-quiet button-small" data-route="errors">Abrir caderno</button></div>${currentErrors.length ? currentErrors.slice(0, 8).map(error => `<div class="result-breakdown"><span>${e(error.questionId)} · ${e(error.topic || error.subject)}</span><span>${e(error.statusLabel || error.status)} <button class="inline-button" data-action="review-error" data-id="${e(error.questionId)}">Marcar em revisão</button></span></div>`).join("") : `<p class="muted">Nenhum erro local pendente.</p>`}</section></div>`;
 }
 
-function errorCard(error) {
+function errorCard(error, queueItem = null) {
   const statuses = ["NEW_ERROR", "REPEATED", "UNDER_REVIEW", "STABILIZING", "MASTERED"];
   const labels = { NEW_ERROR: "Novo erro", REPEATED: "Reincidente", UNDER_REVIEW: "Em revisão", STABILIZING: "Em consolidação", MASTERED: "Consolidado" };
+  const queueState = error.syncStatus === "SYNCED" && !queueItem
+    ? "sincronizado"
+    : queueItem?.attempts
+      ? `${queueItem.attempts} tentativa(s) · próxima em ${formatDate(queueItem.nextAttemptAt, true)}`
+      : "pendente · aguardando envio seguro";
+  const queueError = queueItem?.lastError ? ` · ${queueItem.lastError}` : "";
   return `<article class="error-card"><div class="error-card-top"><span class="tag ${error.status === "MASTERED" ? "tag-green" : error.repeated ? "tag-red" : "tag-amber"}">${e(labels[error.status] || error.statusLabel || "Novo erro")}</span><span class="mono">${e(error.questionId)}</span></div><h3>${e(error.title || error.topic || "Questão")}</h3><p>${e(error.dayCode)} · ${e(error.setCode)} · ${e(error.subject)} · ${e(error.topic)}</p><p>Marcada: <strong>${e(error.selected || "—")}</strong> · gabarito: <strong>${e(error.answerKey || "—")}</strong> · ${Number(error.errorCount || 0)} erro(s)</p>
     <form class="error-edit-form" data-error-form="${e(error.questionId)}"><div class="error-card-grid"><div class="form-row"><label for="status-${e(error.questionId)}">Status</label><select class="field" id="status-${e(error.questionId)}" name="status">${statuses.map(status => `<option value="${status}" ${error.status === status ? "selected" : ""}>${labels[status]}</option>`).join("")}</select></div><div class="form-row"><label for="category-${e(error.questionId)}">Categoria</label><select class="field" id="category-${e(error.questionId)}" name="reasonCategory">${["Conteúdo", "Interpretação", "Distração", "Cálculo", "Confusão conceitual", "Chute"].map(value => `<option value="${e(value)}" ${error.reasonCategory === value ? "selected" : ""}>${e(value)}</option>`).join("")}</select></div></div><div class="error-card-grid"><div class="form-row"><label for="reason-${e(error.questionId)}">Motivo</label><textarea class="field" id="reason-${e(error.questionId)}" name="reason">${e(error.reason)}</textarea></div><div class="form-row"><label for="mnemonic-${e(error.questionId)}">Macete / correção</label><textarea class="field" id="mnemonic-${e(error.questionId)}" name="mnemonic">${e(error.mnemonic)}</textarea></div></div><div class="form-row"><label for="note-${e(error.questionId)}">Observação pessoal</label><textarea class="field" id="note-${e(error.questionId)}" name="note">${e(error.note)}</textarea></div><div class="form-row"><label for="next-review-${e(error.questionId)}">Próxima revisão</label><input class="field" id="next-review-${e(error.questionId)}" name="nextReviewAt" type="datetime-local" value="${e(localDateValue(error.nextReviewAt))}"></div><div class="error-card-actions"><span class="tiny">Primeiro erro ${e(formatDate(error.firstErrorAt))} · último ${e(formatDate(error.lastErrorAt))}</span><button class="button button-quiet button-small" type="submit">Salvar no dispositivo</button></div></form>
-    <div class="tiny sync-queue-state">Fila de sincronização: ${e(error.syncStatus === "SYNCED" ? "sincronizado" : "pendente · aguardando confirmação do backend")}</div></article>`;
+    <div class="tiny sync-queue-state">Fila local: ${e(queueState)}${e(queueError)}</div></article>`;
 }
 
 async function renderErrors(errors) {
   const sorted = [...errors].sort((a, b) => Date.parse(b.lastErrorAt || b.updatedAt) - Date.parse(a.lastErrorAt || a.updatedAt));
   const sync = readSyncConfig();
-  const pending = (await getAllRecords("sync_queue")).filter(item => item.status === "PENDING").length;
+  const queue = (await getAllRecords("sync_queue")).filter(item => item.status === "PENDING");
+  const queueByQuestion = new Map(queue.map(item => [item.entityId, item]));
+  const pending = queue.length;
   const syncControl = sync.endpoint && sync.token
     ? `<button class="button button-primary button-small" data-action="sync-errors">Sincronizar ${pending} pendência(s)</button>`
     : `<span class="tag tag-amber">BACKEND NÃO CONFIGURADO</span>`;
-  root.innerHTML = `<div class="page-wrap">${heading("ERROR LAB", "Caderno de erros", "Um erro por Question ID. Tentativas, contadores e notas são salvos localmente.", syncControl)}<div class="notice notice-warning"><strong>${sync.token ? "Acesso de sincronização disponível nesta sessão." : "Sincronização com Notion ainda não conectada."}</strong><p>Erros e edições entram na fila local. O token de escrita do Notion permanece no backend; o navegador só envia operações ao endpoint HTTPS configurado. Sem endpoint e chave de sessão, nenhum dado sai deste dispositivo.</p></div><div class="error-card-grid">${sorted.map(errorCard).join("") || emptyState("Ainda não há erros", "Respostas incorretas entrarão automaticamente neste caderno.")}</div></div>`;
+  root.innerHTML = `<div class="page-wrap">${heading("ERROR LAB", "Caderno de erros", "Um erro por Question ID. Tentativas, contadores e notas são salvos localmente.", syncControl)}<div class="notice notice-warning"><strong>${sync.token ? "Acesso de sincronização disponível nesta sessão." : "Sincronização com Notion ainda não conectada."}</strong><p>Erros e edições entram na fila local. O token de escrita do Notion permanece no backend; o navegador só envia operações ao endpoint HTTPS configurado. Sem endpoint e chave de sessão, nenhum dado sai deste dispositivo.</p><p>${pending} operação(ões) aguardam confirmação. A fila tenta novamente sozinha quando a conexão estiver disponível; você também pode pedir uma tentativa imediata.</p></div><div class="error-card-grid">${sorted.map(error => errorCard(error, queueByQuestion.get(error.questionId))).join("") || emptyState("Ainda não há erros", "Respostas incorretas entrarão automaticamente neste caderno.")}</div></div>`;
 }
 
 async function renderAnalytics(progress, errors, attempts, sessions, answers) {
@@ -439,7 +449,7 @@ async function enqueueErrorSync(error) {
   const operationId = `ERROR-${error.questionId}`;
   const previous = await getRecord("sync_queue", operationId);
   const updatedAt = error.updatedAt || new Date().toISOString();
-  await putRecord("sync_queue", { operationId, entityId: error.questionId, entityType: "error", action: "upsert", payload: error, status: "PENDING", createdAt: previous?.createdAt || error.createdAt || updatedAt, updatedAt, attempts: previous?.attempts || 0 });
+  await putRecord("sync_queue", { operationId, entityId: error.questionId, entityType: "error", action: "upsert", payload: error, status: "PENDING", createdAt: previous?.createdAt || error.createdAt || updatedAt, updatedAt, attempts: 0, lastAttemptAt: null, lastError: "", nextAttemptAt: null });
   scheduleErrorSync();
 }
 
@@ -452,11 +462,33 @@ async function recordError(question, selected) {
   return error;
 }
 
-function scheduleErrorSync() {
+async function scheduleErrorSync() {
+  const generation = ++errorSyncScheduleGeneration;
+  clearTimeout(errorSyncTimer);
   const config = readSyncConfig();
   if (!config.endpoint || !config.token || navigator.onLine === false) return;
-  clearTimeout(errorSyncTimer);
-  errorSyncTimer = setTimeout(() => syncErrors({ quiet: true }), 1_200);
+  const queue = await getAllRecords("sync_queue");
+  if (generation !== errorSyncScheduleGeneration) return;
+  const delay = millisecondsUntilQueueDue(queue);
+  if (delay === null) return;
+  errorSyncTimer = setTimeout(() => syncErrors({ quiet: true }), delay === 0 ? 1_200 : delay);
+}
+
+async function deferQueueOperation(attempted, reason) {
+  const current = await getRecord("sync_queue", attempted.operationId);
+  if (!isSameSyncOperation(current, attempted)) return;
+  await putRecord("sync_queue", deferFailedOperation(current, reason));
+}
+
+async function acknowledgeQueueOperation(attempted, operation) {
+  const queued = await getRecord("sync_queue", attempted.operationId);
+  if (queued && isSameSyncOperation(queued, attempted)) await deleteRecord("sync_queue", attempted.operationId);
+  const latestQueue = await getRecord("sync_queue", attempted.operationId);
+  const current = await getRecord("errors", attempted.entityId);
+  if (current && !latestQueue && current.updatedAt === attempted.payload?.updatedAt) {
+    await putRecord("errors", { ...current, syncStatus: "SYNCED", notionPageId: operation.notionPageId, notionUpdatedAt: operation.notionUpdatedAt, updatedAt: current.updatedAt });
+  }
+  return !latestQueue;
 }
 
 async function mergeRemoteErrors(records = []) {
@@ -471,7 +503,7 @@ async function mergeRemoteErrors(records = []) {
     const queued = await getRecord("sync_queue", queueId);
     const remoteTime = Date.parse(remote.notionUpdatedAt || remote.updatedAt || "") || 0;
     const localTime = Date.parse(local.updatedAt || local.lastErrorAt || "") || 0;
-    const localWins = localTime > remoteTime;
+    const localWins = Boolean(queued) || localTime > remoteTime;
     const personal = localWins ? local : remote;
     const count = Math.max(1, Number(local.errorCount) || Number(remote.errorCount) || 1);
     const mastered = personal.status === "MASTERED";
@@ -502,14 +534,13 @@ async function mergeRemoteErrors(records = []) {
       updatedAt: localWins ? local.updatedAt : remote.updatedAt,
       notionPageId: remote.notionPageId,
       notionUpdatedAt: remote.notionUpdatedAt,
-      syncStatus: queued && localWins ? "PENDING" : "SYNCED"
+      syncStatus: queued ? "PENDING" : "SYNCED"
     };
     await putRecord("errors", merged);
-    if (queued && !localWins) await deleteRecord("sync_queue", queueId);
   }
 }
 
-async function syncErrors({ quiet = false } = {}) {
+async function syncErrors({ quiet = false, force = false } = {}) {
   if (errorSyncPromise) return errorSyncPromise;
   errorSyncPromise = (async () => {
     const config = readSyncConfig();
@@ -521,15 +552,19 @@ async function syncErrors({ quiet = false } = {}) {
       if (!quiet) toast("Sem conexão. As operações continuam na fila local.");
       return false;
     }
+    let activeBatch = [];
     try {
       config.endpoint = normalizeSyncEndpoint(config.endpoint);
-      const queue = (await getAllRecords("sync_queue")).filter(item => item.status === "PENDING");
+      const now = Date.now();
+      const queue = (await getAllRecords("sync_queue")).filter(item => force ? item.status === "PENDING" : isQueueItemDue(item, now));
       const batches = [];
       for (let index = 0; index < queue.length; index += 10) batches.push(queue.slice(index, index + 10));
       if (!batches.length) batches.push([]);
       let remoteRecords = [];
       let failed = 0;
+      let readWarning = "";
       for (const batch of batches) {
+        activeBatch = batch;
         const response = await fetch(`${config.endpoint}/api/errors/sync`, {
           method: "POST",
           mode: "cors",
@@ -540,22 +575,29 @@ async function syncErrors({ quiet = false } = {}) {
         });
         const result = await response.json().catch(() => ({}));
         if (!response.ok) throw new Error(result.error || `Backend respondeu ${response.status}.`);
-        for (const operation of result.results || []) {
-          if (operation.status !== "SYNCED") { failed += 1; continue; }
-          const queueItem = await getRecord("sync_queue", operation.operationId);
-          const current = await getRecord("errors", queueItem?.entityId || operation.operationId.replace(/^ERROR-/, ""));
-          if (queueItem) await deleteRecord("sync_queue", operation.operationId);
-          if (current) await putRecord("errors", { ...current, syncStatus: "SYNCED", notionPageId: operation.notionPageId, notionUpdatedAt: operation.notionUpdatedAt, updatedAt: current.updatedAt });
+        const results = new Map((result.results || []).map(operation => [operation.operationId, operation]));
+        for (const item of batch) {
+          const operation = results.get(item.operationId);
+          if (operation?.status === "SYNCED") {
+            if (!await acknowledgeQueueOperation(item, operation)) failed += 1;
+          } else {
+            await deferQueueOperation(item, operation?.status || "confirmação ausente");
+            failed += 1;
+          }
         }
         if (Array.isArray(result.records)) remoteRecords = result.records;
-        if (result.readWarning) failed += 1;
+        if (result.readWarning) readWarning = String(result.readWarning).slice(0, 180);
+        activeBatch = [];
       }
       await mergeRemoteErrors(remoteRecords);
-      if (!quiet) toast(failed ? `Sync parcial: ${failed} item(ns) aguardam nova tentativa.` : `Sync concluído: ${remoteRecords.length} registro(s) recebidos do Notion.`);
+      if (!quiet) toast(failed ? `Sync parcial: ${failed} item(ns) aguardam nova tentativa.` : readWarning ? `Erros enviados; não foi possível atualizar a lista remota agora.` : `Sync concluído: ${remoteRecords.length} registro(s) recebidos do Notion.`);
       await renderRoute();
-      return failed === 0;
+      scheduleErrorSync();
+      return failed === 0 && !readWarning;
     } catch (error) {
+      for (const item of activeBatch) await deferQueueOperation(item, error.message || "falha de conexão");
       if (!quiet) toast(`Sync pendente: ${error.message || "falha de conexão"}. A fila foi preservada.`);
+      scheduleErrorSync();
       return false;
     }
   })();
@@ -698,8 +740,8 @@ async function onClick(event) {
     else if (action === "review-error") await reviewError(button.dataset.id);
     else if (action === "resume-reading") window.scrollTo({ top: Number(button.dataset.scroll) || 0, behavior: "smooth" });
     else if (action === "export-backup") await exportBackup();
-    else if (action === "sync-errors") await syncErrors();
-    else if (action === "clear-sync-config") { sessionStorage.removeItem("haba:sync-config"); toast("Conexão do backend removida desta sessão."); await renderRoute(); }
+    else if (action === "sync-errors") await syncErrors({ force: true });
+    else if (action === "clear-sync-config") { sessionStorage.removeItem("haba:sync-config"); ++errorSyncScheduleGeneration; clearTimeout(errorSyncTimer); toast("Conexão do backend removida desta sessão."); await renderRoute(); }
     else if (action === "set-focus") { state.preferences = savePreferences({ focusMode: !state.preferences.focusMode }); await renderRoute(); }
   } catch (error) { toast(error.message || "A ação não foi concluída."); }
 }
@@ -714,7 +756,7 @@ async function onSubmit(event) {
       const token = String(values.get("token") || readSyncConfig().token);
       saveSyncConfig(String(values.get("endpoint") || ""), token);
       toast("Endpoint e chave salvos nesta sessão.");
-      await syncErrors();
+      await syncErrors({ force: true });
     } catch (error) { toast(error.message || "Configuração de sincronização inválida."); }
   } else if (form.id === "preferences-form") {
     event.preventDefault();

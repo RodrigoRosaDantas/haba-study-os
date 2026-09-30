@@ -34,6 +34,8 @@ Tentativas, erros e observações funcionam localmente. O backend em `backend/wo
 
 O Worker ainda precisa ser implantado com uma integração Notion separada que tenha permissão de escrita no Caderno de erros. A integração `HABA_STUDY_OS_LEITURA` continua restrita ao GitHub Actions e nunca é usada para escrever. Instruções e variáveis necessárias estão em [`backend/README.md`](backend/README.md). Sem o Worker configurado, a fila permanece no IndexedDB e entra no backup.
 
+Quando uma tentativa falha, a operação continua na fila e recebe nova tentativa automática com espera crescente, até seis horas entre tentativas. Se uma edição mais recente ocorrer enquanto a anterior está sendo enviada, a confirmação antiga não remove a versão nova da fila. O Error Lab mostra o estado e o horário da próxima tentativa; o botão permite tentar imediatamente.
+
 O token de escrita do Notion fica em segredo do Worker. A chave de acesso do Worker fica apenas no `sessionStorage` da aba; não entra no localStorage, IndexedDB ou backup. O endpoint valida origem, autenticação, tamanho do payload, formato dos IDs, deduplicação e limite por IP.
 
 ## Publicação

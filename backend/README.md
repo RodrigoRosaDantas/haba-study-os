@@ -16,6 +16,8 @@ npx wrangler deploy
 
 Generate the access key once with `openssl rand -base64 32`, keep that value, and enter the same value when Wrangler prompts for `HABA_STUDY_OS_SYNC_ACCESS_KEY`. Configure the deployed `workers.dev` HTTPS endpoint and that access key in the app Settings page. The app holds this browser credential in session storage only; backups exclude it. The Notion writer token remains a Worker secret.
 
+The browser keeps failed operations in IndexedDB and retries them with increasing delays (up to six hours). A successful response only clears the exact queue revision that was sent, so an edit made during an in-flight request stays pending.
+
 Local checks:
 
 ```sh

@@ -54,7 +54,7 @@ if (allWorkflows) ok("arquivos dos quatro workflows presentes");
 const sourceFiles = [
   "scripts/notion-sync-lib.mjs", "scripts/sync-notion.mjs", "scripts/quality.mjs", "backend/worker.mjs",
   "site/src/app.js", "site/src/backup.js", "site/src/content.js", "site/src/core.js",
-  "site/src/preferences.js", "site/src/storage.js", "site/src/ui.js", "site/sw.js"
+  "site/src/preferences.js", "site/src/storage.js", "site/src/sync-queue.js", "site/src/ui.js", "site/sw.js"
 ];
 for (const file of sourceFiles) {
   const result = spawnSync(process.execPath, ["--check", resolve(root, file)], { encoding: "utf8" });
