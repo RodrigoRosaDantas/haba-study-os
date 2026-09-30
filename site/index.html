@@ -10,8 +10,8 @@
     <link rel="icon" href="./icons/favicon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="./icons/icon-192.png">
     <link rel="manifest" href="./manifest.webmanifest">
-    <link rel="stylesheet" href="./styles.css">
-    <script type="module" src="./src/app.js"></script>
+    <link rel="stylesheet" href="./styles.css?v=5">
+    <script type="module" src="./src/app.js?v=5"></script>
   </head>
   <body>
     <a class="skip-link" href="#view-root">Pular para o conteúdo</a>
@@ -33,25 +33,25 @@
         <aside class="sidebar" aria-label="Navegação principal">
           <div class="sidebar-label">WORKSPACE</div>
           <nav class="primary-nav">
-            <button class="nav-item is-active" data-route="today"><span class="nav-icon">◈</span><span>Command Center</span><kbd>01</kbd></button>
-            <button class="nav-item" data-route="study"><span class="nav-icon">▤</span><span>Estudar</span><kbd>02</kbd></button>
-            <button class="nav-item" data-route="questions"><span class="nav-icon">⌘</span><span>Questões</span><kbd>03</kbd></button>
-            <button class="nav-item" data-route="reviews"><span class="nav-icon">⟳</span><span>Revision Engine</span><kbd>04</kbd></button>
-            <button class="nav-item" data-route="errors"><span class="nav-icon">⌁</span><span>Error Lab</span><span class="nav-count" id="error-count">0</span></button>
+            <button class="nav-item is-active" data-route="today" aria-label="Centro de comando" title="Centro de comando"><span class="nav-icon">◈</span><span>Command Center</span><kbd>01</kbd></button>
+            <button class="nav-item" data-route="study" aria-label="Estudar" title="Estudar"><span class="nav-icon">▤</span><span>Estudar</span><kbd>02</kbd></button>
+            <button class="nav-item" data-route="questions" aria-label="Questões" title="Questões"><span class="nav-icon">⌘</span><span>Questões</span><kbd>03</kbd></button>
+            <button class="nav-item" data-route="reviews" aria-label="Revisões" title="Revisões"><span class="nav-icon">⟳</span><span>Revision Engine</span><kbd>04</kbd></button>
+            <button class="nav-item" data-route="errors" aria-label="Caderno de erros" title="Caderno de erros"><span class="nav-icon">⌁</span><span>Error Lab</span><span class="nav-count" id="error-count">0</span></button>
           </nav>
           <div class="sidebar-label sidebar-label-spaced">INTELLIGENCE</div>
           <nav class="primary-nav">
-            <button class="nav-item" data-route="analytics"><span class="nav-icon">▥</span><span>Analytics</span></button>
-            <button class="nav-item" data-route="mentor"><span class="nav-icon">✳</span><span>Decision Engine</span></button>
-            <button class="nav-item" data-route="history"><span class="nav-icon">◷</span><span>Histórico</span></button>
+            <button class="nav-item" data-route="analytics" aria-label="Desempenho" title="Desempenho"><span class="nav-icon">▥</span><span>Analytics</span></button>
+            <button class="nav-item" data-route="mentor" aria-label="Mentor" title="Mentor"><span class="nav-icon">✳</span><span>Decision Engine</span></button>
+            <button class="nav-item" data-route="history" aria-label="Histórico" title="Histórico"><span class="nav-icon">◷</span><span>Histórico</span></button>
           </nav>
           <div class="sidebar-spacer"></div>
           <div class="sidebar-card">
             <div class="sidebar-card-icon">◎</div>
             <div><strong>LOCAL FIRST</strong><span>Seu progresso fica neste dispositivo.</span></div>
           </div>
-          <button class="nav-item settings-link" data-route="settings"><span class="nav-icon">⚙</span><span>Configurações</span></button>
-          <div class="sidebar-footer"><span class="version-dot"></span><span>HABA STUDY OS</span><span class="mono">v0.1</span></div>
+          <button class="nav-item settings-link" data-route="settings" aria-label="Configurações" title="Configurações"><span class="nav-icon">⚙</span><span>Configurações</span></button>
+          <div class="sidebar-footer"><span class="version-dot"></span><span>HABA STUDY OS</span><span class="mono">v0.2</span></div>
         </aside>
 
         <main id="view-root" class="main-content" tabindex="-1" aria-live="polite">
@@ -68,6 +68,6 @@
       </nav>
     </div>
     <div id="toast-region" class="toast-region" aria-live="assertive" aria-atomic="true"></div>
-    <div id="update-banner" class="update-banner" hidden><span>Nova versão pronta para instalar.</span><button id="apply-update" class="button button-primary" type="button">Atualizar</button></div>
+    <div id="update-banner" class="update-banner" role="status" aria-live="polite" hidden><span>Nova interface pronta. Atualize para aplicar.</span><button id="apply-update" class="button button-primary" type="button">Atualizar</button></div>
   </body>
 </html>
