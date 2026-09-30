@@ -268,21 +268,54 @@ export function makeQuestionItem(page, setCode, ordinal) {
   return item;
 }
 
+export function questionItemIssues(item) {
+  const issues = [];
+  if (!item?.questionId) issues.push("missing_id");
+  if (!item?.stem) issues.push("missing_stem");
+  if (!/^[A-E]$/.test(String(item?.answerKey || ""))) issues.push("missing_answer_key");
+  if (!Array.isArray(item?.options) || item.options.length < 2 || !item.options.some(option => option.key === item.answerKey)) issues.push("unusable_options");
+  if (item?.sourceValidated !== true) issues.push("source_not_validated");
+  if (String(item?.status || "").toLowerCase() !== "pronta para estudo") issues.push("status_not_ready");
+  return issues;
+}
+
 export function assertSnapshot(snapshot) {
   const fail = message => { throw new Error(`Validação do snapshot falhou: ${message}`); };
   if (!Array.isArray(snapshot.studyDays) || snapshot.studyDays.length !== 75) fail(`esperados 75 dias; recebidos ${snapshot.studyDays?.length ?? 0}`);
+  let completeQuestionSets = 0;
+  let partialQuestionSets = 0;
+  let unavailableQuestionSets = 0;
+  let usableQuestions = 0;
+  let plannedQuestions = 0;
+  let excludedQuestionRows = 0;
+  let missingQuestionRows = 0;
   for (let index = 0; index < 75; index += 1) {
     const day = snapshot.studyDays[index];
     const expected = `D${String(index + 1).padStart(2, "0")}`;
     if (day.code !== expected || Number(day.order) !== index + 1) fail(`sequência de estudo fora de ordem em ${expected}`);
     if (!day.material?.blocks?.length) fail(`${expected} está sem material disponível`);
-    if (!day.questionSet?.pageId || !day.questionSet?.items?.length) fail(`${expected} está sem página/bateria de questões`);
-    if (day.questionSet.items.length !== Number(day.questionGoal)) fail(`${day.questionSet.code} tem ${day.questionSet.items.length} itens, mas a meta real é ${day.questionGoal}`);
-    if (day.questionSet.items.some(item => !item.answerKey || !item.stem)) fail(`${day.questionSet.code} contém item sem enunciado ou gabarito utilizável`);
-    if (day.questionSet.items.some(item => !Array.isArray(item.options) || item.options.length < 2 || !item.options.some(option => option.key === item.answerKey))) fail(`${day.questionSet.code} contém questão sem alternativas/gabarito correspondentes`);
+    const set = day.questionSet;
+    if (!set?.pageId || !Array.isArray(set.items)) fail(`${expected} está sem página/bateria de questões`);
+    const goal = Number(day.questionGoal);
+    const sourceRows = Number(set.sourceRowCount);
+    const missing = Number(set.missingCount);
+    const extra = Number(set.extraCount);
+    if (!Number.isInteger(goal) || goal < 0 || !Number.isInteger(sourceRows) || sourceRows < 0) fail(`${set.code} tem contagem de fonte inválida`);
+    if (set.items.length + (set.unavailableItems?.length || 0) !== sourceRows) fail(`${set.code} não contabiliza todas as linhas da fonte`);
+    if (missing !== Math.max(0, goal - sourceRows) || extra !== Math.max(0, sourceRows - goal)) fail(`${set.code} tem lacunas de contagem inconsistentes`);
+    const expectedStatus = set.items.length === goal && sourceRows === goal && !set.unavailableItems?.length ? "complete" : set.items.length ? "partial" : "unavailable";
+    if (set.sourceStatus !== expectedStatus || set.availableCount !== set.items.length) fail(`${set.code} tem status de disponibilidade inconsistente`);
+    if (set.items.some(item => questionItemIssues(item).length)) fail(`${set.code} contém questão incompleta no player`);
     if (new Set(day.questionSet.items.map(item => item.questionId)).size !== day.questionSet.items.length) fail(`${day.questionSet.code} contém IDs originais duplicados`);
     if (day.questionSet.composition.total !== Number(day.questionGoal)) fail(`${day.questionSet.code} tem composição que não fecha com a meta do Notion`);
     if (day.questionSet.composition.main + day.questionSet.composition.complementary !== Number(day.questionGoal)) fail(`${day.questionSet.code} não fecha a divisão principal/complementar`);
+    if (set.sourceStatus === "complete") completeQuestionSets += 1;
+    else if (set.sourceStatus === "partial") partialQuestionSets += 1;
+    else unavailableQuestionSets += 1;
+    usableQuestions += set.items.length;
+    plannedQuestions += goal;
+    excludedQuestionRows += set.unavailableItems?.length || 0;
+    missingQuestionRows += missing;
   }
   if (snapshot.reviews.length !== 15) fail(`esperadas 15 revisões; recebidas ${snapshot.reviews.length}`);
   if (snapshot.restDays.length !== 15) fail(`esperados 15 domingos de descanso; recebidos ${snapshot.restDays.length}`);
@@ -290,5 +323,11 @@ export function assertSnapshot(snapshot) {
   if (snapshot.reviews.some(review => !review.blocks?.length)) fail("há uma revisão oficial sem conteúdo acessível");
   if (snapshot.reviews.some((review, index) => review.code !== `R${String(index + 1).padStart(2, "0")}`)) fail("as revisões R01–R15 estão fora da sequência oficial");
   if (snapshot.restDays.some(day => !/^REST-W\d{2}$/.test(day.code))) fail("há dia de descanso sem identificador estável");
+  const coverage = snapshot.meta?.questionCoverage;
+  if (!coverage || coverage.status !== (completeQuestionSets === 75 ? "complete" : "partial")
+    || coverage.completeSets !== completeQuestionSets || coverage.partialSets !== partialQuestionSets
+    || coverage.unavailableSets !== unavailableQuestionSets || coverage.totalSets !== 75
+    || coverage.usableQuestions !== usableQuestions || coverage.plannedQuestions !== plannedQuestions
+    || coverage.excludedRows !== excludedQuestionRows || coverage.missingRows !== missingQuestionRows) fail("o resumo de disponibilidade de questões diverge do conteúdo");
   return true;
 }

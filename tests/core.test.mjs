@@ -25,6 +25,17 @@ test("the next mission follows editorial order rather than calendar time", () =>
   ]).code, "R01");
 });
 
+test("days with no usable source questions do not block the next editorial day", () => {
+  const days = [
+    { code: "D01", order: 1, title: "D01", week: 1, questionSet: { items: [] } },
+    { code: "D02", order: 2, title: "D02", week: 1, questionSet: { items: [{ questionId: "q2" }] } }
+  ];
+  const reviews = [{ code: "R01", week: 1, title: "R01" }];
+  const progress = [{ id: "D01", completedAt: "2026-09-01" }];
+  assert.equal(getNextMission(days, reviews, progress).code, "D02");
+  assert.equal(progress.some(row => row.id === "Q01"), false);
+});
+
 test("question scoring does not count unanswered questions as wrong", () => {
   const items = [{ questionId: "a", answerKey: "A" }, { questionId: "b", answerKey: "B" }, { questionId: "c", answerKey: "C" }];
   assert.deepEqual(scoreQuestionSet(items, { a: "A", b: "D" }), {
@@ -52,6 +63,9 @@ test("analytics represent no data as unknown and withhold thin trends", () => {
   const small = calculateAnalytics([], [{ subject: "Redes", isCorrect: true }], [], [], []);
   assert.equal(small.subjects[0].accuracy, 100);
   assert.equal(small.subjects[0].trend, "insufficient-sample");
+  const partial = calculateAnalytics([{ questionSet: "Q01", completedAt: "2026-09-01", coverageStatus: "partial" }], [], [], [], []);
+  assert.equal(partial.completedQuestionSets, 0);
+  assert.equal(partial.partialQuestionSets, 1);
 });
 
 test("mentor advice cites the basis and does not assert mastery", () => {

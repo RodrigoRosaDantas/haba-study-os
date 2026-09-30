@@ -100,6 +100,38 @@ function completionRatio(code, progress) {
 function getDay(code) { return missionDays().find(day => day.code === code); }
 function dayForQuestion(code) { return missionDays().find(day => day.questionSet.code === code); }
 
+function questionCoverageNotice(day) {
+  const set = day?.questionSet;
+  if (!set || set.sourceStatus === "complete") return "";
+  const reasonLabels = {
+    missing_id: "ID original ausente",
+    missing_stem: "enunciado parafraseado ausente",
+    missing_answer_key: "gabarito ausente",
+    unusable_options: "alternativas ausentes ou incompatíveis com o gabarito",
+    source_not_validated: "fonte ainda não validada",
+    status_not_ready: "registro ainda não está pronto para estudo"
+  };
+  const links = (set.unavailableItems || []).map(item => {
+    const id = String(item.notionPageId || "").replaceAll("-", "");
+    const label = e(item.questionId || "registro sem ID");
+    const link = /^[0-9a-f]{32}$/i.test(id) ? `<a href="https://www.notion.so/${e(id)}" target="_blank" rel="noopener noreferrer">${label}</a>` : label;
+    const reasons = (item.reasons || []).map(reason => reasonLabels[reason] || reasonLabels.missing_answer_key).join("; ");
+    return `<li>${link}: ${e(reasons)}</li>`;
+  }).join("");
+  const pageId = String(set.pageId || "").replaceAll("-", "");
+  const notionLink = /^[0-9a-f]{32}$/i.test(pageId) ? `<a href="https://www.notion.so/${e(pageId)}" target="_blank" rel="noopener noreferrer">Abrir ${e(set.code)} no Notion ↗</a>` : "";
+  const missing = Number(set.missingCount || 0);
+  const excluded = (set.unavailableItems || []).length;
+  return `<div class="notice notice-warning" role="status"><strong>${e(set.availableCount || 0)}/${e(day.questionGoal)} questões utilizáveis</strong><p>A interface só inclui registros com enunciado, alternativas, gabarito e fonte validados. O conteúdo ausente permanece sinalizado; nenhuma questão foi inventada.${missing ? ` ${missing} linha(s) planejada(s) ainda não estão mapeadas na fonte.` : ""}</p>${excluded ? `<details><summary>${excluded} registro(s) fora do player</summary><ul>${links}</ul></details>` : ""}${notionLink ? `<p>${notionLink}</p>` : ""}</div>`;
+}
+
+function questionCoverageSummary(meta) {
+  const coverage = meta?.questionCoverage;
+  if (!coverage || coverage.status === "complete") return "";
+  const sourceUrl = safeUrl(meta.sourceRootUrl);
+  return `<section class="notice notice-warning" role="status"><strong>Disponibilidade editorial de questões: parcial</strong><p>${e(coverage.completeSets)}/${e(coverage.totalSets)} baterias completas · ${e(coverage.usableQuestions)}/${e(coverage.plannedQuestions)} questões utilizáveis · ${e(coverage.excludedRows)} registros incompletos excluídos · ${e(coverage.missingRows)} sem mapeamento oficial.</p><p>Materiais, sequência, revisões e questões válidas continuam disponíveis. As lacunas aparecem em cada Qxx.</p>${sourceUrl ? `<a href="${e(sourceUrl)}" target="_blank" rel="noopener noreferrer">Abrir a fonte editorial no Notion ↗</a>` : ""}</section>`;
+}
+
 function blockHost(blocks, className = "reader-document") {
   const host = document.createElement("div");
   host.className = className;
@@ -109,10 +141,12 @@ function blockHost(blocks, className = "reader-document") {
 
 function moduleCard(day, progress) {
   const complete = completionRatio(day.code, progress) === 100;
-  const answered = progress.find(item => item.id === day.questionSet.code)?.completedAt;
+  const questionProgress = progress.find(item => item.id === day.questionSet.code);
+  const answered = questionProgress?.completedAt;
+  const questionMark = answered ? (questionProgress.coverageStatus === "partial" ? "Q ~" : "Q ✓") : e(day.questionSet.code);
   return `<button class="module-card" type="button" data-route="study" data-parameter="${e(day.code)}">
     <span class="module-code">${e(day.code)}</span><span class="module-copy"><strong>${e(day.title.replace(/^D\d{2}\s*[—–-]\s*/, ""))}</strong><small>${e(day.focus)} · ${e(day.weekday)}</small></span>
-    <span class="module-trailing"><span class="tag ${complete ? "tag-green" : "tag-cyan"}">${complete ? "LIDO" : "ABRIR"}</span><span class="mono">${answered ? "Q ✓" : e(day.questionSet.code)}</span></span>
+    <span class="module-trailing"><span class="tag ${complete ? "tag-green" : "tag-cyan"}">${complete ? "LIDO" : "ABRIR"}</span><span class="mono">${questionMark}</span></span>
   </button>`;
 }
 
@@ -125,10 +159,10 @@ async function renderToday(progress, errors, attempts, sessions) {
   if (mission.type === "study") {
     const day = mission.day;
     missionBody = `<div class="hero-topline"><span class="mission-chip">${e(day.cycle)} · SEMANA ${String(day.week).padStart(2, "0")}</span><span class="mission-chip">MISSÃO ${e(day.code)}</span></div>
-      <h1 class="hero-title">${e(day.code)} <span>·</span> ${e(day.focus)}</h1><p class="hero-subtitle">${e(day.complementary)} · bateria oficial de ${e(day.questionGoal)} questões em ${e(day.questionSet.composition.main)} principais + ${e(day.questionSet.composition.complementary)} complementares.</p>
+      <h1 class="hero-title">${e(day.code)} <span>·</span> ${e(day.focus)}</h1><p class="hero-subtitle">${e(day.complementary)} · meta de ${e(day.questionGoal)} questões em ${e(day.questionSet.composition.main)} principais + ${e(day.questionSet.composition.complementary)} complementares; ${e(day.questionSet.items.length)} utilizáveis nesta sincronização.</p>
       <div class="hero-actions"><button class="button button-primary" data-route="study" data-parameter="${e(day.code)}">Abrir material <span aria-hidden="true">→</span></button><button class="button button-quiet" data-route="questions" data-parameter="${e(day.questionSet.code)}">Ir às questões</button></div>`;
   } else if (mission.type === "questions") {
-    missionBody = `<div class="hero-topline"><span class="mission-chip">${e(mission.day.cycle)} · ${e(mission.day.code)} CONCLUÍDO</span><span class="mission-chip">BATTERIA ${e(mission.code)}</span></div><h1 class="hero-title">Material fechado.<br><span>Agora é hora de praticar.</span></h1><p class="hero-subtitle">${e(mission.day.questionGoal)} questões oficiais associadas a ${e(mission.day.code)}. O histórico fica salvo neste dispositivo.</p><div class="hero-actions"><button class="button button-primary" data-route="questions" data-parameter="${e(mission.code)}">Abrir ${e(mission.code)} →</button></div>`;
+    missionBody = `<div class="hero-topline"><span class="mission-chip">${e(mission.day.cycle)} · ${e(mission.day.code)} CONCLUÍDO</span><span class="mission-chip">BATERIA ${e(mission.code)}</span></div><h1 class="hero-title">Material fechado.<br><span>Agora é hora de praticar.</span></h1><p class="hero-subtitle">${e(mission.day.questionSet.items.length)} de ${e(mission.day.questionGoal)} questões utilizáveis em ${e(mission.day.code)}. O histórico fica salvo neste dispositivo.</p><div class="hero-actions"><button class="button button-primary" data-route="questions" data-parameter="${e(mission.code)}">Abrir ${e(mission.code)} →</button></div>`;
   } else if (mission.type === "review") {
     missionBody = `<div class="hero-topline"><span class="mission-chip">SEMANA ${String(mission.review.week).padStart(2, "0")}</span><span class="mission-chip">REVISÃO OFICIAL</span></div><h1 class="hero-title">${e(mission.code)} <span>·</span> Revisão de sábado</h1><p class="hero-subtitle">${e(mission.review.focus || mission.review.title)}. O ciclo continua pela sequência pedagógica, sem pular dias.</p><div class="hero-actions"><button class="button button-primary" data-route="reviews" data-parameter="${e(mission.code)}">Abrir revisão →</button></div>`;
   } else {
@@ -140,7 +174,8 @@ async function renderToday(progress, errors, attempts, sessions) {
       <div class="panel"><div class="panel-kicker">STATUS DE CONTEÚDO</div><div class="sync-line">${statusLine}</div><div class="sync-line"><span class="tiny">Última sincronização</span><strong>${e(lastSync)}</strong></div><a class="inline-link" href="https://github.com/RodrigoRosaDantas/haba-study-os/actions/workflows/sync-notion.yml" target="_blank" rel="noopener noreferrer">Atualizar conteúdo no GitHub ↗</a></div>
       <div class="panel"><div class="panel-kicker">SESSÃO DE ESTUDO</div>${state.activeSession ? `<p class="session-running"><span class="live-dot"></span> <span class="session-clock" data-session-started="${e(state.activeSession.startedAt)}">${e(formatDuration(Math.floor((Date.now() - Date.parse(state.activeSession.startedAt)) / 1000)))}</span> · ${e(state.activeSession.dayCode || "Estudo livre")}</p><button class="button button-danger button-small" data-action="stop-session">Encerrar sessão</button>` : `<p class="muted">O tempo só conta depois de iniciar uma sessão.</p><button class="button button-primary button-small" data-action="start-session" data-day="${e(mission.day?.code || "")}">Iniciar sessão</button>`}</div>
     </aside></section>
-    <section class="metric-grid">${metric("QUESTÕES", analytics.questionCount || "—", analytics.questionCount ? `${analytics.correct} acertos · ${analytics.incorrect} erros` : "Sem respostas registradas", "⌘")}${metric("PRECISÃO", analytics.accuracy == null ? "—" : `${analytics.accuracy}%`, analytics.accuracy == null ? "Aguardando respostas" : `${analytics.sampleSize} respostas`, "◎")}${metric("TEMPO REAL", analytics.studyMinutes ? `${analytics.studyHours} h` : "—", analytics.studyMinutes ? `${analytics.studyMinutes} min registrados` : "Sem sessões concluídas", "◷")}${metric("TRILHA", `${analytics.completedDays}/75`, `${analytics.completedQuestionSets} baterias concluídas`, "▤")}</section>
+    ${questionCoverageSummary(state.content.meta)}
+    <section class="metric-grid">${metric("QUESTÕES", analytics.questionCount || "—", analytics.questionCount ? `${analytics.correct} acertos · ${analytics.incorrect} erros` : "Sem respostas registradas", "⌘")}${metric("PRECISÃO", analytics.accuracy == null ? "—" : `${analytics.accuracy}%`, analytics.accuracy == null ? "Aguardando respostas" : `${analytics.sampleSize} respostas`, "◎")}${metric("TEMPO REAL", analytics.studyMinutes ? `${analytics.studyHours} h` : "—", analytics.studyMinutes ? `${analytics.studyMinutes} min registrados` : "Sem sessões concluídas", "◷")}${metric("TRILHA", `${analytics.completedDays}/75`, `${analytics.completedQuestionSets} baterias completas · ${analytics.partialQuestionSets} parciais`, "▤")}</section>
     <div class="two-column"><section><div class="section-head"><div><div class="eyebrow">SEQUÊNCIA EDITORIAL</div><h2>Próximas unidades</h2></div><button class="button button-quiet button-small" data-route="study">Ver trilha</button></div><div class="module-list">${missionDays().filter(day => day.order >= (mission.day?.order || missionDays()[0]?.order || 1)).slice(0, 4).map(day => moduleCard(day, progress)).join("")}</div></section>
     <aside class="panel"><div class="panel-kicker">PENDÊNCIAS LOCAIS</div><div class="task-list"><button class="task-row" data-route="errors"><span class="task-icon">⌁</span><span class="task-copy"><strong>${errors.filter(error => error.status !== "MASTERED").length} erros para revisar</strong><small>Salvos neste dispositivo</small></span><span class="task-time">Abrir →</span></button><button class="task-row" data-route="reviews"><span class="task-icon">⟳</span><span class="task-copy"><strong>Revisões R01–R15</strong><small>Conforme a trilha oficial</small></span><span class="task-time">Abrir →</span></button></div></aside></div>
   </div>`;
@@ -163,7 +198,7 @@ async function renderStudy(progress) {
       ${resume?.scrollY > 100 ? `<button class="resume-reading" data-action="resume-reading" data-scroll="${e(resume.scrollY)}">Continuar de onde parei <span>${percent}%</span></button>` : ""}
       <div class="reader-document" id="reader-document" data-reader-page="${e(pageId)}">${blockHost(day.material.blocks)}</div>
       <div class="study-complete-row"><button class="button ${done ? "button-quiet" : "button-primary"}" data-action="complete-day" data-day="${e(day.code)}">${done ? "Unidade concluída ✓" : "Concluir unidade"}</button><span class="tiny">Leitura retomável · posição salva localmente</span></div>
-    </article><aside class="reader-aside"><div class="panel"><h3>PROGRESSO DE LEITURA</h3><div class="reader-progress"><span>${percent}% lido</span><span>${done ? "Concluído" : "Em andamento"}</span></div><div class="progress-track"><span class="progress-fill ${progressWidthClass(percent)}"></span></div><p>O progresso da leitura é salvo neste navegador. Iniciar uma sessão registra o tempo de estudo explicitamente.</p></div><div class="panel"><h3>OBJETIVO DO DIA</h3><p><strong>${e(day.focus)}</strong></p><p>Complementar: ${e(day.complementary)}</p><p>${e(day.questionGoal)} questões · ${e(day.questionSet.composition.main)} principais + ${e(day.questionSet.composition.complementary)} complementares.</p><button class="button button-primary button-small" data-route="questions" data-parameter="${e(day.questionSet.code)}">Abrir ${e(day.questionSet.code)}</button></div><div class="panel"><h3>FONTE EDITORIAL</h3><p>${e(day.material.title)}</p><a href="https://www.notion.so/${e(pageId.replaceAll("-", ""))}" target="_blank" rel="noopener noreferrer">Abrir no Notion ↗</a></div></aside></div></div>`;
+    </article><aside class="reader-aside"><div class="panel"><h3>PROGRESSO DE LEITURA</h3><div class="reader-progress"><span>${percent}% lido</span><span>${done ? "Concluído" : "Em andamento"}</span></div><div class="progress-track"><span class="progress-fill ${progressWidthClass(percent)}"></span></div><p>O progresso da leitura é salvo neste navegador. Iniciar uma sessão registra o tempo de estudo explicitamente.</p></div><div class="panel"><h3>OBJETIVO DO DIA</h3><p><strong>${e(day.focus)}</strong></p><p>Complementar: ${e(day.complementary)}</p><p>Meta ${e(day.questionGoal)} · ${e(day.questionSet.items.length)} questões utilizáveis · ${e(day.questionSet.composition.main)} principais + ${e(day.questionSet.composition.complementary)} complementares.</p><button class="button button-primary button-small" data-route="questions" data-parameter="${e(day.questionSet.code)}">Abrir ${e(day.questionSet.code)}</button>${questionCoverageNotice(day)}</div><div class="panel"><h3>FONTE EDITORIAL</h3><p>${e(day.material.title)}</p><a href="https://www.notion.so/${e(pageId.replaceAll("-", ""))}" target="_blank" rel="noopener noreferrer">Abrir no Notion ↗</a></div></aside></div></div>`;
   scheduleReadingSave();
 }
 
@@ -181,7 +216,7 @@ async function getAttemptAndAnswers(day) {
   const attempts = (await getAllRecords("question_attempts")).filter(row => row.questionSet === day.questionSet.code);
   const attemptNumber = attempts.length + 1;
   const attemptId = `${day.questionSet.code}-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
-  const attempt = { attemptId, questionSet: day.questionSet.code, dayCode: day.code, attemptNumber, startedAt: new Date().toISOString(), completedAt: null, questionVersion: day.questionSet.contentHash || "", status: "IN_PROGRESS" };
+  const attempt = { attemptId, questionSet: day.questionSet.code, dayCode: day.code, attemptNumber, startedAt: new Date().toISOString(), completedAt: null, questionVersion: day.questionSet.contentHash || "", availableQuestionCount: day.questionSet.items.length, plannedQuestionCount: day.questionGoal, coverageStatus: day.questionSet.sourceStatus, status: "IN_PROGRESS" };
   await putRecord("question_attempts", attempt);
   await putRecord("progress", { id: key, attemptId, updatedAt: attempt.startedAt });
   return { attempt, answers: [] };
@@ -205,12 +240,12 @@ async function renderQuestions(progress = []) {
   const code = state.parameter.startsWith("Q") ? state.parameter : currentMission(progress).day?.questionSet.code || missionDays().find(day => !progress.some(item => item.id === day.questionSet.code && item.completedAt))?.questionSet.code;
   const day = dayForQuestion(code);
   if (!day) {
-    root.innerHTML = `<div class="page-wrap">${heading("QUESTION ENGINE", "Questões oficiais", "As baterias são carregadas das páginas vinculadas ao Dxx.")}<div class="module-list">${missionDays().map(item => `<button class="module-card" data-route="questions" data-parameter="${e(item.questionSet.code)}"><span class="module-code">${e(item.questionSet.code)}</span><span class="module-copy"><strong>${e(item.focus)}</strong><small>${e(item.questionGoal)} questões · vinculada a ${e(item.code)}</small></span><span class="module-trailing"><span class="tag tag-cyan">ABRIR →</span></span></button>`).join("")}</div></div>`;
+    root.innerHTML = `<div class="page-wrap">${heading("QUESTION ENGINE", "Questões oficiais", "As baterias são carregadas das páginas vinculadas ao Dxx.")}${questionCoverageSummary(state.content.meta)}<div class="module-list">${missionDays().map(item => `<button class="module-card" data-route="questions" data-parameter="${e(item.questionSet.code)}"><span class="module-code">${e(item.questionSet.code)}</span><span class="module-copy"><strong>${e(item.focus)}</strong><small>${e(item.questionSet.items.length)}/${e(item.questionGoal)} questões utilizáveis · vinculada a ${e(item.code)}</small></span><span class="module-trailing"><span class="tag ${item.questionSet.sourceStatus === "complete" ? "tag-green" : "tag-amber"}">${item.questionSet.sourceStatus === "complete" ? "COMPLETA" : item.questionSet.sourceStatus === "partial" ? "PARCIAL" : "INDISPONÍVEL"}</span></span></button>`).join("")}</div></div>`;
     return;
   }
   const set = day.questionSet;
   if (!set.items?.length) {
-    root.innerHTML = `<div class="page-wrap">${heading("QUESTION ENGINE", code, day.focus)}${emptyState("Bateria ainda indisponível", "O snapshot validado não contém questões para esta bateria.")}</div>`;
+    root.innerHTML = `<div class="page-wrap">${heading("QUESTION ENGINE", code, day.focus)}${questionCoverageNotice(day)}${emptyState("Nenhuma questão utilizável", "A fonte oficial ainda não tem questões completas para esta bateria.")}</div>`;
     return;
   }
   const session = await getAttemptAndAnswers(day);
@@ -222,7 +257,7 @@ async function renderQuestions(progress = []) {
     const score = session.attempt.score || scoreQuestionSet(set.items, answeredMap);
     const subjects = resultByField(set.items, session.answers, "subject");
     const topics = resultByField(set.items, session.answers, "topic");
-    root.innerHTML = `<div class="page-wrap">${heading(`${day.code} · ${day.cycle}`, `${code} · Resultado`, `${session.attempt.attemptNumber}ª tentativa · ${e(formatDate(session.attempt.completedAt, true))}`)}
+    root.innerHTML = `<div class="page-wrap">${heading(`${day.code} · ${day.cycle}`, `${code} · Resultado`, `${session.attempt.attemptNumber}ª tentativa · ${e(formatDate(session.attempt.completedAt, true))}`)}${questionCoverageNotice(day)}
       <section class="result-banner"><div class="result-score">${score.accuracy == null ? "—" : `${score.accuracy}%`}</div><p>${score.correct} acertos · ${score.incorrect} erros · ${score.unanswered} sem resposta · ${score.total} questões</p></section>
       <div class="result-grid"><div><span class="tiny">ACERTOS</span><strong>${score.correct}</strong></div><div><span class="tiny">ERROS</span><strong>${score.incorrect}</strong></div><div><span class="tiny">TEMPO</span><strong>${e(formatDuration(session.attempt.durationSeconds || 0))}</strong></div></div>
       <div class="two-column"><section class="panel"><h2>Por matéria</h2>${subjects.length ? subjects.map(item => `<div class="result-breakdown"><span>${e(item.name)}</span><span>${item.correct}/${item.total} · ${item.accuracy}%</span></div>`).join("") : `<p class="muted">Sem respostas para analisar.</p>`}</section><section class="panel"><h2>Por assunto</h2>${topics.length ? topics.map(item => `<div class="result-breakdown"><span>${e(item.name)}</span><span>${item.correct}/${item.total} · ${item.accuracy}%</span></div>`).join("") : `<p class="muted">Sem respostas para analisar.</p>`}</section></div>
@@ -237,7 +272,7 @@ async function renderQuestions(progress = []) {
   const answer = session.answers.find(row => row.questionId === item.questionId);
   const duration = Math.max(0, Math.floor((Date.now() - Date.parse(session.attempt.startedAt)) / 1000));
   root.innerHTML = `<div class="page-wrap">${heading(`${day.code} · ${day.cycle}`, code, `${day.focus} + ${day.complementary}`, `<button class="button button-quiet button-small" data-route="study" data-parameter="${e(day.code)}">Voltar ao material</button>`)}
-    <section class="question-shell"><div class="question-head"><span class="question-counter">QUESTÃO ${String(index + 1).padStart(2, "0")} / ${String(set.items.length).padStart(2, "0")}</span><span class="tag tag-cyan">${answered.size}/${set.items.length} respondidas</span><span class="tag">${e(formatDuration(duration))}</span></div>
+    ${questionCoverageNotice(day)}<section class="question-shell"><div class="question-head"><span class="question-counter">QUESTÃO ${String(index + 1).padStart(2, "0")} / ${String(set.items.length).padStart(2, "0")}</span><span class="tag tag-cyan">${answered.size}/${set.items.length} respondidas</span><span class="tag">${e(formatDuration(duration))}</span></div>
       <article class="question-card"><div class="question-context"><span class="tag tag-cyan">${e(item.board || "Cesgranrio")}</span><span class="tag">${e(item.subject || "Matéria não classificada")}</span><span class="tag">${e(item.topic || "Assunto não classificado")}</span>${item.year ? `<span class="tag">${e(item.year)}</span>` : ""}</div>
         <div class="question-stem">${e(item.stem || item.title)}</div>
         <div class="question-note">Enunciado parafraseado para estudo; consulte a fonte original para a redação integral. ${safeUrl(item.sourceUrl) ? `<a href="${e(safeUrl(item.sourceUrl))}" target="_blank" rel="noopener noreferrer">Fonte da questão ↗</a>` : ""}</div>
@@ -287,7 +322,7 @@ async function renderAnalytics(progress, errors, attempts, sessions, answers) {
   const analytics = calculateAnalytics(attempts, answers, sessions, missionDays(), progress);
   const subjects = analytics.subjects;
   root.innerHTML = `<div class="page-wrap">${heading("ANALYTICS", "Desempenho local", "Métricas derivadas das respostas e sessões registradas neste dispositivo.")}
-    <section class="metric-grid">${metric("RESPOSTAS", analytics.questionCount || "—", analytics.questionCount ? `${analytics.correct} acertos` : "Sem amostra", "⌘")}${metric("PRECISÃO", analytics.accuracy == null ? "—" : `${analytics.accuracy}%`, analytics.sampleSize < 10 && analytics.questionCount ? `Amostra pequena: ${analytics.sampleSize}` : analytics.questionCount ? `${analytics.sampleSize} respostas` : "Sem dados", "◎")}${metric("HORAS", analytics.studyMinutes ? `${analytics.studyHours} h` : "—", analytics.studyMinutes ? `${analytics.studyMinutes} minutos de sessões` : "Sem sessões", "◷")}${metric("PROGRESSO", `${analytics.completedDays}/75`, `${analytics.completedQuestionSets} baterias`, "▤")}</section>
+    <section class="metric-grid">${metric("RESPOSTAS", analytics.questionCount || "—", analytics.questionCount ? `${analytics.correct} acertos` : "Sem amostra", "⌘")}${metric("PRECISÃO", analytics.accuracy == null ? "—" : `${analytics.accuracy}%`, analytics.sampleSize < 10 && analytics.questionCount ? `Amostra pequena: ${analytics.sampleSize}` : analytics.questionCount ? `${analytics.sampleSize} respostas` : "Sem dados", "◎")}${metric("HORAS", analytics.studyMinutes ? `${analytics.studyHours} h` : "—", analytics.studyMinutes ? `${analytics.studyMinutes} minutos de sessões` : "Sem sessões", "◷")}${metric("PROGRESSO", `${analytics.completedDays}/75`, `${analytics.completedQuestionSets} completas · ${analytics.partialQuestionSets} parciais`, "▤")}</section>
     <div class="two-column"><section class="panel"><div class="panel-kicker">DESEMPENHO POR MATÉRIA</div>${subjects.length ? subjects.map(item => `<div class="subject-bar"><div class="subject-bar-label"><strong>${e(item.subject)}</strong><span>${item.correct}/${item.total}${item.accuracy == null ? "" : ` · ${item.accuracy}%`}</span></div><div class="progress-track"><span class="progress-fill ${progressWidthClass(item.accuracy || 0)}"></span></div><small>${item.total >= 10 ? "Amostra suficiente para leitura descritiva" : `Amostra pequena (${item.total}); sem tendência`}</small></div>`).join("") : `<p class="muted">Ainda não há respostas suficientes para mostrar desempenho por matéria.</p>`}</section><section class="panel"><div class="panel-kicker">ATIVIDADE REGISTRADA</div><p>${attempts.filter(item => item.completedAt).length} tentativas concluídas.</p><p>${sessions.length} sessões de estudo registradas explicitamente.</p><p>${errors.filter(item => item.repeated).length} questões reincidentes no Error Lab.</p><p class="tiny">Ausência de respostas aparece como —; nenhum percentual é inferido sem amostra.</p></section></div>
   </div>`;
 }
@@ -305,7 +340,7 @@ async function renderHistory(attempts, answers, sessions, progress) {
   const orderedSessions = [...sessions].sort((a, b) => Date.parse(b.startedAt) - Date.parse(a.startedAt));
   root.innerHTML = `<div class="page-wrap">${heading("HISTÓRICO", "Atividade deste dispositivo", "Tentativas, unidades e sessões explicitamente iniciadas.", `<button class="button button-quiet button-small" data-action="export-backup">Exportar backup</button>`)}
     <section class="panel"><div class="section-head"><div><div class="eyebrow">SESSÕES</div><h2>Tempo estudado</h2></div></div>${orderedSessions.length ? `<div class="table-wrap"><table class="data-table"><thead><tr><th>Início</th><th>Unidade</th><th>Duração</th><th>Ajustar minutos</th></tr></thead><tbody>${orderedSessions.map(session => `<tr><td>${e(formatDate(session.startedAt, true))}</td><td><strong>${e(session.dayCode || "Livre")}</strong></td><td>${e(session.status === "IN_PROGRESS" ? "Em andamento" : formatDuration(session.durationSeconds || 0))}</td><td>${session.status === "IN_PROGRESS" ? "—" : `<form class="inline-form" data-adjust-session="${e(session.sessionId)}"><input class="field" name="minutes" type="number" min="0" max="1440" step="1" value="${Math.round(session.durationMinutes || 0)}" aria-label="Minutos ajustados"><button class="button button-quiet button-small">Salvar</button></form>`}</td></tr>`).join("")}</tbody></table></div>` : `<p class="muted">Nenhuma sessão foi registrada. Inicie pelo Command Center ou material.</p>`}</section>
-    <div class="two-column"><section class="panel"><div class="panel-kicker">TENTATIVAS DE QUESTÕES</div>${orderedAttempts.length ? `<div class="table-wrap"><table class="data-table"><thead><tr><th>Bateria</th><th>Tentativa</th><th>Resultado</th><th>Data</th></tr></thead><tbody>${orderedAttempts.map(attempt => { const rows = answers.filter(answer => answer.attemptId === attempt.attemptId); const score = attempt.score || scoreQuestionSet([], {}); return `<tr><td><strong>${e(attempt.questionSet)}</strong></td><td>${attempt.attemptNumber}</td><td>${attempt.completedAt ? `${score.correct ?? 0}/${score.total ?? rows.length}` : "Em andamento"}</td><td>${e(formatDate(attempt.startedAt, true))}</td></tr>`; }).join("")}</tbody></table></div>` : `<p class="muted">Nenhuma tentativa registrada.</p>`}</section><section class="panel"><div class="panel-kicker">PROGRESSO EDITORIAL</div><p>${progress.filter(item => /^D\d{2}$/.test(item.id) && item.completedAt).length} unidades concluídas.</p><p>${progress.filter(item => /^R\d{2}$/.test(item.id) && item.completedAt).length} revisões registradas.</p><p>Próximo passo: ${e(currentMission(progress).code || "trilha concluída")}.</p></section></div></div>`;
+    <div class="two-column"><section class="panel"><div class="panel-kicker">TENTATIVAS DE QUESTÕES</div>${orderedAttempts.length ? `<div class="table-wrap"><table class="data-table"><thead><tr><th>Bateria</th><th>Tentativa</th><th>Resultado</th><th>Data</th></tr></thead><tbody>${orderedAttempts.map(attempt => { const rows = answers.filter(answer => answer.attemptId === attempt.attemptId); const score = attempt.score || scoreQuestionSet([], {}); const coverage = attempt.coverageStatus === "partial" ? ` · ${score.total}/${attempt.plannedQuestionCount || score.total} disponíveis` : ""; return `<tr><td><strong>${e(attempt.questionSet)}</strong></td><td>${attempt.attemptNumber}</td><td>${attempt.completedAt ? `${score.correct ?? 0}/${score.total ?? rows.length}${coverage}` : "Em andamento"}</td><td>${e(formatDate(attempt.startedAt, true))}</td></tr>`; }).join("")}</tbody></table></div>` : `<p class="muted">Nenhuma tentativa registrada.</p>`}</section><section class="panel"><div class="panel-kicker">PROGRESSO EDITORIAL</div><p>${progress.filter(item => /^D\d{2}$/.test(item.id) && item.completedAt).length} unidades concluídas.</p><p>${progress.filter(item => /^R\d{2}$/.test(item.id) && item.completedAt).length} revisões registradas.</p><p>Próximo passo: ${e(currentMission(progress).code || "trilha concluída")}.</p></section></div></div>`;
 }
 
 async function renderSettings() {
@@ -565,11 +600,12 @@ async function finishQuestionSet(setCode) {
   const score = scoreQuestionSet(day.questionSet.items, answersByQuestion);
   const completedAt = new Date().toISOString();
   const durationSeconds = Math.max(0, Math.floor((Date.parse(completedAt) - Date.parse(attempt.startedAt)) / 1000));
-  const finished = { ...attempt, completedAt, durationSeconds, score, status: "COMPLETED", updatedAt: completedAt };
+  const coverageStatus = day.questionSet.sourceStatus === "complete" ? "complete" : "partial";
+  const finished = { ...attempt, completedAt, durationSeconds, score, coverageStatus, availableQuestionCount: day.questionSet.items.length, plannedQuestionCount: day.questionGoal, status: "COMPLETED", updatedAt: completedAt };
   await putRecord("question_attempts", finished);
-  await putRecord("progress", { id: setCode, completedAt, updatedAt: completedAt, attemptId: attempt.attemptId, score });
+  await putRecord("progress", { id: setCode, completedAt, updatedAt: completedAt, attemptId: attempt.attemptId, score, coverageStatus, availableQuestionCount: day.questionSet.items.length, plannedQuestionCount: day.questionGoal });
   state.currentAttempt = finished;
-  toast(`Bateria concluída: ${score.correct}/${score.answered} acertos respondidos.`);
+  toast(coverageStatus === "complete" ? `Bateria concluída: ${score.correct}/${score.answered} acertos respondidos.` : `Bateria parcial: ${score.correct}/${score.answered} acertos em ${day.questionSet.items.length}/${day.questionGoal} questões utilizáveis.`);
   await renderRoute();
 }
 
@@ -620,7 +656,7 @@ async function retryQuestionSet(code) {
   const attemptNumber = attempts.length + 1;
   const startedAt = new Date().toISOString();
   const attemptId = `${code}-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
-  const attempt = { attemptId, questionSet: code, dayCode: day.code, attemptNumber, startedAt, completedAt: null, questionVersion: day.questionSet.contentHash || "", status: "IN_PROGRESS" };
+  const attempt = { attemptId, questionSet: code, dayCode: day.code, attemptNumber, startedAt, completedAt: null, questionVersion: day.questionSet.contentHash || "", availableQuestionCount: day.questionSet.items.length, plannedQuestionCount: day.questionGoal, coverageStatus: day.questionSet.sourceStatus, status: "IN_PROGRESS" };
   await putRecord("question_attempts", attempt);
   await putRecord("progress", { id: `active-attempt:${code}`, attemptId, updatedAt: startedAt });
   openRoute("questions", code);

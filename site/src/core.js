@@ -13,7 +13,8 @@ export function getNextMission(studyDays, reviewRows, progressRows = []) {
     const dayState = progress.get(day.code);
     if (!dayState?.completedAt) return { type: "study", code: day.code, title: day.title, day };
     const questionCode = day.questionCode || day.code.replace(/^D/, "Q");
-    if (!progress.get(questionCode)?.completedAt) return { type: "questions", code: questionCode, title: day.title, day };
+    const questionsUnavailable = Array.isArray(day.questionSet?.items) && day.questionSet.items.length === 0;
+    if (!questionsUnavailable && !progress.get(questionCode)?.completedAt) return { type: "questions", code: questionCode, title: day.title, day };
     const nextDay = days[index + 1];
     const weekFinished = !nextDay || Number(nextDay.week) !== Number(day.week);
     if (weekFinished) {
@@ -92,7 +93,8 @@ export function calculateAnalytics(attempts = [], answers = [], sessions = [], s
     trend: item.total >= 10 ? "supported" : "insufficient-sample"
   })).sort((a, b) => b.total - a.total);
   const completedDays = progress.filter(item => /^D\d{2}$/.test(item.id) && item.completedAt).length;
-  const completedQuestionSets = attempts.filter(item => item.completedAt).length;
+  const completedQuestionSets = attempts.filter(item => item.completedAt && item.coverageStatus !== "partial").length;
+  const partialQuestionSets = attempts.filter(item => item.completedAt && item.coverageStatus === "partial").length;
   const minutes = sessions.reduce((sum, session) => sum + Math.max(0, Number(session.durationMinutes) || 0), 0);
   return {
     questionCount: totalAnswers,
@@ -104,6 +106,7 @@ export function calculateAnalytics(attempts = [], answers = [], sessions = [], s
     completedDays,
     totalDays: studyDays.length,
     completedQuestionSets,
+    partialQuestionSets,
     subjects,
     sampleSize: totalAnswers
   };

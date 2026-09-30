@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {
   assertSnapshot, flattenBlockText, makeQuestionItem, notionId, parseComposition, parseOptions,
-  normalizeBlock, plainRichText, propertyValue, versionEntity
+  normalizeBlock, plainRichText, propertyValue, questionItemIssues, versionEntity
 } from "../scripts/notion-sync-lib.mjs";
 
 test("Notion rich text properties normalize without losing plain text", () => {
@@ -62,6 +62,12 @@ test("question items retain stable source IDs and the paraphrase label metadata"
   assert.equal(item.answerKey, "B");
   assert.equal(item.stem, "Pergunta resumida");
   assert.equal(item.options.length, 2);
+});
+
+test("incomplete Notion questions are excluded with an explicit reason", () => {
+  const issueList = questionItemIssues({ questionId: "Q-2", stem: "Resumo", answerKey: "A", options: [], sourceValidated: true, status: "Pronta para estudo" });
+  assert.deepEqual(issueList, ["unusable_options"]);
+  assert.ok(questionItemIssues({ questionId: "Q-3", stem: "", answerKey: "", options: [], sourceValidated: false, status: "Revisar gabarito" }).includes("missing_stem"));
 });
 
 test("snapshot validator rejects truncated source material", () => {

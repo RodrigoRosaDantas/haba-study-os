@@ -2,7 +2,7 @@ import { mkdir, readFile, rename, writeFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import {
   SOURCE_IDS, assertSnapshot, fetchPageBundle, flattenBlockText, makeQuestionItem,
-  notionId, parseComposition, propertyValue, queryDataSource, sha256, versionEntity
+  notionId, parseComposition, propertyValue, queryDataSource, questionItemIssues, sha256, versionEntity
 } from "./notion-sync-lib.mjs";
 
 const OUTPUT = resolve("site/data/content.json");
@@ -125,12 +125,13 @@ async function buildSnapshot(previous) {
   }
 
   const sourceQuestionSets = new Map();
-  for (let index = 1; index <= 75; index += 1) {
-    const code = `Q${String(index).padStart(2, "0")}`;
-    sourceQuestionSets.set(code, sortQuestionRows(questionRows.filter(row =>
-      hasOfficialTag(propertyValue(row, "Uso na trilha oficial"), code)
-      && stringValue(row, "Status").toLowerCase() === "pronta para estudo"
-    )));
+  for (let index = 1; index <= 75; index += 1) sourceQuestionSets.set(`Q${String(index).padStart(2, "0")}`, []);
+  for (const row of questionRows) {
+    const tags = new Set(String(propertyValue(row, "Uso na trilha oficial")).toUpperCase().match(/Q\d{2}-BATERIA/g) || []);
+    for (let index = 1; index <= 75; index += 1) {
+      const code = `Q${String(index).padStart(2, "0")}`;
+      if (tags.has(`${code}-BATERIA`) && hasOfficialTag(propertyValue(row, "Uso na trilha oficial"), code)) sourceQuestionSets.get(code).push(row);
+    }
   }
 
   const sourceUpdatedAt = newestDate(
@@ -148,8 +149,24 @@ async function buildSnapshot(previous) {
     const questionBundle = bundles.get(questionPageId);
     if (!materialBundle || !questionBundle) throw new Error(`${code} não aponta para página de material e bateria de questões.`);
     const goal = numberValue(page, "Meta de questões");
-    const sourceQuestionRows = sourceQuestionSets.get(code.replace("D", "Q")) || [];
-    const items = sourceQuestionRows.map((row, index) => makeQuestionItem(row, code.replace("D", "Q"), index + 1));
+    const questionCode = code.replace("D", "Q");
+    const sourceQuestionRows = sortQuestionRows(sourceQuestionSets.get(questionCode) || []);
+    const assessedRows = sourceQuestionRows.map((row, index) => {
+      const item = makeQuestionItem(row, questionCode, index + 1);
+      return { item, issues: questionItemIssues(item) };
+    });
+    const items = assessedRows.filter(row => row.issues.length === 0).map(row => row.item);
+    const unavailableItems = assessedRows.filter(row => row.issues.length > 0).map(({ item, issues }) => ({
+      questionId: item.questionId,
+      notionPageId: item.notionPageId,
+      title: item.title,
+      reasons: issues
+    }));
+    const missingCount = Math.max(0, goal - sourceQuestionRows.length);
+    const extraCount = Math.max(0, sourceQuestionRows.length - goal);
+    const sourceStatus = items.length === goal && sourceQuestionRows.length === goal && unavailableItems.length === 0
+      ? "complete"
+      : items.length ? "partial" : "unavailable";
     const oldItems = new Map((previousDays.get(code)?.questionSet?.items || []).map(item => [item.questionId, item]));
     const versionedItems = items.map(item => versionEntity(item, oldItems.get(item.questionId)));
     const compositionText = [
@@ -174,11 +191,17 @@ async function buildSnapshot(previous) {
       notionUpdatedAt: page.last_edited_time || "",
       material: { pageId: materialBundle.pageId, title: materialBundle.title, updatedAt: materialBundle.updatedAt, blocks: materialBundle.blocks },
       questionSet: {
-        code: code.replace("D", "Q"),
+        code: questionCode,
         pageId: questionBundle.pageId,
         title: questionBundle.title,
         updatedAt: questionBundle.updatedAt,
         composition,
+        sourceStatus,
+        availableCount: versionedItems.length,
+        sourceRowCount: sourceQuestionRows.length,
+        missingCount,
+        extraCount,
+        unavailableItems,
         items: versionedItems
       },
       reviewCode: reviewCode(stringValue(reviewPages.get(reviewPageId) || {}, "Dia")) || `R${String(numberValue(page, "Semana")).padStart(2, "0")}`,
@@ -251,8 +274,19 @@ async function buildSnapshot(previous) {
     return versionEntity(payload, previousCycles.get(cycle.code));
   });
 
+  const questionCoverage = {
+    status: studyDays.every(day => day.questionSet.sourceStatus === "complete") ? "complete" : "partial",
+    completeSets: studyDays.filter(day => day.questionSet.sourceStatus === "complete").length,
+    partialSets: studyDays.filter(day => day.questionSet.sourceStatus === "partial").length,
+    unavailableSets: studyDays.filter(day => day.questionSet.sourceStatus === "unavailable").length,
+    totalSets: studyDays.length,
+    usableQuestions: studyDays.reduce((sum, day) => sum + day.questionSet.items.length, 0),
+    plannedQuestions: studyDays.reduce((sum, day) => sum + Number(day.questionGoal || 0), 0),
+    excludedRows: studyDays.reduce((sum, day) => sum + day.questionSet.unavailableItems.length, 0),
+    missingRows: studyDays.reduce((sum, day) => sum + day.questionSet.missingCount, 0)
+  };
   const snapshot = {
-    schemaVersion: 1,
+    schemaVersion: 2,
     rootPageId: ROOT_PAGE_ID,
     meta: {
       generatedAt: new Date().toISOString(),
@@ -260,7 +294,8 @@ async function buildSnapshot(previous) {
       source: "Notion · HABA Study OS",
       sourceRootUrl: `https://www.notion.so/${ROOT_PAGE_ID.replaceAll("-", "")}`,
       contentVersion: "",
-      counts: { studyDays: studyDays.length, reviews: reviews.length, restDays: restDays.length, cycles: cycles.length, questions: studyDays.reduce((sum, day) => sum + day.questionSet.items.length, 0) }
+      counts: { studyDays: studyDays.length, reviews: reviews.length, restDays: restDays.length, cycles: cycles.length, questions: questionCoverage.usableQuestions, plannedQuestions: questionCoverage.plannedQuestions, completeQuestionSets: questionCoverage.completeSets },
+      questionCoverage
     },
     studyDays,
     reviews,
@@ -279,4 +314,4 @@ await mkdir(dirname(OUTPUT), { recursive: true });
 const temporary = `${OUTPUT}.tmp`;
 await writeFile(temporary, output, { encoding: "utf8", mode: 0o644 });
 await rename(temporary, OUTPUT);
-console.log(`Snapshot Notion validado: ${snapshot.meta.counts.studyDays} dias, ${snapshot.meta.counts.questions} questões, ${snapshot.meta.counts.reviews} revisões.`);
+console.log(`Snapshot Notion validado: ${snapshot.meta.counts.studyDays} dias, ${snapshot.meta.counts.questions}/${snapshot.meta.counts.plannedQuestions} questões utilizáveis, ${snapshot.meta.questionCoverage.completeSets}/${snapshot.meta.questionCoverage.totalSets} baterias completas e ${snapshot.meta.counts.reviews} revisões.`);
