@@ -35,7 +35,7 @@ else ok("CSS sem dependência externa");
 if (/style-src[^;]*unsafe-inline/i.test(html) || /\bstyle\s*=|\.style\./i.test(`${html}\n${app}`)) fail("shell usa estilo inline incompatível com a CSP");
 if (!html.includes("https://*.workers.dev") || !html.includes("script-src 'self'")) fail("CSP não permite o Worker configurável ou enfraquece scripts");
 else ok("CSP para script próprio e backend HTTPS");
-if (!sw.includes("CONTENT_CACHE") || !sw.includes("networkFirstContent") || !sw.includes("SKIP_WAITING") || !sw.includes("candidate.studyDays.length === 75")) fail("service worker deve preservar snapshot offline e esperar atualização explícita");
+if (!sw.includes("haba-study-os-content-v2") || !sw.includes("networkFirstContent") || !sw.includes("SKIP_WAITING") || !sw.includes("candidate?.schemaVersion === 2") || !sw.includes("candidate.studyDays.length === 75")) fail("service worker deve validar o schema 2, preservar snapshot offline e esperar atualização explícita");
 else ok("service worker offline e atualização controlada");
 
 const requiredStores = ["study_sessions", "question_attempts", "question_answers", "errors", "revisions", "progress", "reading_progress", "sync_queue", "content_versions", "backups"];

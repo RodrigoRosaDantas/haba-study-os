@@ -1,5 +1,5 @@
-const SHELL_CACHE = "haba-study-os-shell-v1";
-const CONTENT_CACHE = "haba-study-os-content-v1";
+const SHELL_CACHE = "haba-study-os-shell-v2";
+const CONTENT_CACHE = "haba-study-os-content-v2";
 const SHELL_FILES = [
   "./", "./index.html", "./styles.css", "./manifest.webmanifest", "./icons/favicon.svg",
   "./icons/icon-192.png", "./icons/icon-512.png", "./src/app.js", "./src/backup.js",
@@ -19,7 +19,8 @@ self.addEventListener("install", event => {
 self.addEventListener("activate", event => {
   event.waitUntil((async () => {
     const keys = await caches.keys();
-    await Promise.all(keys.filter(key => key.startsWith("haba-study-os-shell-") && key !== SHELL_CACHE).map(key => caches.delete(key)));
+    await Promise.all(keys.filter(key => (key.startsWith("haba-study-os-shell-") && key !== SHELL_CACHE)
+      || (key.startsWith("haba-study-os-content-") && key !== CONTENT_CACHE)).map(key => caches.delete(key)));
     await self.clients.claim();
   })());
 });
@@ -34,7 +35,7 @@ async function networkFirstContent(request) {
     const response = await fetch(request, { cache: "no-store" });
     if (response.ok) {
       const candidate = await response.clone().json();
-      if (candidate?.schemaVersion === 1 && Array.isArray(candidate.studyDays) && candidate.studyDays.length === 75) {
+      if (candidate?.schemaVersion === 2 && candidate.meta?.contentVersion && Array.isArray(candidate.studyDays) && candidate.studyDays.length === 75) {
         await cache.put(request, response.clone());
         return response;
       }
