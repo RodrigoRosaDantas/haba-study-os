@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {
   assertSnapshot, flattenBlockText, makeQuestionItem, notionId, parseComposition, parseOptions,
-  plainRichText, propertyValue, versionEntity
+  normalizeBlock, plainRichText, propertyValue, versionEntity
 } from "../scripts/notion-sync-lib.mjs";
 
 test("Notion rich text properties normalize without losing plain text", () => {
@@ -26,6 +26,12 @@ test("battery composition and alternatives preserve the actual question plan", (
 
 test("page normalization flattens nested block text for official composition checks", () => {
   assert.match(flattenBlockText([{ richText: [{ text: "Bateria montada:" }], children: [{ richText: [{ text: "8 principais + 4 complementares = 12" }] }] }]), /8 principais \+ 4 complementares/);
+});
+
+test("child page titles remain intact when the Notion API returns a plain string", () => {
+  const child = normalizeBlock({ id: "child-1", type: "child_page", child_page: { title: "Página interna" } });
+  assert.equal(child.title, "Página interna");
+  assert.deepEqual(child.richText, []);
 });
 
 test("stable entity revisions change only when editorial payload changes", () => {

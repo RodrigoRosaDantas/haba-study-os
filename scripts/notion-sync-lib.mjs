@@ -82,7 +82,8 @@ function imageHref(value) {
 export function normalizeBlock(block) {
   const type = block.type;
   const data = block[type] || {};
-  const rich = data.rich_text || data.title || data.caption || [];
+  const richSource = data.rich_text ?? data.title ?? data.caption ?? [];
+  const rich = Array.isArray(richSource) ? richSource : [];
   const result = { id: block.id, type, richText: rich.map(richTextPart), children: [] };
   if (type === "to_do") result.checked = Boolean(data.checked);
   if (type === "callout") result.icon = data.icon?.emoji || data.icon?.external?.url || "";
