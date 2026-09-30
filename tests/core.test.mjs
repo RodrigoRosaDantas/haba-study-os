@@ -53,6 +53,7 @@ test("Error Lab upserts by stable Question ID and preserves first-error data", (
   assert.equal(repeated.errorCount, 2);
   assert.equal(repeated.repeated, true);
   assert.equal(repeated.status, "REPEATED");
+  assert.equal(Object.hasOwn(repeated, "syncStatus"), false);
 });
 
 test("analytics represent no data as unknown and withhold thin trends", () => {
