@@ -79,6 +79,30 @@ export function upsertError(current, question, selected, now = new Date().toISOS
     updatedAt: now
   };
 }
+export function createQuestionSetSnapshot(day, contentVersion, now = new Date().toISOString()) {
+  const questionSet = JSON.parse(JSON.stringify(day.questionSet));
+  const questionVersion = String(questionSet.contentHash || contentVersion || "");
+  if (!questionSet.code || !questionVersion) throw new Error("Não foi possível identificar a versão desta bateria.");
+  return {
+    entityId: "question-set:" + questionSet.code + ":" + questionVersion,
+    questionSetCode: questionSet.code,
+    questionVersion,
+    questionSet,
+    daySnapshot: {
+      code: day.code,
+      title: day.title || "",
+      focus: day.focus || "",
+      complementary: day.complementary || "",
+      cycle: day.cycle || "",
+      week: Number(day.week) || 0,
+      weekday: day.weekday || "",
+      questionGoal: Number(day.questionGoal) || 0
+    },
+    createdAt: now,
+    updatedAt: now
+  };
+}
+
 export function calculateAnalytics(attempts = [], answers = [], sessions = [], studyDays = [], progress = []) {
   const totalAnswers = answers.length;
   const correct = answers.filter(answer => answer.isCorrect === true).length;
