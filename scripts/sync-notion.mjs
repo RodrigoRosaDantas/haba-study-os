@@ -150,7 +150,7 @@ async function buildSnapshot(previous) {
     const goal = numberValue(page, "Meta de questões");
     const sourceQuestionRows = sourceQuestionSets.get(code.replace("D", "Q")) || [];
     const items = sourceQuestionRows.map((row, index) => makeQuestionItem(row, code.replace("D", "Q"), index + 1));
-    const oldItems = new Map((previousDays.find(day => day.code === code)?.questionSet?.items || []).map(item => [item.questionId, item]));
+    const oldItems = new Map((previousDays.get(code)?.questionSet?.items || []).map(item => [item.questionId, item]));
     const versionedItems = items.map(item => versionEntity(item, oldItems.get(item.questionId)));
     const compositionText = [
       flattenBlockText(questionBundle.blocks),
