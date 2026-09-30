@@ -2,17 +2,17 @@
   "schemaVersion": 2,
   "rootPageId": "3dfcf5a2-6731-8119-9194-d4ab2ed5c26d",
   "meta": {
-    "generatedAt": "2026-09-30T19:43:38.518Z",
-    "sourceUpdatedAt": "2026-09-30T19:17:00.000Z",
+    "generatedAt": "2026-09-30T20:16:55.860Z",
+    "sourceUpdatedAt": "2026-09-30T20:02:00.000Z",
     "source": "Notion · HABA Study OS",
     "sourceRootUrl": "https://www.notion.so/3dfcf5a2673181199194d4ab2ed5c26d",
-    "contentVersion": "9da601b85b453a76686eb6eb70d2d0b9f44954a0e16bd5fe1cc29cae9c881fa6",
+    "contentVersion": "699ac8b070bd86cd6a428569c7f710f7aacc43486231b84982d6f052c7e0e5fc",
     "counts": {
       "studyDays": 75,
       "reviews": 15,
       "restDays": 15,
       "cycles": 5,
-      "questions": 104,
+      "questions": 110,
       "plannedQuestions": 1603,
       "completeQuestionSets": 2
     },
@@ -22,9 +22,9 @@
       "partialSets": 8,
       "unavailableSets": 65,
       "totalSets": 75,
-      "usableQuestions": 104,
+      "usableQuestions": 110,
       "plannedQuestions": 1603,
-      "excludedRows": 57,
+      "excludedRows": 51,
       "missingRows": 1442
     }
   },
@@ -17935,7 +17935,7 @@
         "code": "Q02",
         "pageId": "3dfcf5a2-6731-8128-b890-c9a36408a556",
         "title": "Q02 — Questões | Banco de dados — fundamentos e modelo relacional + Matemática — porcentagem, razão e proporção",
-        "updatedAt": "2026-09-22T14:29:00.000Z",
+        "updatedAt": "2026-09-30T20:02:00.000Z",
         "composition": {
           "total": 12,
           "main": 8,
@@ -17943,7 +17943,7 @@
           "source": "regra-70-30"
         },
         "sourceStatus": "partial",
-        "availableCount": 8,
+        "availableCount": 11,
         "sourceRowCount": 12,
         "missingCount": 0,
         "extraCount": 0,
@@ -17952,30 +17952,6 @@
             "questionId": "Q1824884",
             "notionPageId": "3dfcf5a2-6731-810d-a7e6-ca8c13e59e10",
             "title": "BB 2021 — CREATE TABLE e tipos",
-            "reasons": [
-              "unusable_options"
-            ]
-          },
-          {
-            "questionId": "Q2174433",
-            "notionPageId": "3e3cf5a2-6731-81da-9fe3-d13ad6760489",
-            "title": "AGERIO 2023 — Aumentos percentuais sucessivos",
-            "reasons": [
-              "unusable_options"
-            ]
-          },
-          {
-            "questionId": "Q3055890",
-            "notionPageId": "3e3cf5a2-6731-8105-9d85-c887fa6eade6",
-            "title": "BASA 2024 — Desconto e aumento sucessivos",
-            "reasons": [
-              "unusable_options"
-            ]
-          },
-          {
-            "questionId": "Q3055919",
-            "notionPageId": "3e3cf5a2-6731-8176-b91f-fe1f19e8f1ee",
-            "title": "BASA 2024 — Taxa de rotatividade de 14%",
             "reasons": [
               "unusable_options"
             ]
@@ -17994,27 +17970,39 @@
             "exam": "BB 2021 — Agente de Tecnologia",
             "board": "Cesgranrio",
             "year": 2021,
-            "stem": "Um modelo inicial mistura dados de terreno, empresa, donos e riscos e apresenta dependências funcionais e relacionamentos muitos-para-muitos. Qual decomposição usa o menor número adequado de tabelas e preserva as dependências na terceira forma normal?",
-            "optionsSummary": "A) separa Terreno, Empresa, Dono, Risco, TipoRisco e PessoaFisica | B-E) mantêm dependências transitivas, multivalorados ou relacionamentos mal modelados",
+            "stem": "Considere o modelo inicial Terreno(rua, numero, tipoTerreno, CNPJ, nomeEmpresa, codigoRisco, nomeRisco, probabilidadeRisco) e Empresa(CNPJ, nomeEmpresa, CPFs, nomePessoas). Valem as dependências codigoRisco → nomeRisco; CNPJ → nomeEmpresa; CPF → nomePessoa; {rua,numero} → CNPJ. Além disso, empresa↔dono é N:N e um terreno pode possuir vários riscos. Qual esquema usa o menor número de tabelas, preserva essas propriedades e fica em 3FN?",
+            "optionsSummary": "A) Terreno(rua,numero,tipoTerreno,CNPJ); Empresa(CNPJ,nomeEmpresa); Dono(CNPJ,CPF); Risco(rua,nome,codigoRisco,probabilidadeRisco); TipoRisco(codigoRisco,nomeRisco); PessoaFisica(CPF,nome) | B) Terreno(rua,numero,tipoTerreno,CNPJ,codigoRisco,probabilidadeRisco); Empresa(CNPJ,nomeEmpresa); Dono(CNPJ,CPF); TipoRisco(codigoRisco,nomeRisco); PessoaFisica(CPF,nome) | C) Terreno(rua,numero,tipoTerreno,CNPJ); Empresa(CNPJ,nomeEmpresa); Risco(rua,nome,codigoRisco,probabilidadeRisco); TipoRisco(codigoRisco,nomeRisco); PessoaFisica(CPF,nome,CNPJ) | D) Terreno(rua,numero,tipoTerreno,CNPJ,nomeEmpresa,codigoRisco,nomeRisco,probabilidadeRisco); Empresa(CNPJ,CPF,nomeEmpresa,nomePessoa) | E) Terreno(rua,numero,tipoTerreno,CNPJ,nomeEmpresa,codigoRisco,probabilidadeRisco); Risco(codigoRisco,nomeRisco); Empresa(CNPJ,CPF,nomeEmpresa,nomePessoa)",
             "options": [
               {
                 "key": "A",
-                "text": "separa Terreno, Empresa, Dono, Risco, TipoRisco e PessoaFisica"
+                "text": "Terreno(rua,numero,tipoTerreno,CNPJ); Empresa(CNPJ,nomeEmpresa); Dono(CNPJ,CPF); Risco(rua,nome,codigoRisco,probabilidadeRisco); TipoRisco(codigoRisco,nomeRisco); PessoaFisica(CPF,nome)"
               },
               {
                 "key": "B",
-                "text": "E) mantêm dependências transitivas, multivalorados ou relacionamentos mal modelados"
+                "text": "Terreno(rua,numero,tipoTerreno,CNPJ,codigoRisco,probabilidadeRisco); Empresa(CNPJ,nomeEmpresa); Dono(CNPJ,CPF); TipoRisco(codigoRisco,nomeRisco); PessoaFisica(CPF,nome)"
+              },
+              {
+                "key": "C",
+                "text": "Terreno(rua,numero,tipoTerreno,CNPJ); Empresa(CNPJ,nomeEmpresa); Risco(rua,nome,codigoRisco,probabilidadeRisco); TipoRisco(codigoRisco,nomeRisco); PessoaFisica(CPF,nome,CNPJ)"
+              },
+              {
+                "key": "D",
+                "text": "Terreno(rua,numero,tipoTerreno,CNPJ,nomeEmpresa,codigoRisco,nomeRisco,probabilidadeRisco); Empresa(CNPJ,CPF,nomeEmpresa,nomePessoa)"
+              },
+              {
+                "key": "E",
+                "text": "Terreno(rua,numero,tipoTerreno,CNPJ,nomeEmpresa,codigoRisco,probabilidadeRisco); Risco(codigoRisco,nomeRisco); Empresa(CNPJ,CPF,nomeEmpresa,nomePessoa)"
               }
             ],
             "answerText": "A",
             "answerKey": "A",
-            "commentary": "Para atingir 3FN, atributos dependentes de código de risco e CNPJ são separados, e os relacionamentos N:N precisam de tabelas associativas próprias.",
+            "commentary": "A. CNPJ→nomeEmpresa exige separar Empresa; codigoRisco→nomeRisco exige TipoRisco; empresa↔dono é N:N, portanto Dono(CNPJ,CPF); e um terreno pode ter vários riscos, exigindo relação própria Risco entre terreno e tipo de risco. PessoaFisica separa CPF→nome. As demais alternativas mantêm atributo multivalorado, dependência transitiva ou modelam incorretamente os relacionamentos N:N.",
             "sourceUrl": "https://www.qconcursos.com/questoes-de-concursos/provas/cesgranrio-2021-banco-do-brasil-agente-de-tecnologia/questoes?discipline_ids%5B%5D=96",
             "sourceValidated": true,
             "status": "Pronta para estudo",
-            "updatedAt": "2026-09-22T17:59:00.000Z",
-            "revision": 1,
-            "contentHash": "2dbbe51397c483b42c6bc5540d8e685378d3a4b8f0bd41aa96c13a6965af9fd2"
+            "updatedAt": "2026-09-30T20:01:00.000Z",
+            "revision": 2,
+            "contentHash": "3b1b2bd761036b12c14bfe3ed3493e7759036ae7dce738b4290d4dd97bd523b6"
           },
           {
             "questionId": "Q1824879",
@@ -18201,6 +18189,52 @@
             "contentHash": "70e606eb62432387017825eae93311cfde32c1780acbce459efc0b3b5a8f3434"
           },
           {
+            "questionId": "Q2174433",
+            "occurrenceId": "Q02-007",
+            "ordinal": 7,
+            "notionPageId": "3e3cf5a2-6731-81da-9fe3-d13ad6760489",
+            "setCode": "Q02",
+            "title": "AGERIO 2023 — Aumentos percentuais sucessivos",
+            "subject": "Matemática",
+            "topic": "Porcentagem — variações sucessivas",
+            "exam": "AGERIO 2023 — Assistente Técnico Administrativo",
+            "board": "Cesgranrio",
+            "year": 2023,
+            "stem": "Um preço aumenta sucessivamente 5%, 10% e 20% em meses consecutivos. Qual é o aumento percentual acumulado em relação ao preço inicial?",
+            "optionsSummary": "A) 11,7% | B) 20,0% | C) 35,0% | D) 37,0% | E) 38,6%",
+            "options": [
+              {
+                "key": "A",
+                "text": "11,7%"
+              },
+              {
+                "key": "B",
+                "text": "20,0%"
+              },
+              {
+                "key": "C",
+                "text": "35,0%"
+              },
+              {
+                "key": "D",
+                "text": "37,0%"
+              },
+              {
+                "key": "E",
+                "text": "38,6%"
+              }
+            ],
+            "answerText": "E — 38,6%",
+            "answerKey": "E",
+            "commentary": "E. Em variações sucessivas, multiplicam-se os fatores: 1,05×1,10×1,20 = 1,386. Assim, o preço final é 138,6% do inicial, isto é, aumento acumulado de 38,6%. Somar 5%+10%+20%=35% ignora que cada aumento incide sobre o preço já reajustado.",
+            "sourceUrl": "https://www.qconcursos.com/questoes-de-concursos/questoes?discipline_ids%5B%5D=13&examining_board_ids%5B%5D=5&subject_ids%5B%5D=20321",
+            "sourceValidated": true,
+            "status": "Pronta para estudo",
+            "updatedAt": "2026-09-30T20:01:00.000Z",
+            "revision": 1,
+            "contentHash": "762a58176c50c554a76d680c587f9f04e34443c2ba568c6804d3fbf160e8a21d"
+          },
+          {
             "questionId": "Q3044875",
             "occurrenceId": "Q02-008",
             "ordinal": 8,
@@ -18212,39 +18246,39 @@
             "exam": "BNDES 2024 — Analista — Análise de Sistemas — Desenvolvimento (Manhã)",
             "board": "Cesgranrio",
             "year": 2024,
-            "stem": "Uma tabela PESSOA já usa CPF como chave primária. Ao adicionar o atributo RG, o que ocorre com a chave primária existente?",
-            "optionsSummary": "A PK vira CPF+RG; B passa a ter duas PKs; C CPF continua PK; D RG precisa ser FK; E domínios de CPF e RG devem coincidir.",
+            "stem": "Considere PESSOA(CPF, nome, data-nascimento, email), definida no modelo relacional com CPF como chave primária. O atributo RG precisa ser adicionado. Depois dessa inclusão, qual afirmação sobre a chave primária é correta?",
+            "optionsSummary": "A) a PK passa a ser CPF+RG | B) a tabela passa a ter duas PKs | C) CPF continua sendo a PK | D) RG precisa necessariamente ser FK | E) os domínios de CPF e RG precisam ser compatibilizados",
             "options": [
               {
                 "key": "A",
-                "text": "PK vira CPF+RG"
+                "text": "a PK passa a ser CPF+RG"
               },
               {
                 "key": "B",
-                "text": "passa a ter duas PKs"
+                "text": "a tabela passa a ter duas PKs"
               },
               {
                 "key": "C",
-                "text": "CPF continua PK"
+                "text": "CPF continua sendo a PK"
               },
               {
                 "key": "D",
-                "text": "RG precisa ser FK"
+                "text": "RG precisa necessariamente ser FK"
               },
               {
                 "key": "E",
-                "text": "domínios de CPF e RG devem coincidir."
+                "text": "os domínios de CPF e RG precisam ser compatibilizados"
               }
             ],
             "answerText": "C — CPF continua sendo a chave primária",
             "answerKey": "C",
-            "commentary": "Aderente ao D02 por testar conceito de chave primária sem exigir SQL avançado.",
+            "commentary": "C. Adicionar um novo atributo não altera automaticamente a chave primária já definida. CPF continua identificando unicamente cada tupla. Não surge uma segunda PK (B), RG não precisa integrar a PK (A) nem ser FK (D), e CPF/RG não precisam compartilhar o mesmo domínio (E).",
             "sourceUrl": "https://www.qconcursos.com/questoes-de-concursos/questoes/f840e35d-8c",
             "sourceValidated": true,
             "status": "Pronta para estudo",
-            "updatedAt": "2026-09-22T14:28:00.000Z",
-            "revision": 1,
-            "contentHash": "d7b1dc69bcb6ffb08ee0a6e6c6c438758b23c11c4564fc2166da87a1f306b187"
+            "updatedAt": "2026-09-30T20:01:00.000Z",
+            "revision": 2,
+            "contentHash": "91b2d4ab1d82baa03e084e8c41820d6b898cfa684318659e1ff7da43c1924333"
           },
           {
             "questionId": "Q3048966",
@@ -18259,38 +18293,130 @@
             "board": "Cesgranrio",
             "year": 2024,
             "stem": "No modelo relacional, o que o domínio de um atributo determina em relação aos valores que esse atributo pode assumir?",
-            "optionsSummary": "A participação em PK; B correspondência obrigatória com PK externa; C área de conhecimento; D conjunto de valores possíveis; E todos os tipos de dados suportáveis.",
+            "optionsSummary": "A) participação do atributo em uma chave primária | B) correspondência obrigatória com uma chave primária externa | C) área de conhecimento a que pertence o atributo | D) conjunto de valores possíveis que o atributo pode assumir | E) todos os tipos de dados que o SGBD suporta",
             "options": [
               {
                 "key": "A",
-                "text": "participação em PK"
+                "text": "participação do atributo em uma chave primária"
               },
               {
                 "key": "B",
-                "text": "correspondência obrigatória com PK externa"
+                "text": "correspondência obrigatória com uma chave primária externa"
               },
               {
                 "key": "C",
-                "text": "área de conhecimento"
+                "text": "área de conhecimento a que pertence o atributo"
               },
               {
                 "key": "D",
-                "text": "conjunto de valores possíveis"
+                "text": "conjunto de valores possíveis que o atributo pode assumir"
               },
               {
                 "key": "E",
-                "text": "todos os tipos de dados suportáveis."
+                "text": "todos os tipos de dados que o SGBD suporta"
               }
             ],
             "answerText": "D — conjunto de valores possíveis",
             "answerKey": "D",
-            "commentary": "Questão diretamente aderente ao D02: domínio de atributo como conjunto de valores admissíveis.",
+            "commentary": "D. No modelo relacional, domínio é o conjunto de valores admissíveis para um atributo. Não define se o atributo participa de PK/FK (A/B), não significa área temática (C) e não corresponde ao conjunto de todos os tipos suportados pelo SGBD (E).",
             "sourceUrl": "https://www.qconcursos.com/questoes-de-concursos/questoes/84850fd6-91",
             "sourceValidated": true,
             "status": "Pronta para estudo",
-            "updatedAt": "2026-09-22T14:28:00.000Z",
+            "updatedAt": "2026-09-30T20:01:00.000Z",
+            "revision": 2,
+            "contentHash": "b530805dd9407a067b34d5f168f7c87362f935965d427759e3c8f5b5f40598e5"
+          },
+          {
+            "questionId": "Q3055890",
+            "occurrenceId": "Q02-010",
+            "ordinal": 10,
+            "notionPageId": "3e3cf5a2-6731-8105-9d85-c887fa6eade6",
+            "setCode": "Q02",
+            "title": "BASA 2024 — Desconto e aumento sucessivos",
+            "subject": "Matemática",
+            "topic": "Porcentagem — desconto e aumento sucessivos",
+            "exam": "Banco da Amazônia 2024 — Técnico Bancário",
+            "board": "Cesgranrio",
+            "year": 2024,
+            "stem": "Um preço sofre desconto de 20% e depois aumento de 100%, ambos sobre o valor vigente. Qual desconto sobre o preço final o faria retornar ao preço inicial?",
+            "optionsSummary": "A) 37,5% | B) 40,0% | C) 60,0% | D) 62,5% | E) 80,0%",
+            "options": [
+              {
+                "key": "A",
+                "text": "37,5%"
+              },
+              {
+                "key": "B",
+                "text": "40,0%"
+              },
+              {
+                "key": "C",
+                "text": "60,0%"
+              },
+              {
+                "key": "D",
+                "text": "62,5%"
+              },
+              {
+                "key": "E",
+                "text": "80,0%"
+              }
+            ],
+            "answerText": "A — 37,5%",
+            "answerKey": "A",
+            "commentary": "A. Tome P=100. Após desconto de 20%, o preço vai a 80; com aumento de 100%, Q=160. Para voltar de 160 a 100 é preciso retirar 60, isto é, 60/160=0,375=37,5%. Percentuais sucessivos incidem sobre bases diferentes, por isso não se somam/subtraem diretamente.",
+            "sourceUrl": "https://www.qconcursos.com/questoes-de-concursos/questoes/5c2a6001-96",
+            "sourceValidated": true,
+            "status": "Pronta para estudo",
+            "updatedAt": "2026-09-30T20:01:00.000Z",
             "revision": 1,
-            "contentHash": "2201e5351e5b10bd56df7804b91989c1f89e9175a678a4a744109852bf9976a1"
+            "contentHash": "4627bb52a24639478ec3608019410f7eeaf1e4d56200b5f3be99ce00f3b4c110"
+          },
+          {
+            "questionId": "Q3055919",
+            "occurrenceId": "Q02-011",
+            "ordinal": 11,
+            "notionPageId": "3e3cf5a2-6731-8176-b91f-fe1f19e8f1ee",
+            "setCode": "Q02",
+            "title": "BASA 2024 — Taxa de rotatividade de 14%",
+            "subject": "Matemática",
+            "topic": "Porcentagem — cálculo direto",
+            "exam": "Banco da Amazônia 2024 — Técnico Bancário",
+            "board": "Cesgranrio",
+            "year": 2024,
+            "stem": "Uma agência tem 424 clientes e admite rotatividade máxima de 14%. Qual é a maior quantidade inteira de clientes que pode encerrar a conta sem ultrapassar essa taxa?",
+            "optionsSummary": "A) 14 | B) 59 | C) 110 | D) 330 | E) 410",
+            "options": [
+              {
+                "key": "A",
+                "text": "14"
+              },
+              {
+                "key": "B",
+                "text": "59"
+              },
+              {
+                "key": "C",
+                "text": "110"
+              },
+              {
+                "key": "D",
+                "text": "330"
+              },
+              {
+                "key": "E",
+                "text": "410"
+              }
+            ],
+            "answerText": "B — 59",
+            "answerKey": "B",
+            "commentary": "B. 14% de 424 = 0,14×424 = 59,36. Como a quantidade de clientes deve ser inteira e não pode ultrapassar a taxa máxima, o maior número admissível é 59; 60 clientes já corresponderiam a mais de 14%.",
+            "sourceUrl": "https://www.qconcursos.com/questoes-de-concursos/questoes?discipline_ids%5B%5D=13&examining_board_ids%5B%5D=5&scholarity_ids%5B%5D=2&subject_ids%5B%5D=20321",
+            "sourceValidated": true,
+            "status": "Pronta para estudo",
+            "updatedAt": "2026-09-30T20:01:00.000Z",
+            "revision": 1,
+            "contentHash": "615b76aa9fdcb96c5c9ca051154443fe46efc3087babe9e6a9506bf369314135"
           },
           {
             "questionId": "Q3057471",
@@ -18305,47 +18431,47 @@
             "board": "Cesgranrio",
             "year": 2024,
             "stem": "Em uma tabela relacional com várias chaves possíveis, qual afirmação correta descreve uma relação possível entre chave primária e chave estrangeira?",
-            "optionsSummary": "A FK ausente por número negativo; B limite de três PKs; C PK pode também ser FK; D PK limitada a dois atributos; E FK numérica pode apontar PK de data.",
+            "optionsSummary": "A) ausência de valor em FK é sempre indicada por número negativo | B) uma tabela pode ter no máximo três chaves primárias | C) uma chave primária pode ser, ao mesmo tempo, uma chave estrangeira | D) uma chave primária não pode ter mais de dois atributos | E) uma PK do tipo data pode ser referenciada por FK do tipo número",
             "options": [
               {
                 "key": "A",
-                "text": "FK ausente por número negativo"
+                "text": "ausência de valor em FK é sempre indicada por número negativo"
               },
               {
                 "key": "B",
-                "text": "limite de três PKs"
+                "text": "uma tabela pode ter no máximo três chaves primárias"
               },
               {
                 "key": "C",
-                "text": "PK pode também ser FK"
+                "text": "uma chave primária pode ser, ao mesmo tempo, uma chave estrangeira"
               },
               {
                 "key": "D",
-                "text": "PK limitada a dois atributos"
+                "text": "uma chave primária não pode ter mais de dois atributos"
               },
               {
                 "key": "E",
-                "text": "FK numérica pode apontar PK de data."
+                "text": "uma PK do tipo data pode ser referenciada por FK do tipo número"
               }
             ],
             "answerText": "C — uma chave primária pode ser também chave estrangeira",
             "answerKey": "C",
-            "commentary": "Aderente ao D02 por cobrar semântica de PK/FK e integridade estrutural do modelo relacional.",
+            "commentary": "C. Uma coluna (ou conjunto de colunas) pode identificar unicamente a linha de sua própria tabela e, ao mesmo tempo, referenciar uma chave de outra tabela — caso comum em relacionamentos 1:1. A é falsa porque ausência pode ser NULL quando permitida; B é falsa porque há uma única restrição de PK por tabela; D é falsa porque uma PK composta pode ter mais de dois atributos; E viola a compatibilidade esperada entre domínios da chave referenciada e da FK.",
             "sourceUrl": "https://www.qconcursos.com/questoes-de-concursos/questoes/474e0f02-97",
             "sourceValidated": true,
             "status": "Pronta para estudo",
-            "updatedAt": "2026-09-22T14:28:00.000Z",
-            "revision": 1,
-            "contentHash": "8b0ca6973e783ade264ec27f847d5d0e5a88c0d755ecc45092d3955faf22e8d1"
+            "updatedAt": "2026-09-30T20:01:00.000Z",
+            "revision": 2,
+            "contentHash": "52d9420c8bee3ebb709cf2c60313ce0894e3b54a2e2394afbe7ee3ff96bcadf3"
           }
         ],
-        "revision": 1,
-        "contentHash": "7a6fc988dc1ed5bcff1a821b7cdf84b6f2fbe7b239368b0c376ba2e542818e0b"
+        "revision": 2,
+        "contentHash": "c25d08fd645ece9bc89fe46352af1f86eaf5911b79e3ae1198586ef12c5b69c0"
       },
       "reviewCode": "R01",
       "reviewPageId": "3dfcf5a2673181369e09cd5716d2eae0",
-      "revision": 1,
-      "contentHash": "828d36f0b5dadda64f6bf122a8c936babe8ef25d4e422d958ffdd316776c0aeb"
+      "revision": 2,
+      "contentHash": "4cf4e4fb60abc33de05cd57aecc8ea55544871ccea070280a3f808c58c2b13c2"
     },
     {
       "code": "D03",
@@ -56489,7 +56615,7 @@
         "code": "Q06",
         "pageId": "3dfcf5a2-6731-8148-8e39-f27f23a17adc",
         "title": "Q06 — Questões | Algoritmos e estruturas de dados I + Sistema Financeiro Nacional",
-        "updatedAt": "2026-09-22T18:45:00.000Z",
+        "updatedAt": "2026-09-30T19:43:00.000Z",
         "composition": {
           "total": 15,
           "main": 11,
@@ -56507,7 +56633,8 @@
             "notionPageId": "3dfcf5a2-6731-8135-ba27-fe44d5e20e84",
             "title": "BB 2021 — Busca em array e listas encadeadas",
             "reasons": [
-              "unusable_options"
+              "unusable_options",
+              "status_not_ready"
             ]
           },
           {
@@ -56515,7 +56642,8 @@
             "notionPageId": "3dfcf5a2-6731-81dd-a176-d0d1020fa236",
             "title": "BB 2021 — Complexidade da busca binária",
             "reasons": [
-              "unusable_options"
+              "unusable_options",
+              "status_not_ready"
             ]
           },
           {
@@ -56523,7 +56651,8 @@
             "notionPageId": "3dfcf5a2-6731-814c-976d-cd76227e8412",
             "title": "BB 2021 — Operações em pilha",
             "reasons": [
-              "unusable_options"
+              "unusable_options",
+              "status_not_ready"
             ]
           }
         ],
@@ -57073,13 +57202,13 @@
             "contentHash": "d030fe56ed5992b368c3f8468f745249ca350d38234191ad0f4b3a1da06e59cb"
           }
         ],
-        "revision": 2,
-        "contentHash": "dff7f1dab673bd6157f0bb1d09aef9b6bc204090ecf4882bafb81ca6a11d3aba"
+        "revision": 3,
+        "contentHash": "ca277645ca81258c700739723fe011837bf7e6bdca0b3c538d886da8ffd53822"
       },
       "reviewCode": "R02",
       "reviewPageId": "3dfcf5a26731815ca529c2248038e987",
-      "revision": 2,
-      "contentHash": "fd0ddbaa5690aace15a66a4b165ecaffe26d4d5a13e79e9513fc94ee50c45163"
+      "revision": 3,
+      "contentHash": "851e41a1deb5434aa0df3757a8474b55e0c8ce2d05025fdbfee7a8663069c603"
     },
     {
       "code": "D07",
@@ -89182,7 +89311,7 @@
           "source": "regra-70-30"
         },
         "sourceStatus": "partial",
-        "availableCount": 13,
+        "availableCount": 16,
         "sourceRowCount": 25,
         "missingCount": 0,
         "extraCount": 0,
@@ -89249,35 +89378,11 @@
             ]
           },
           {
-            "questionId": "Q2174433",
-            "notionPageId": "3e3cf5a2-6731-81da-9fe3-d13ad6760489",
-            "title": "AGERIO 2023 — Aumentos percentuais sucessivos",
-            "reasons": [
-              "unusable_options"
-            ]
-          },
-          {
             "questionId": "Q2879874",
             "notionPageId": "3e3cf5a2-6731-8137-ba1a-c144dbcaab48",
             "title": "CAPES 2008 — Assimetria positiva, média e mediana",
             "reasons": [
               "missing_answer_key",
-              "unusable_options"
-            ]
-          },
-          {
-            "questionId": "Q3055890",
-            "notionPageId": "3e3cf5a2-6731-8105-9d85-c887fa6eade6",
-            "title": "BASA 2024 — Desconto e aumento sucessivos",
-            "reasons": [
-              "unusable_options"
-            ]
-          },
-          {
-            "questionId": "Q3055919",
-            "notionPageId": "3e3cf5a2-6731-8176-b91f-fe1f19e8f1ee",
-            "title": "BASA 2024 — Taxa de rotatividade de 14%",
-            "reasons": [
               "unusable_options"
             ]
           },
@@ -89603,6 +89708,52 @@
             "contentHash": "69611d61d1148f80e45e4613c3d83fc5bb955ad8320e66cfd7831b93991714ed"
           },
           {
+            "questionId": "Q2174433",
+            "occurrenceId": "Q10-015",
+            "ordinal": 15,
+            "notionPageId": "3e3cf5a2-6731-81da-9fe3-d13ad6760489",
+            "setCode": "Q10",
+            "title": "AGERIO 2023 — Aumentos percentuais sucessivos",
+            "subject": "Matemática",
+            "topic": "Porcentagem — variações sucessivas",
+            "exam": "AGERIO 2023 — Assistente Técnico Administrativo",
+            "board": "Cesgranrio",
+            "year": 2023,
+            "stem": "Um preço aumenta sucessivamente 5%, 10% e 20% em meses consecutivos. Qual é o aumento percentual acumulado em relação ao preço inicial?",
+            "optionsSummary": "A) 11,7% | B) 20,0% | C) 35,0% | D) 37,0% | E) 38,6%",
+            "options": [
+              {
+                "key": "A",
+                "text": "11,7%"
+              },
+              {
+                "key": "B",
+                "text": "20,0%"
+              },
+              {
+                "key": "C",
+                "text": "35,0%"
+              },
+              {
+                "key": "D",
+                "text": "37,0%"
+              },
+              {
+                "key": "E",
+                "text": "38,6%"
+              }
+            ],
+            "answerText": "E — 38,6%",
+            "answerKey": "E",
+            "commentary": "E. Em variações sucessivas, multiplicam-se os fatores: 1,05×1,10×1,20 = 1,386. Assim, o preço final é 138,6% do inicial, isto é, aumento acumulado de 38,6%. Somar 5%+10%+20%=35% ignora que cada aumento incide sobre o preço já reajustado.",
+            "sourceUrl": "https://www.qconcursos.com/questoes-de-concursos/questoes?discipline_ids%5B%5D=13&examining_board_ids%5B%5D=5&subject_ids%5B%5D=20321",
+            "sourceValidated": true,
+            "status": "Pronta para estudo",
+            "updatedAt": "2026-09-30T20:01:00.000Z",
+            "revision": 1,
+            "contentHash": "1b8a66eb45a42c2303dbfc89ee2e68eec1890ecb1f736fd5111bfe1255d2c2b9"
+          },
+          {
             "questionId": "Q2495351",
             "occurrenceId": "Q10-016",
             "ordinal": 16,
@@ -89877,15 +90028,107 @@
             "updatedAt": "2026-09-22T23:00:00.000Z",
             "revision": 1,
             "contentHash": "0ba92b846a1797b86586e9a8e8a4553205dd13a5524f89fe6261b72ca0492e78"
+          },
+          {
+            "questionId": "Q3055890",
+            "occurrenceId": "Q10-023",
+            "ordinal": 23,
+            "notionPageId": "3e3cf5a2-6731-8105-9d85-c887fa6eade6",
+            "setCode": "Q10",
+            "title": "BASA 2024 — Desconto e aumento sucessivos",
+            "subject": "Matemática",
+            "topic": "Porcentagem — desconto e aumento sucessivos",
+            "exam": "Banco da Amazônia 2024 — Técnico Bancário",
+            "board": "Cesgranrio",
+            "year": 2024,
+            "stem": "Um preço sofre desconto de 20% e depois aumento de 100%, ambos sobre o valor vigente. Qual desconto sobre o preço final o faria retornar ao preço inicial?",
+            "optionsSummary": "A) 37,5% | B) 40,0% | C) 60,0% | D) 62,5% | E) 80,0%",
+            "options": [
+              {
+                "key": "A",
+                "text": "37,5%"
+              },
+              {
+                "key": "B",
+                "text": "40,0%"
+              },
+              {
+                "key": "C",
+                "text": "60,0%"
+              },
+              {
+                "key": "D",
+                "text": "62,5%"
+              },
+              {
+                "key": "E",
+                "text": "80,0%"
+              }
+            ],
+            "answerText": "A — 37,5%",
+            "answerKey": "A",
+            "commentary": "A. Tome P=100. Após desconto de 20%, o preço vai a 80; com aumento de 100%, Q=160. Para voltar de 160 a 100 é preciso retirar 60, isto é, 60/160=0,375=37,5%. Percentuais sucessivos incidem sobre bases diferentes, por isso não se somam/subtraem diretamente.",
+            "sourceUrl": "https://www.qconcursos.com/questoes-de-concursos/questoes/5c2a6001-96",
+            "sourceValidated": true,
+            "status": "Pronta para estudo",
+            "updatedAt": "2026-09-30T20:01:00.000Z",
+            "revision": 1,
+            "contentHash": "e23776bee96213645731cc33b7f1001a5ee5b17226958d83d40805b065a39c9d"
+          },
+          {
+            "questionId": "Q3055919",
+            "occurrenceId": "Q10-024",
+            "ordinal": 24,
+            "notionPageId": "3e3cf5a2-6731-8176-b91f-fe1f19e8f1ee",
+            "setCode": "Q10",
+            "title": "BASA 2024 — Taxa de rotatividade de 14%",
+            "subject": "Matemática",
+            "topic": "Porcentagem — cálculo direto",
+            "exam": "Banco da Amazônia 2024 — Técnico Bancário",
+            "board": "Cesgranrio",
+            "year": 2024,
+            "stem": "Uma agência tem 424 clientes e admite rotatividade máxima de 14%. Qual é a maior quantidade inteira de clientes que pode encerrar a conta sem ultrapassar essa taxa?",
+            "optionsSummary": "A) 14 | B) 59 | C) 110 | D) 330 | E) 410",
+            "options": [
+              {
+                "key": "A",
+                "text": "14"
+              },
+              {
+                "key": "B",
+                "text": "59"
+              },
+              {
+                "key": "C",
+                "text": "110"
+              },
+              {
+                "key": "D",
+                "text": "330"
+              },
+              {
+                "key": "E",
+                "text": "410"
+              }
+            ],
+            "answerText": "B — 59",
+            "answerKey": "B",
+            "commentary": "B. 14% de 424 = 0,14×424 = 59,36. Como a quantidade de clientes deve ser inteira e não pode ultrapassar a taxa máxima, o maior número admissível é 59; 60 clientes já corresponderiam a mais de 14%.",
+            "sourceUrl": "https://www.qconcursos.com/questoes-de-concursos/questoes?discipline_ids%5B%5D=13&examining_board_ids%5B%5D=5&scholarity_ids%5B%5D=2&subject_ids%5B%5D=20321",
+            "sourceValidated": true,
+            "status": "Pronta para estudo",
+            "updatedAt": "2026-09-30T20:01:00.000Z",
+            "revision": 1,
+            "contentHash": "bad4ca4e8201fddfc5be7b3fef3971da2b7dc532134af41db17343ea4aa151cd"
           }
         ],
-        "revision": 1,
-        "contentHash": "786fd9b50ff68eabf40eeeb4545c26a26aad91be5a13eeb4f2aebaf6e205353f"
+        "revision": 2,
+        "contentHash": "1f0fef613c42d96adc82c745e1ceb3cc2d6f5acf6bf7ecc72e23dddffa7949a2"
       },
       "reviewCode": "R02",
       "reviewPageId": "3dfcf5a26731815ca529c2248038e987",
-      "revision": 1,
-      "contentHash": "e15bbd3728239371d4f0355442b19c6afd2ad515f060cd4a608b0c17d530b279"
+      "revision": 2,
+      "contentHash": "e0363113b1d9a9e27c706102f9a446e3d05439ca6abba3328d1b3f79ad37d9f2"
     },
     {
       "code": "D11",
