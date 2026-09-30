@@ -141,9 +141,22 @@ export async function exportStores() {
 }
 
 function timestampOf(record) {
-  const value = record?.updatedAt || record?.finishedAt || record?.createdAt || record?.exportedAt || "";
+  const value = record?.updatedAt || record?.completedAt || record?.finishedAt || record?.answeredAt
+    || record?.lastErrorAt || record?.lastReviewedAt || record?.createdAt || record?.startedAt
+    || record?.firstErrorAt || record?.exportedAt || "";
   const time = Date.parse(value);
   return Number.isFinite(time) ? time : 0;
+}
+
+export function deduplicateRecords(records, keyPath) {
+  const latestByKey = new Map();
+  for (const record of records || []) {
+    if (!record || record[keyPath] === undefined || record[keyPath] === null) continue;
+    const key = record[keyPath];
+    const current = latestByKey.get(key);
+    if (!current || timestampOf(record) >= timestampOf(current)) latestByKey.set(key, record);
+  }
+  return [...latestByKey.values()];
 }
 
 export async function mergeIntoStores(stores) {
@@ -155,7 +168,7 @@ export async function mergeIntoStores(stores) {
   for (const name of names) {
     const keyPath = STORE_KEYS[name];
     const store = tx.objectStore(name);
-    for (const incoming of stores[name]) {
+    for (const incoming of deduplicateRecords(stores[name], keyPath)) {
       if (!incoming || incoming[keyPath] === undefined || incoming[keyPath] === null) continue;
       const getRequest = store.get(incoming[keyPath]);
       getRequest.onsuccess = () => {
