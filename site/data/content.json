@@ -2,29 +2,29 @@
   "schemaVersion": 2,
   "rootPageId": "3dfcf5a2-6731-8119-9194-d4ab2ed5c26d",
   "meta": {
-    "generatedAt": "2026-09-30T22:24:55.161Z",
-    "sourceUpdatedAt": "2026-09-30T22:02:00.000Z",
+    "generatedAt": "2026-10-01T06:06:57.251Z",
+    "sourceUpdatedAt": "2026-10-01T05:00:00.000Z",
     "source": "Notion · HABA Study OS",
     "sourceRootUrl": "https://www.notion.so/3dfcf5a2673181199194d4ab2ed5c26d",
-    "contentVersion": "feaf502578a67e988def182454201835dc4375d54f00f58200c9c9ea2aabcfb0",
+    "contentVersion": "f7f6c88b9ff8fb37c7482536500496dd3afc0a1a257c25296107635296f05e49",
     "counts": {
       "studyDays": 75,
       "reviews": 15,
       "restDays": 15,
       "cycles": 5,
-      "questions": 113,
+      "questions": 142,
       "plannedQuestions": 1603,
-      "completeQuestionSets": 2
+      "completeQuestionSets": 4
     },
     "questionCoverage": {
       "status": "partial",
-      "completeSets": 2,
-      "partialSets": 8,
+      "completeSets": 4,
+      "partialSets": 6,
       "unavailableSets": 65,
       "totalSets": 75,
-      "usableQuestions": 113,
+      "usableQuestions": 142,
       "plannedQuestions": 1603,
-      "excludedRows": 48,
+      "excludedRows": 19,
       "missingRows": 1442
     }
   },
@@ -37818,44 +37818,19 @@
         "code": "Q04",
         "pageId": "3dfcf5a2-6731-81cc-b38c-fddfd711663a",
         "title": "Q04 — Questões | Sistemas operacionais e Linux I + Estatística e probabilidade",
-        "updatedAt": "2026-09-22T16:53:00.000Z",
+        "updatedAt": "2026-09-30T22:57:00.000Z",
         "composition": {
           "total": 15,
           "main": 11,
           "complementary": 4,
           "source": "regra-70-30"
         },
-        "sourceStatus": "partial",
-        "availableCount": 12,
+        "sourceStatus": "complete",
+        "availableCount": 15,
         "sourceRowCount": 15,
         "missingCount": 0,
         "extraCount": 0,
-        "unavailableItems": [
-          {
-            "questionId": "Q54257",
-            "notionPageId": "3e3cf5a2-6731-81ae-98ee-f391b413fd49",
-            "title": "Petrobras 2010 — uname -a no Linux",
-            "reasons": [
-              "unusable_options"
-            ]
-          },
-          {
-            "questionId": "Q54259",
-            "notionPageId": "3e3cf5a2-6731-8181-b7bd-cdce18451e89",
-            "title": "Petrobras 2010 — mv para mover arquivo no Linux",
-            "reasons": [
-              "unusable_options"
-            ]
-          },
-          {
-            "questionId": "Q491542",
-            "notionPageId": "3e3cf5a2-6731-81ba-8de1-e898a4934825",
-            "title": "Petrobras 2010 — Page faults com LRU",
-            "reasons": [
-              "unusable_options"
-            ]
-          }
-        ],
+        "unavailableItems": [],
         "items": [
           {
             "questionId": "Q9183",
@@ -37904,6 +37879,52 @@
             "contentHash": "69325d4386bd6975dbd307cef27cfd0ce62fd4cc397aefaa0c7ebf08cffa69e6"
           },
           {
+            "questionId": "Q54257",
+            "occurrenceId": "Q04-002",
+            "ordinal": 2,
+            "notionPageId": "3e3cf5a2-6731-81ae-98ee-f391b413fd49",
+            "setCode": "Q04",
+            "title": "Petrobras 2010 — uname -a no Linux",
+            "subject": "Sistemas Operacionais",
+            "topic": "Linux — uname",
+            "exam": "Petrobras 2010 — Técnico em Informática",
+            "board": "Cesgranrio",
+            "year": 2010,
+            "stem": "Qual comando de shell Linux exibe informações como kernel e arquitetura do sistema para diagnóstico?",
+            "optionsSummary": "A) info -i | B) lin -a | C) mkdir -a | D) rename -i | E) uname -a",
+            "options": [
+              {
+                "key": "A",
+                "text": "info -i"
+              },
+              {
+                "key": "B",
+                "text": "lin -a"
+              },
+              {
+                "key": "C",
+                "text": "mkdir -a"
+              },
+              {
+                "key": "D",
+                "text": "rename -i"
+              },
+              {
+                "key": "E",
+                "text": "uname -a"
+              }
+            ],
+            "answerText": "E — uname -a",
+            "answerKey": "E",
+            "commentary": "E. uname -a exibe em conjunto informações do sistema/kernel e da arquitetura da máquina, sendo a opção compatível com o diagnóstico pedido. mkdir cria diretórios; rename renomeia arquivos; as demais opções não fornecem o conjunto de informações solicitado.",
+            "sourceUrl": "https://www.qconcursos.com/questoes-de-concursos/provas/cesgranrio-2010-petrobras-tecnico-em-informatica/questoes",
+            "sourceValidated": true,
+            "status": "Pronta para estudo",
+            "updatedAt": "2026-09-30T22:56:00.000Z",
+            "revision": 1,
+            "contentHash": "6b1159df64a6af89f28488ec3e8e21e62ccef90cdeaa7682f8d18111ec23d6a5"
+          },
+          {
             "questionId": "Q54258",
             "occurrenceId": "Q04-003",
             "ordinal": 3,
@@ -37950,6 +37971,52 @@
             "contentHash": "1fae607d2fabfd07c43081e234b748b58a8eb9d8a542e8a04022e8caa2493d04"
           },
           {
+            "questionId": "Q54259",
+            "occurrenceId": "Q04-004",
+            "ordinal": 4,
+            "notionPageId": "3e3cf5a2-6731-8181-b7bd-cdce18451e89",
+            "setCode": "Q04",
+            "title": "Petrobras 2010 — mv para mover arquivo no Linux",
+            "subject": "Sistemas Operacionais",
+            "topic": "Linux — comando mv",
+            "exam": "Petrobras 2010 — Técnico em Informática",
+            "board": "Cesgranrio",
+            "year": 2010,
+            "stem": "Qual comando de shell Linux deve ser usado para mover um arquivo para outro diretório?",
+            "optionsSummary": "A) ls | B) mv | C) ns | D) pr | E) xl",
+            "options": [
+              {
+                "key": "A",
+                "text": "ls"
+              },
+              {
+                "key": "B",
+                "text": "mv"
+              },
+              {
+                "key": "C",
+                "text": "ns"
+              },
+              {
+                "key": "D",
+                "text": "pr"
+              },
+              {
+                "key": "E",
+                "text": "xl"
+              }
+            ],
+            "answerText": "B — mv",
+            "answerKey": "B",
+            "commentary": "B. mv move ou renomeia arquivos e diretórios no Linux. ls lista conteúdo; pr prepara texto para impressão; ns e xl não são os comandos adequados para mover o arquivo no contexto da questão.",
+            "sourceUrl": "https://www.qconcursos.com/questoes-de-concursos/provas/cesgranrio-2010-petrobras-tecnico-em-informatica/questoes",
+            "sourceValidated": true,
+            "status": "Pronta para estudo",
+            "updatedAt": "2026-09-30T22:56:00.000Z",
+            "revision": 1,
+            "contentHash": "19fa0f62ea268549a731aa968d2c0b4f743d7e83f7cc62cd1820293a3b9882cc"
+          },
+          {
             "questionId": "Q187990",
             "occurrenceId": "Q04-005",
             "ordinal": 5,
@@ -37962,7 +38029,7 @@
             "board": "Cesgranrio",
             "year": 2010,
             "stem": "Quando dois eventos de um espaço amostral são independentes?",
-            "optionsSummary": "A saber que um ocorreu não altera a probabilidade do outro; B são mutuamente exclusivos; C são disjuntos com probabilidade negativa; D têm correlação negativa; E têm mesma probabilidade.",
+            "optionsSummary": "A) saber que um ocorreu não altera a probabilidade do outro | B) um ocorrer impede necessariamente o outro | C) são disjuntos e a probabilidade conjunta é negativa | D) são negativamente correlacionados | E) têm a mesma probabilidade",
             "options": [
               {
                 "key": "A",
@@ -37970,30 +38037,76 @@
               },
               {
                 "key": "B",
-                "text": "são mutuamente exclusivos"
+                "text": "um ocorrer impede necessariamente o outro"
               },
               {
                 "key": "C",
-                "text": "são disjuntos com probabilidade negativa"
+                "text": "são disjuntos e a probabilidade conjunta é negativa"
               },
               {
                 "key": "D",
-                "text": "têm correlação negativa"
+                "text": "são negativamente correlacionados"
               },
               {
                 "key": "E",
-                "text": "têm mesma probabilidade."
+                "text": "têm a mesma probabilidade"
               }
             ],
             "answerText": "A — a ocorrência de um não altera a probabilidade do outro",
             "answerKey": "A",
-            "commentary": "Aderência direta ao tópico de independência entre eventos do complementar de D04.",
+            "commentary": "A. Independência significa P(B|A)=P(B) (e, equivalentemente, P(A∩B)=P(A)P(B)): saber que um evento ocorreu não muda a probabilidade do outro. Eventos mutuamente exclusivos não são, em geral, independentes; probabilidades nunca são negativas; correlação negativa e igualdade das probabilidades também não definem independência.",
             "sourceUrl": "https://www.qconcursos.com/questoes-de-concursos/questoes/a7f29c75-da",
             "sourceValidated": true,
             "status": "Pronta para estudo",
-            "updatedAt": "2026-09-22T16:51:00.000Z",
+            "updatedAt": "2026-09-30T22:56:00.000Z",
+            "revision": 2,
+            "contentHash": "0045d3e8aa2167dead96b53aca9bcf88f98b183b25b35526a4f8345351084b56"
+          },
+          {
+            "questionId": "Q491542",
+            "occurrenceId": "Q04-006",
+            "ordinal": 6,
+            "notionPageId": "3e3cf5a2-6731-81ba-8de1-e898a4934825",
+            "setCode": "Q04",
+            "title": "Petrobras 2010 — Page faults com LRU",
+            "subject": "Sistemas Operacionais",
+            "topic": "Memória virtual — page fault e LRU",
+            "exam": "Petrobras 2010 — Analista de Sistemas Júnior — Engenharia de Software",
+            "board": "Cesgranrio",
+            "year": 2010,
+            "stem": "No algoritmo LRU de substituição de páginas, há 4 páginas alocadas na memória. Para a sequência de referências 4, 7, 5, 7, 6, 7, 10, 4, 8, 5, 8, 6, 8, 11, 4, 9, 5, 9, 6, 9, 12, 4, 7, 5, 7, quantas falhas de página ocorrem?",
+            "optionsSummary": "A) 15 | B) 17 | C) 19 | D) 21 | E) 23",
+            "options": [
+              {
+                "key": "A",
+                "text": "15"
+              },
+              {
+                "key": "B",
+                "text": "17"
+              },
+              {
+                "key": "C",
+                "text": "19"
+              },
+              {
+                "key": "D",
+                "text": "21"
+              },
+              {
+                "key": "E",
+                "text": "23"
+              }
+            ],
+            "answerText": "C — 19",
+            "answerKey": "C",
+            "commentary": "C. Simulando o LRU com 4 frames, cada referência ausente provoca page fault; quando os frames estão cheios, sai a página usada há mais tempo. Ao percorrer toda a sequência, totalizam-se 19 falhas. A pegadinha é não contar referências repetidas que ainda permanecem na memória como novas falhas.",
+            "sourceUrl": "https://www.qconcursos.com/questoes-de-concursos/questoes/2d7daae5-d6",
+            "sourceValidated": true,
+            "status": "Pronta para estudo",
+            "updatedAt": "2026-09-30T22:56:00.000Z",
             "revision": 1,
-            "contentHash": "586a3a024428038857265ed4c2728e96784a214de2be3ac59882e8de2f579dcf"
+            "contentHash": "2c8d3fd0b2358afdd5eada1c43838e5a16e3f600594b04526afe5663ef5d0d43"
           },
           {
             "questionId": "Q876082",
@@ -38008,38 +38121,38 @@
             "board": "Cesgranrio",
             "year": 2018,
             "stem": "Em substituição de páginas, para que serve o dirty bit associado a uma página?",
-            "optionsSummary": "A evitar política local; B impedir página vítima; C indicar que a página foi modificada; D indicar thrashing; E indicar referência recente.",
+            "optionsSummary": "A) evitar algoritmo local | B) impedir que uma página seja vítima | C) indicar que a página foi alterada | D) indicar candidatura a thrashing | E) indicar referência recente",
             "options": [
               {
                 "key": "A",
-                "text": "evitar política local"
+                "text": "evitar algoritmo local"
               },
               {
                 "key": "B",
-                "text": "impedir página vítima"
+                "text": "impedir que uma página seja vítima"
               },
               {
                 "key": "C",
-                "text": "indicar que a página foi modificada"
+                "text": "indicar que a página foi alterada"
               },
               {
                 "key": "D",
-                "text": "indicar thrashing"
+                "text": "indicar candidatura a thrashing"
               },
               {
                 "key": "E",
-                "text": "indicar referência recente."
+                "text": "indicar referência recente"
               }
             ],
             "answerText": "C — indicar que a página foi alterada",
             "answerKey": "C",
-            "commentary": "Aderente ao D04 por aprofundar paginação e substituição de páginas sem exigir conteúdo posterior.",
+            "commentary": "C. O dirty bit (bit de modificação) indica que a página foi escrita/alterada desde que entrou na memória. Se uma página suja for escolhida como vítima, seu conteúdo precisa ser gravado no armazenamento secundário antes da substituição. O bit de referência, e não o dirty bit, é que informa uso recente.",
             "sourceUrl": "https://www.qconcursos.com/questoes-de-concursos/questoes/73fea6ab-2d",
             "sourceValidated": true,
             "status": "Pronta para estudo",
-            "updatedAt": "2026-09-22T16:51:00.000Z",
-            "revision": 1,
-            "contentHash": "3cfb63728416e4339db61691e9142f4c0e7b5cc1d5745fa615822f3ebe6eb116"
+            "updatedAt": "2026-09-30T22:57:00.000Z",
+            "revision": 2,
+            "contentHash": "039671222af8d27bfec0ab5cc2d82c892f9f53738237a385b73dcb225ba83add"
           },
           {
             "questionId": "Q2128625",
@@ -38410,13 +38523,13 @@
             "contentHash": "9040d6ae6e893f17a143ddb173afd064dffb87ae14eb3178d569387be6e0551d"
           }
         ],
-        "revision": 1,
-        "contentHash": "97d71a708a3b07677bbe19b289547e6b35e2927286ec5a8935a0a03d0f83d5e0"
+        "revision": 2,
+        "contentHash": "9e3eb3143395a975581f3d603808f8f33e149760dce35ebed9d79e60a7030cc3"
       },
       "reviewCode": "R01",
       "reviewPageId": "3dfcf5a2673181369e09cd5716d2eae0",
-      "revision": 1,
-      "contentHash": "11758f467513d4d1e08cceaf1b89311f8835cadad772bc12e5c36fce512a5c04"
+      "revision": 2,
+      "contentHash": "edfc6140f2663ca721060a0c2ea90f45ed00cf9ec5279d6300781bd8079b074c"
     },
     {
       "code": "D05",
@@ -47234,7 +47347,7 @@
         "code": "Q05",
         "pageId": "3dfcf5a2-6731-8117-88dd-e8a070c5a243",
         "title": "Q05 — Questões | Português intensivo — interpretação + gramática",
-        "updatedAt": "2026-09-22T17:02:00.000Z",
+        "updatedAt": "2026-10-01T01:05:00.000Z",
         "composition": {
           "total": 25,
           "main": 18,
@@ -47242,95 +47355,15 @@
           "source": "regra-70-30"
         },
         "sourceStatus": "partial",
-        "availableCount": 7,
+        "availableCount": 23,
         "sourceRowCount": 25,
         "missingCount": 0,
         "extraCount": 0,
         "unavailableItems": [
           {
-            "questionId": "Q1824840",
-            "notionPageId": "3e3cf5a2-6731-81ea-aa9c-c64a2f64f77f",
-            "title": "BB 2021 — Argumento sobre ensino remoto",
-            "reasons": [
-              "unusable_options"
-            ]
-          },
-          {
-            "questionId": "Q1824841",
-            "notionPageId": "3e3cf5a2-6731-8111-a943-f6d4ed7073a3",
-            "title": "BB 2021 — Progressão argumentativa do texto",
-            "reasons": [
-              "unusable_options"
-            ]
-          },
-          {
-            "questionId": "Q1824842",
-            "notionPageId": "3e3cf5a2-6731-8145-90af-f99dd30b0c8e",
-            "title": "BB 2021 — Valor semântico de 'mesmo que'",
-            "reasons": [
-              "unusable_options"
-            ]
-          },
-          {
-            "questionId": "Q1824843",
-            "notionPageId": "3e3cf5a2-6731-8122-82c5-efdfbaecebe7",
-            "title": "BB 2021 — Marca de avaliação do autor",
-            "reasons": [
-              "unusable_options"
-            ]
-          },
-          {
-            "questionId": "Q1824844",
-            "notionPageId": "3e3cf5a2-6731-81ec-b01c-fde61174d54c",
-            "title": "BB 2021 — Concordância verbal",
-            "reasons": [
-              "unusable_options"
-            ]
-          },
-          {
-            "questionId": "Q1824845",
-            "notionPageId": "3e3cf5a2-6731-812c-a970-d8957addcb3c",
-            "title": "BB 2021 — Concordância nominal",
-            "reasons": [
-              "unusable_options"
-            ]
-          },
-          {
-            "questionId": "Q1824849",
-            "notionPageId": "3e3cf5a2-6731-81ad-afbe-f75eafd4977b",
-            "title": "BB 2021 — Coesão referencial",
-            "reasons": [
-              "unusable_options"
-            ]
-          },
-          {
-            "questionId": "Q2128600",
-            "notionPageId": "3e3cf5a2-6731-8132-ace3-ea3857e22305",
-            "title": "BB 2023 — Finalidade do texto sobre empreendedorismo social",
-            "reasons": [
-              "unusable_options"
-            ]
-          },
-          {
-            "questionId": "Q2128601",
-            "notionPageId": "3e3cf5a2-6731-8175-8f0a-fda228086b74",
-            "title": "BB 2023 — Empreendedorismo social x empresarial",
-            "reasons": [
-              "unusable_options"
-            ]
-          },
-          {
             "questionId": "Q2128604",
             "notionPageId": "3e3cf5a2-6731-814c-b7c3-c5ce1aa4b2ba",
             "title": "BB 2023 — Sentido contextual de 'concepção'",
-            "reasons": [
-              "unusable_options"
-            ]
-          },
-          {
-            "questionId": "Q2128605",
-            "notionPageId": "3e3cf5a2-6731-8150-9948-de0504e00b75",
-            "title": "BB 2023 — Concordância nominal em contexto",
             "reasons": [
               "unusable_options"
             ]
@@ -47342,57 +47375,423 @@
             "reasons": [
               "unusable_options"
             ]
-          },
-          {
-            "questionId": "Q2128607",
-            "notionPageId": "3e3cf5a2-6731-816f-8b72-c107063d6237",
-            "title": "BB 2023 — Emprego do acento grave",
-            "reasons": [
-              "unusable_options"
-            ]
-          },
-          {
-            "questionId": "Q2128608",
-            "notionPageId": "3e3cf5a2-6731-8135-84e6-ff1b7636551f",
-            "title": "BB 2023 — Emprego da vírgula",
-            "reasons": [
-              "unusable_options"
-            ]
-          },
-          {
-            "questionId": "Q2128609",
-            "notionPageId": "3e3cf5a2-6731-81ac-999e-caba5c9d466f",
-            "title": "BB 2023 — Colocação pronominal",
-            "reasons": [
-              "unusable_options"
-            ]
-          },
-          {
-            "questionId": "Q2495341",
-            "notionPageId": "3e3cf5a2-6731-8160-89e7-c18c652949ab",
-            "title": "CAIXA 2024 — Benefícios da redução de combustíveis fósseis",
-            "reasons": [
-              "unusable_options"
-            ]
-          },
-          {
-            "questionId": "Q2495342",
-            "notionPageId": "3e3cf5a2-6731-81fc-a562-d9f9fdceb6a6",
-            "title": "CAIXA 2024 — Progressão temática",
-            "reasons": [
-              "unusable_options"
-            ]
-          },
-          {
-            "questionId": "Q2495343",
-            "notionPageId": "3e3cf5a2-6731-8132-930d-f75ccbb3dc49",
-            "title": "CAIXA 2024 — Relação de exemplificação entre parágrafos",
-            "reasons": [
-              "unusable_options"
-            ]
           }
         ],
         "items": [
+          {
+            "questionId": "Q1824840",
+            "occurrenceId": "Q05-001",
+            "ordinal": 1,
+            "notionPageId": "3e3cf5a2-6731-81ea-aa9c-c64a2f64f77f",
+            "setCode": "Q05",
+            "title": "BB 2021 — Argumento sobre ensino remoto",
+            "subject": "Português",
+            "topic": "Interpretação — argumento e inferência",
+            "exam": "BB 2021 — Agente de Tecnologia",
+            "board": "Cesgranrio",
+            "year": 2021,
+            "stem": "No texto sobre ensino remoto durante a pandemia, qual argumento é utilizado para explicar o relativo sucesso da experiência apresentada?",
+            "optionsSummary": "A) baixo custo do uso de aplicativos de mensagens | B) uso de plataformas de aprendizagem de alta tecnologia | C) oportunidade de usar imagens e áudios disponíveis na rede | D) possibilidade de aprofundar conteúdos de várias disciplinas | E) qualidade do acesso às atividades devido à alta conectividade",
+            "options": [
+              {
+                "key": "A",
+                "text": "baixo custo do uso de aplicativos de mensagens"
+              },
+              {
+                "key": "B",
+                "text": "uso de plataformas de aprendizagem de alta tecnologia"
+              },
+              {
+                "key": "C",
+                "text": "oportunidade de usar imagens e áudios disponíveis na rede"
+              },
+              {
+                "key": "D",
+                "text": "possibilidade de aprofundar conteúdos de várias disciplinas"
+              },
+              {
+                "key": "E",
+                "text": "qualidade do acesso às atividades devido à alta conectividade"
+              }
+            ],
+            "answerText": "A",
+            "answerKey": "A",
+            "commentary": "A. O texto destaca que mensagens direcionadas são uma forma relativamente barata de comunicação, o que ajuda a explicar o relativo êxito do ensino remoto no contexto descrito. As demais alternativas atribuem ao texto alta tecnologia, conectividade ou aprofundamento de conteúdos que não constituem esse argumento.",
+            "sourceUrl": "https://www.qconcursos.com/questoes-de-concursos/provas/cesgranrio-2021-banco-do-brasil-agente-de-tecnologia/questoes?discipline_ids%5B%5D=1",
+            "sourceValidated": true,
+            "status": "Pronta para estudo",
+            "updatedAt": "2026-10-01T01:03:00.000Z",
+            "revision": 1,
+            "contentHash": "ac0d05beed96f4e88e56060203b11ffdf85a29fb5c152190780c10804f2708dd"
+          },
+          {
+            "questionId": "Q1824841",
+            "occurrenceId": "Q05-002",
+            "ordinal": 2,
+            "notionPageId": "3e3cf5a2-6731-8111-a943-f6d4ed7073a3",
+            "setCode": "Q05",
+            "title": "BB 2021 — Progressão argumentativa do texto",
+            "subject": "Português",
+            "topic": "Organização e progressão textual",
+            "exam": "BB 2021 — Agente de Tecnologia",
+            "board": "Cesgranrio",
+            "year": 2021,
+            "stem": "No 5º parágrafo do texto sobre ensino remoto, após informar que estudantes da educação básica já foram afetados pela falta de escolarização, qual ideia é desenvolvida em seguida?",
+            "optionsSummary": "A) o ensino remoto tecnológico garantiu continuidade da escolarização | B) alunos prejudicados precisarão de aulas/encontros extras para enfrentar a ruptura | C) aplicativos de mensagens foram a alternativa mais produtiva | D) a maioria dos professores manteve contato por aplicativos | E) o celular compartilhado foi a ferramenta mais usada",
+            "options": [
+              {
+                "key": "A",
+                "text": "o ensino remoto tecnológico garantiu continuidade da escolarização"
+              },
+              {
+                "key": "B",
+                "text": "alunos prejudicados precisarão de aulas/encontros extras para enfrentar a ruptura"
+              },
+              {
+                "key": "C",
+                "text": "aplicativos de mensagens foram a alternativa mais produtiva"
+              },
+              {
+                "key": "D",
+                "text": "a maioria dos professores manteve contato por aplicativos"
+              },
+              {
+                "key": "E",
+                "text": "o celular compartilhado foi a ferramenta mais usada"
+              }
+            ],
+            "answerText": "B",
+            "answerKey": "B",
+            "commentary": "B. A questão cobra progressão textual: depois de mencionar o prejuízo causado pela interrupção da escolarização, o parágrafo desenvolve a necessidade de medidas compensatórias — aulas ou encontros extras — para os estudantes afetados.",
+            "sourceUrl": "https://www.qconcursos.com/questoes-de-concursos/provas/cesgranrio-2021-banco-do-brasil-agente-de-tecnologia/questoes?discipline_ids%5B%5D=1",
+            "sourceValidated": true,
+            "status": "Pronta para estudo",
+            "updatedAt": "2026-09-30T23:58:00.000Z",
+            "revision": 1,
+            "contentHash": "d743d3863bf1bc9a5bc587d0176d29a055c4cf8cc7aa4279bc81c459e3deb731"
+          },
+          {
+            "questionId": "Q1824842",
+            "occurrenceId": "Q05-003",
+            "ordinal": 3,
+            "notionPageId": "3e3cf5a2-6731-8145-90af-f99dd30b0c8e",
+            "setCode": "Q05",
+            "title": "BB 2021 — Valor semântico de 'mesmo que'",
+            "subject": "Português",
+            "topic": "Conjunções — concessão",
+            "exam": "BB 2021 — Agente de Tecnologia",
+            "board": "Cesgranrio",
+            "year": 2021,
+            "stem": "No trecho sobre a importância de cultivar interações entre estudantes, 'mesmo que eles não estejam no mesmo ambiente físico' estabelece qual relação com a oração principal?",
+            "optionsSummary": "A) condição | B) concessão | C) comparação | D) conformidade | E) proporcionalidade",
+            "options": [
+              {
+                "key": "A",
+                "text": "condição"
+              },
+              {
+                "key": "B",
+                "text": "concessão"
+              },
+              {
+                "key": "C",
+                "text": "comparação"
+              },
+              {
+                "key": "D",
+                "text": "conformidade"
+              },
+              {
+                "key": "E",
+                "text": "proporcionalidade"
+              }
+            ],
+            "answerText": "B",
+            "answerKey": "B",
+            "commentary": "B. 'Mesmo que' é locução conjuntiva concessiva: introduz uma circunstância que poderia funcionar como obstáculo — os estudantes não estarem no mesmo ambiente físico — sem impedir a validade da ideia principal, que é cultivar interações.",
+            "sourceUrl": "https://www.qconcursos.com/questoes-de-concursos/provas/cesgranrio-2021-banco-do-brasil-agente-de-tecnologia/questoes?discipline_ids%5B%5D=1",
+            "sourceValidated": true,
+            "status": "Pronta para estudo",
+            "updatedAt": "2026-10-01T01:04:00.000Z",
+            "revision": 1,
+            "contentHash": "f28c7ba51830f218d44f9642facadf7b99c50f8d50046beb0828149297ab53f7"
+          },
+          {
+            "questionId": "Q1824843",
+            "occurrenceId": "Q05-004",
+            "ordinal": 4,
+            "notionPageId": "3e3cf5a2-6731-8122-82c5-efdfbaecebe7",
+            "setCode": "Q05",
+            "title": "BB 2021 — Marca de avaliação do autor",
+            "subject": "Português",
+            "topic": "Modalização — ponto de vista do autor",
+            "exam": "BB 2021 — Agente de Tecnologia",
+            "board": "Cesgranrio",
+            "year": 2021,
+            "stem": "Entre cinco trechos do texto sobre ensino remoto, qual contém uma palavra que evidencia avaliação/opinião do autor, e não mera descrição?",
+            "optionsSummary": "A) 'atualmente' ao situar a rotina das famílias | B) 'regularmente' sobre conexão por aplicativos | C) 'geralmente' sobre uso do celular | D) 'felizmente' ao avaliar mensagens direcionadas como comunicação relativamente barata | E) 'exatamente' no trecho sobre dificuldade de previsão",
+            "options": [
+              {
+                "key": "A",
+                "text": "'atualmente' ao situar a rotina das famílias"
+              },
+              {
+                "key": "B",
+                "text": "'regularmente' sobre conexão por aplicativos"
+              },
+              {
+                "key": "C",
+                "text": "'geralmente' sobre uso do celular"
+              },
+              {
+                "key": "D",
+                "text": "'felizmente' ao avaliar mensagens direcionadas como comunicação relativamente barata"
+              },
+              {
+                "key": "E",
+                "text": "'exatamente' no trecho sobre dificuldade de previsão"
+              }
+            ],
+            "answerText": "D — felizmente",
+            "answerKey": "D",
+            "commentary": "D. 'Felizmente' é advérbio avaliativo: explicita a atitude positiva do enunciador diante do fato apresentado. Os demais termos destacados cumprem funções circunstanciais sem manifestar, por si, a mesma avaliação subjetiva.",
+            "sourceUrl": "https://www.qconcursos.com/questoes-de-concursos/provas/cesgranrio-2021-banco-do-brasil-agente-de-tecnologia/questoes?discipline_ids%5B%5D=1",
+            "sourceValidated": true,
+            "status": "Pronta para estudo",
+            "updatedAt": "2026-09-30T23:58:00.000Z",
+            "revision": 1,
+            "contentHash": "69988b1769a78cecc5581288fff24e336986fb54653e39a09b2ecbfd3314b309"
+          },
+          {
+            "questionId": "Q1824844",
+            "occurrenceId": "Q05-005",
+            "ordinal": 5,
+            "notionPageId": "3e3cf5a2-6731-81ec-b01c-fde61174d54c",
+            "setCode": "Q05",
+            "title": "BB 2021 — Concordância verbal",
+            "subject": "Português",
+            "topic": "Concordância verbal",
+            "exam": "BB 2021 — Agente de Tecnologia",
+            "board": "Cesgranrio",
+            "year": 2021,
+            "stem": "Em qual alternativa a concordância verbal atende à norma-padrão?",
+            "optionsSummary": "A) 'Aspiram-se a bons cargos...' | B) '...fazem dois anos que não viajo...' | C) 'Nos últimos anos, combatem-se batalhas comerciais cotidianamente...' | D) '...existe problemas a serem resolvidos...' | E) '...precisam-se de equipamentos digitais...'",
+            "options": [
+              {
+                "key": "A",
+                "text": "'Aspiram-se a bons cargos...'"
+              },
+              {
+                "key": "B",
+                "text": "'...fazem dois anos que não viajo...'"
+              },
+              {
+                "key": "C",
+                "text": "'Nos últimos anos, combatem-se batalhas comerciais cotidianamente...'"
+              },
+              {
+                "key": "D",
+                "text": "'...existe problemas a serem resolvidos...'"
+              },
+              {
+                "key": "E",
+                "text": "'...precisam-se de equipamentos digitais...'"
+              }
+            ],
+            "answerText": "C",
+            "answerKey": "C",
+            "commentary": "C. Em 'combatem-se batalhas comerciais', o verbo concorda com o sujeito paciente plural 'batalhas comerciais'. A: aspirar, no sentido de almejar, rege preposição e não admite essa passiva com 'se'. B: 'fazer' indicando tempo decorrido é impessoal: 'faz dois anos'. D: o verbo deve concordar com 'problemas': 'existem problemas'. E: 'precisar de' é transitivo indireto; com índice de indeterminação do sujeito, fica no singular: 'precisa-se de equipamentos'.",
+            "sourceUrl": "https://www.qconcursos.com/questoes-de-concursos/provas/cesgranrio-2021-banco-do-brasil-agente-de-tecnologia/questoes?discipline_ids%5B%5D=1",
+            "sourceValidated": true,
+            "status": "Pronta para estudo",
+            "updatedAt": "2026-10-01T01:03:00.000Z",
+            "revision": 1,
+            "contentHash": "613b0a2fbcc41a769f2c2b7db1a2679104a01ac4301177782eb0b6541a4faa45"
+          },
+          {
+            "questionId": "Q1824845",
+            "occurrenceId": "Q05-006",
+            "ordinal": 6,
+            "notionPageId": "3e3cf5a2-6731-812c-a970-d8957addcb3c",
+            "setCode": "Q05",
+            "title": "BB 2021 — Concordância nominal",
+            "subject": "Português",
+            "topic": "Concordância nominal",
+            "exam": "BB 2021 — Agente de Tecnologia",
+            "board": "Cesgranrio",
+            "year": 2021,
+            "stem": "De acordo com a norma-padrão, em qual alternativa a concordância do termo predicativo/particípio está plenamente adequada?",
+            "optionsSummary": "A) A capacitação dos técnicos e o atendimento aos trabalhadores da saúde precisam ser desenvolvidos em todo o país. | B) As famílias dos alunos e os professores da rede pública devem ser acolhidas pelas direções. | C) O estudo das disciplinas e a realização de provas têm sido planejadas com cuidado. | D) O tratamento das doenças e a vacinação da população devem ser implementadas pelos órgãos. | E) Os arquivos escolares e as notas dos estudantes necessitam ser guardadas com sigilo.",
+            "options": [
+              {
+                "key": "A",
+                "text": "A capacitação dos técnicos e o atendimento aos trabalhadores da saúde precisam ser desenvolvidos em todo o país."
+              },
+              {
+                "key": "B",
+                "text": "As famílias dos alunos e os professores da rede pública devem ser acolhidas pelas direções."
+              },
+              {
+                "key": "C",
+                "text": "O estudo das disciplinas e a realização de provas têm sido planejadas com cuidado."
+              },
+              {
+                "key": "D",
+                "text": "O tratamento das doenças e a vacinação da população devem ser implementadas pelos órgãos."
+              },
+              {
+                "key": "E",
+                "text": "Os arquivos escolares e as notas dos estudantes necessitam ser guardadas com sigilo."
+              }
+            ],
+            "answerText": "A",
+            "answerKey": "A",
+            "commentary": "A. Com sujeito composto formado por núcleos de gêneros diferentes ('capacitação' e 'atendimento'), o predicativo/particípio no plural assume o masculino: 'desenvolvidos'. Nas demais, o adjetivo/particípio foi flexionado apenas no feminino, embora o sujeito composto inclua núcleo masculino.",
+            "sourceUrl": "https://www.qconcursos.com/questoes-de-concursos/provas/cesgranrio-2021-banco-do-brasil-agente-de-tecnologia/questoes?discipline_ids%5B%5D=1",
+            "sourceValidated": true,
+            "status": "Pronta para estudo",
+            "updatedAt": "2026-09-30T23:58:00.000Z",
+            "revision": 1,
+            "contentHash": "62882873fc8a12965190515fac13bf4dd7a4adb345c81bedeb7ce8e0e6910857"
+          },
+          {
+            "questionId": "Q1824849",
+            "occurrenceId": "Q05-007",
+            "ordinal": 7,
+            "notionPageId": "3e3cf5a2-6731-81ad-afbe-f75eafd4977b",
+            "setCode": "Q05",
+            "title": "BB 2021 — Coesão referencial",
+            "subject": "Português",
+            "topic": "Coesão referencial",
+            "exam": "BB 2021 — Agente de Tecnologia",
+            "board": "Cesgranrio",
+            "year": 2021,
+            "stem": "Qual associação entre uma expressão do texto sobre ensino remoto e o seu referente está corretamente identificada?",
+            "optionsSummary": "A) 'seus alunos' → pesquisadores | B) 'Esse uso' → contato | C) 'dos demais' → resultados | D) 'os que tiveram ensino mínimo ou nulo' → alunos | E) 'essa ruptura' → desenvolvimento",
+            "options": [
+              {
+                "key": "A",
+                "text": "'seus alunos' → pesquisadores"
+              },
+              {
+                "key": "B",
+                "text": "'Esse uso' → contato"
+              },
+              {
+                "key": "C",
+                "text": "'dos demais' → resultados"
+              },
+              {
+                "key": "D",
+                "text": "'os que tiveram ensino mínimo ou nulo' → alunos"
+              },
+              {
+                "key": "E",
+                "text": "'essa ruptura' → desenvolvimento"
+              }
+            ],
+            "answerText": "D",
+            "answerKey": "D",
+            "commentary": "D. Em 'averiguar os que tiveram ensino mínimo ou nulo', o pronome substantivo 'os' retoma os alunos/estudantes afetados pela interrupção da escolarização. Nas demais alternativas, o referente indicado entre colchetes não corresponde ao elemento retomado pela expressão destacada.",
+            "sourceUrl": "https://www.qconcursos.com/questoes-de-concursos/provas/cesgranrio-2021-banco-do-brasil-agente-de-tecnologia/questoes?discipline_ids%5B%5D=1",
+            "sourceValidated": true,
+            "status": "Pronta para estudo",
+            "updatedAt": "2026-10-01T01:03:00.000Z",
+            "revision": 1,
+            "contentHash": "ea34ce021b02eefc3a62e2f3a93e52d55b6bdbf0769e3764ed8de6cc1b5c6eab"
+          },
+          {
+            "questionId": "Q2128600",
+            "occurrenceId": "Q05-008",
+            "ordinal": 8,
+            "notionPageId": "3e3cf5a2-6731-8132-ace3-ea3857e22305",
+            "setCode": "Q05",
+            "title": "BB 2023 — Finalidade do texto sobre empreendedorismo social",
+            "subject": "Português",
+            "topic": "Interpretação — finalidade e ideia central",
+            "exam": "BB 2023 — Agente de Tecnologia",
+            "board": "Cesgranrio",
+            "year": 2023,
+            "stem": "Qual trecho do texto resume o objetivo do empreendedorismo social?",
+            "optionsSummary": "A) meta de transformar uma realidade, promover o bem-estar social e agregar valor de cunho social | B) empreendimentos sociais analisam o desempenho pelo impacto social | C) iniciativa deve ser inovadora, realizável, autossustentável e participativa | D) interessado na área precisa trabalhar em grupo e formar parcerias | E) profissional precisa de flexibilidade e pode exercer papel fora da formação",
+            "options": [
+              {
+                "key": "A",
+                "text": "meta de transformar uma realidade, promover o bem-estar social e agregar valor de cunho social"
+              },
+              {
+                "key": "B",
+                "text": "empreendimentos sociais analisam o desempenho pelo impacto social"
+              },
+              {
+                "key": "C",
+                "text": "iniciativa deve ser inovadora, realizável, autossustentável e participativa"
+              },
+              {
+                "key": "D",
+                "text": "interessado na área precisa trabalhar em grupo e formar parcerias"
+              },
+              {
+                "key": "E",
+                "text": "profissional precisa de flexibilidade e pode exercer papel fora da formação"
+              }
+            ],
+            "answerText": "A",
+            "answerKey": "A",
+            "commentary": "A. O trecho da alternativa A formula diretamente a finalidade do empreendedorismo social: transformar uma realidade, promover bem-estar e agregar valor social. As demais alternativas tratam de avaliação de desempenho, características da iniciativa ou perfil de atuação profissional.",
+            "sourceUrl": "https://www.qconcursos.com/questoes-de-concursos/provas/cesgranrio-2023-banco-do-brasil-agente-de-tecnologia-microrregiao-158-ti/questoes?discipline_ids%5B%5D=1",
+            "sourceValidated": true,
+            "status": "Pronta para estudo",
+            "updatedAt": "2026-10-01T01:04:00.000Z",
+            "revision": 1,
+            "contentHash": "e0447909205e4f4c1ec50f8dd98ba076bd32380a021d89fe083f22c84de9b658"
+          },
+          {
+            "questionId": "Q2128601",
+            "occurrenceId": "Q05-009",
+            "ordinal": 9,
+            "notionPageId": "3e3cf5a2-6731-8175-8f0a-fda228086b74",
+            "setCode": "Q05",
+            "title": "BB 2023 — Empreendedorismo social x empresarial",
+            "subject": "Português",
+            "topic": "Interpretação — contraste de ideias",
+            "exam": "BB 2023 — Agente de Tecnologia",
+            "board": "Cesgranrio",
+            "year": 2023,
+            "stem": "Segundo o texto, o empreendedorismo social se diferencia do conceito de negócio social porque o primeiro procura o quê?",
+            "optionsSummary": "A) criar profissionais especializados em sua área | B) excluir a parcela mais carente da população | C) seguir a lógica tradicional do mercado de ações | D) ter como objetivo produzir retorno financeiro | E) transformar a sociedade por meio da inovação",
+            "options": [
+              {
+                "key": "A",
+                "text": "criar profissionais especializados em sua área"
+              },
+              {
+                "key": "B",
+                "text": "excluir a parcela mais carente da população"
+              },
+              {
+                "key": "C",
+                "text": "seguir a lógica tradicional do mercado de ações"
+              },
+              {
+                "key": "D",
+                "text": "ter como objetivo produzir retorno financeiro"
+              },
+              {
+                "key": "E",
+                "text": "transformar a sociedade por meio da inovação"
+              }
+            ],
+            "answerText": "E",
+            "answerKey": "E",
+            "commentary": "E. O empreendedorismo social é apresentado como atuação inovadora voltada à transformação da realidade e ao impacto social. As alternativas A–D atribuem especialização, exclusão, lógica de mercado ou retorno financeiro como finalidade central, contrariando o contraste desenvolvido no texto.",
+            "sourceUrl": "https://www.qconcursos.com/questoes-de-concursos/provas/cesgranrio-2023-banco-do-brasil-agente-de-tecnologia-microrregiao-158-ti/questoes?discipline_ids%5B%5D=1",
+            "sourceValidated": true,
+            "status": "Pronta para estudo",
+            "updatedAt": "2026-10-01T01:04:00.000Z",
+            "revision": 1,
+            "contentHash": "e7e63c6aa60d4409784c20c0516977d38fe6cb2c85f748b7848fbd32c61e3a95"
+          },
           {
             "questionId": "Q2128602",
             "occurrenceId": "Q05-010",
@@ -47484,6 +47883,328 @@
             "updatedAt": "2026-09-22T18:00:00.000Z",
             "revision": 1,
             "contentHash": "b07d4cef3c31810d09413bc9a9880a063a6d4ffec5538d2a6c441c1c8b867ab6"
+          },
+          {
+            "questionId": "Q2128605",
+            "occurrenceId": "Q05-013",
+            "ordinal": 13,
+            "notionPageId": "3e3cf5a2-6731-8150-9948-de0504e00b75",
+            "setCode": "Q05",
+            "title": "BB 2023 — Concordância nominal em contexto",
+            "subject": "Português",
+            "topic": "Concordância nominal",
+            "exam": "BB 2023 — Agente de Tecnologia",
+            "board": "Cesgranrio",
+            "year": 2023,
+            "stem": "Em qual alternativa a concordância do termo destacado atende à norma-padrão?",
+            "optionsSummary": "A) administração de empresas de tecnologia e marketing profissional 'estão envolvidos' na promoção de novos negócios | B) assistência social e cuidados com novas doenças 'são necessárias' | C) iniciativa de implementar mudanças e sucesso ao alcançar êxito 'são comemoradas' | D) financiamento de projetos e assistência aos necessitados, 'desejadas' pelos empreendedores | E) vacinação da população e intensificação dos estudos 'devem ser implementados'",
+            "options": [
+              {
+                "key": "A",
+                "text": "administração de empresas de tecnologia e marketing profissional 'estão envolvidos' na promoção de novos negócios"
+              },
+              {
+                "key": "B",
+                "text": "assistência social e cuidados com novas doenças 'são necessárias'"
+              },
+              {
+                "key": "C",
+                "text": "iniciativa de implementar mudanças e sucesso ao alcançar êxito 'são comemoradas'"
+              },
+              {
+                "key": "D",
+                "text": "financiamento de projetos e assistência aos necessitados, 'desejadas' pelos empreendedores"
+              },
+              {
+                "key": "E",
+                "text": "vacinação da população e intensificação dos estudos 'devem ser implementados'"
+              }
+            ],
+            "answerText": "A",
+            "answerKey": "A",
+            "commentary": "A. Com núcleos de gêneros diferentes, o predicativo no plural pode ir ao masculino: 'administração ... e marketing ... estão envolvidos'. Em B, C e D, o adjetivo/particípio foi flexionado no feminino apesar de o conjunto incluir núcleo masculino; em E, 'vacinação' e 'intensificação' são ambos femininos, portanto o adequado seria 'implementadas'.",
+            "sourceUrl": "https://www.qconcursos.com/questoes-de-concursos/provas/cesgranrio-2023-banco-do-brasil-agente-de-tecnologia-microrregiao-158-ti/questoes?discipline_ids%5B%5D=1",
+            "sourceValidated": true,
+            "status": "Pronta para estudo",
+            "updatedAt": "2026-10-01T01:04:00.000Z",
+            "revision": 1,
+            "contentHash": "4db3f9482fdbc44fcd422f7aebf396039652e0d63721afe77c7a6a6ce2933dc6"
+          },
+          {
+            "questionId": "Q2128607",
+            "occurrenceId": "Q05-015",
+            "ordinal": 15,
+            "notionPageId": "3e3cf5a2-6731-816f-8b72-c107063d6237",
+            "setCode": "Q05",
+            "title": "BB 2023 — Emprego do acento grave",
+            "subject": "Português",
+            "topic": "Crase — regência e artigo",
+            "exam": "BB 2023 — Agente de Tecnologia",
+            "board": "Cesgranrio",
+            "year": 2023,
+            "stem": "Em qual alternativa o acento grave indicativo de crase é obrigatório segundo a norma-padrão?",
+            "optionsSummary": "A) empreendimento a ser realizado | B) levou muitas pessoas a se candidatarem à vaga mais concorrida | C) isenção buscada a todo custo | D) sucesso atribuído a gestores competentes | E) levou os jovens estudiosos a uma nova forma de aprendizagem",
+            "options": [
+              {
+                "key": "A",
+                "text": "empreendimento a ser realizado"
+              },
+              {
+                "key": "B",
+                "text": "levou muitas pessoas a se candidatarem à vaga mais concorrida"
+              },
+              {
+                "key": "C",
+                "text": "isenção buscada a todo custo"
+              },
+              {
+                "key": "D",
+                "text": "sucesso atribuído a gestores competentes"
+              },
+              {
+                "key": "E",
+                "text": "levou os jovens estudiosos a uma nova forma de aprendizagem"
+              }
+            ],
+            "answerText": "B",
+            "answerKey": "B",
+            "commentary": "B. O verbo 'candidatar-se' rege a preposição 'a', e 'vaga' admite artigo feminino 'a': a + a = à. Em A, há verbo no infinitivo; em C, a locução é 'a todo custo'; em D, o substantivo plural aparece sem artigo definido; em E, após 'a' vem artigo indefinido 'uma', não havendo fusão que gere crase.",
+            "sourceUrl": "https://www.qconcursos.com/questoes-de-concursos/provas/cesgranrio-2023-banco-do-brasil-agente-de-tecnologia-microrregiao-158-ti/questoes?discipline_ids%5B%5D=1",
+            "sourceValidated": true,
+            "status": "Pronta para estudo",
+            "updatedAt": "2026-10-01T01:04:00.000Z",
+            "revision": 1,
+            "contentHash": "c17e25f6da65027a6df8bf10c41da0e61a07476105873e0443ca94afd3454150"
+          },
+          {
+            "questionId": "Q2128608",
+            "occurrenceId": "Q05-016",
+            "ordinal": 16,
+            "notionPageId": "3e3cf5a2-6731-8135-84e6-ff1b7636551f",
+            "setCode": "Q05",
+            "title": "BB 2023 — Emprego da vírgula",
+            "subject": "Português",
+            "topic": "Pontuação — vírgula",
+            "exam": "BB 2023 — Agente de Tecnologia",
+            "board": "Cesgranrio",
+            "year": 2023,
+            "stem": "Em qual alternativa o emprego da vírgula atende à norma-padrão?",
+            "optionsSummary": "A) execução de novas tarefas em supermercado — vírgula separa sujeito e verbo | B) ao consultar fornecedores para suas lojas — vírgula após oração adverbial deslocada | C) escolha do funcionário para palestra — vírgula separa sujeito e verbo | D) estudar, com antecedência as possibilidades — intercalação mal delimitada | E) para desenvolver projetos cabe ao gerente, a iniciativa — vírgula separa termos essenciais",
+            "options": [
+              {
+                "key": "A",
+                "text": "execução de novas tarefas em supermercado — vírgula separa sujeito e verbo"
+              },
+              {
+                "key": "B",
+                "text": "ao consultar fornecedores para suas lojas — vírgula após oração adverbial deslocada"
+              },
+              {
+                "key": "C",
+                "text": "escolha do funcionário para palestra — vírgula separa sujeito e verbo"
+              },
+              {
+                "key": "D",
+                "text": "estudar, com antecedência as possibilidades — intercalação mal delimitada"
+              },
+              {
+                "key": "E",
+                "text": "para desenvolver projetos cabe ao gerente, a iniciativa — vírgula separa termos essenciais"
+              }
+            ],
+            "answerText": "B",
+            "answerKey": "B",
+            "commentary": "B. A oração adverbial deslocada 'Ao consultar os fornecedores de produtos para suas lojas' vem corretamente separada por vírgula. A e C separam sujeito de verbo; D abre uma intercalação sem fechá-la adequadamente; E separa indevidamente elementos essenciais da oração.",
+            "sourceUrl": "https://www.qconcursos.com/questoes-de-concursos/provas/cesgranrio-2023-banco-do-brasil-agente-de-tecnologia-microrregiao-158-ti/questoes?discipline_ids%5B%5D=1",
+            "sourceValidated": true,
+            "status": "Pronta para estudo",
+            "updatedAt": "2026-10-01T01:05:00.000Z",
+            "revision": 1,
+            "contentHash": "b1d044fe6960879b476a86daf86292910b2cefbbb50798cca0dca4aff138e582"
+          },
+          {
+            "questionId": "Q2128609",
+            "occurrenceId": "Q05-017",
+            "ordinal": 17,
+            "notionPageId": "3e3cf5a2-6731-81ac-999e-caba5c9d466f",
+            "setCode": "Q05",
+            "title": "BB 2023 — Colocação pronominal",
+            "subject": "Português",
+            "topic": "Colocação pronominal",
+            "exam": "BB 2023 — Agente de Tecnologia",
+            "board": "Cesgranrio",
+            "year": 2023,
+            "stem": "Em qual alternativa o pronome oblíquo átono está colocado de acordo com a norma-padrão?",
+            "optionsSummary": "A) 'não encontra-se atendida' | B) 'porque destina-se a transformar' | C) 'sempre preocupam-se com ações' | D) 'Para uma iniciativa ... tornar-se produtiva...' | E) 'Quando ... sentem-se desanimados...'",
+            "options": [
+              {
+                "key": "A",
+                "text": "'não encontra-se atendida'"
+              },
+              {
+                "key": "B",
+                "text": "'porque destina-se a transformar'"
+              },
+              {
+                "key": "C",
+                "text": "'sempre preocupam-se com ações'"
+              },
+              {
+                "key": "D",
+                "text": "'Para uma iniciativa ... tornar-se produtiva...'"
+              },
+              {
+                "key": "E",
+                "text": "'Quando ... sentem-se desanimados...'"
+              }
+            ],
+            "answerText": "D",
+            "answerKey": "D",
+            "commentary": "D. Em 'tornar-se', a ênclise ao infinitivo está adequada. A exige próclise por causa de 'não': 'não se encontra'. B, com a conjunção subordinativa 'porque', pede 'porque se destina'. C, com 'sempre', pede 'sempre se preocupam'. E, com 'quando', pede 'quando se sentem'.",
+            "sourceUrl": "https://www.qconcursos.com/questoes-de-concursos/provas/cesgranrio-2023-banco-do-brasil-agente-de-tecnologia-microrregiao-158-ti/questoes?discipline_ids%5B%5D=1",
+            "sourceValidated": true,
+            "status": "Pronta para estudo",
+            "updatedAt": "2026-10-01T01:04:00.000Z",
+            "revision": 1,
+            "contentHash": "489ce7c0233150083b13491f8e5240c6631f23325e20216721ab3d9a1175cc23"
+          },
+          {
+            "questionId": "Q2495341",
+            "occurrenceId": "Q05-018",
+            "ordinal": 18,
+            "notionPageId": "3e3cf5a2-6731-8160-89e7-c18c652949ab",
+            "setCode": "Q05",
+            "title": "CAIXA 2024 — Benefícios da redução de combustíveis fósseis",
+            "subject": "Português",
+            "topic": "Interpretação — localização de informação",
+            "exam": "CAIXA 2024 — TBN/TI",
+            "board": "Cesgranrio",
+            "year": 2024,
+            "stem": "Qual trecho do texto enumera benefícios associados à redução do uso de combustíveis fósseis?",
+            "optionsSummary": "A) projeto com veículos elétricos para transporte público, redução de custos, ruídos e poluentes ligados ao aquecimento global e às mudanças climáticas | B) Estocolmo ganhou prêmio de Cidade Verde Europeia e tem alta proporção de veículos não poluentes | C) Paris liderou na COP21 medidas de energia limpa e mobilidade elétrica | D) Paris, Londres, Milão e Oslo criaram zonas de baixa emissão | E) o avanço mundial é promissor e o Brasil começa a entrar nesse cenário",
+            "options": [
+              {
+                "key": "A",
+                "text": "projeto com veículos elétricos para transporte público, redução de custos, ruídos e poluentes ligados ao aquecimento global e às mudanças climáticas"
+              },
+              {
+                "key": "B",
+                "text": "Estocolmo ganhou prêmio de Cidade Verde Europeia e tem alta proporção de veículos não poluentes"
+              },
+              {
+                "key": "C",
+                "text": "Paris liderou na COP21 medidas de energia limpa e mobilidade elétrica"
+              },
+              {
+                "key": "D",
+                "text": "Paris, Londres, Milão e Oslo criaram zonas de baixa emissão"
+              },
+              {
+                "key": "E",
+                "text": "o avanço mundial é promissor e o Brasil começa a entrar nesse cenário"
+              }
+            ],
+            "answerText": "A",
+            "answerKey": "A",
+            "commentary": "A. É a única alternativa que efetivamente enumera uma cadeia de benefícios: redução de custos, de ruídos e de poluentes causadores do aquecimento global e das mudanças climáticas. As demais apresentam exemplos de cidades, políticas ou avaliação do cenário.",
+            "sourceUrl": "https://www.qconcursos.com/questoes-de-concursos/provas/cesgranrio-2024-caixa-tecnico-bancario-novo-tecnologia-da-informacao/questoes?discipline_ids%5B%5D=1",
+            "sourceValidated": true,
+            "status": "Pronta para estudo",
+            "updatedAt": "2026-10-01T01:04:00.000Z",
+            "revision": 1,
+            "contentHash": "e83d39fb3e5fc93f6ced881238960b42f0e1a8878f976481aa846348519b2d53"
+          },
+          {
+            "questionId": "Q2495342",
+            "occurrenceId": "Q05-019",
+            "ordinal": 19,
+            "notionPageId": "3e3cf5a2-6731-81fc-a562-d9f9fdceb6a6",
+            "setCode": "Q05",
+            "title": "CAIXA 2024 — Progressão temática",
+            "subject": "Português",
+            "topic": "Organização e progressão textual",
+            "exam": "CAIXA 2024 — TBN/TI",
+            "board": "Cesgranrio",
+            "year": 2024,
+            "stem": "No texto sobre transporte movido a energia limpa, depois de informar que cidades e estados brasileiros aceleram o desenvolvimento de veículos elétricos e sustentáveis, qual ideia é desenvolvida em seguida?",
+            "optionsSummary": "A) energia limpa é mais econômica, eficiente e competitiva que combustíveis fósseis | B) a maior cidade brasileira transformou parte da frota em veículos elétricos em novembro de 2019, reduzindo custos operacionais frente ao diesel | C) mobilidade urbana tornou-se a maior tendência mundial da indústria automotiva | D) uma cidade europeia com 75% do transporte público movido a renováveis ganhou prêmio ambiental em 2010 | E) várias cidades europeias promovem energia limpa e baixa emissão de poluentes",
+            "options": [
+              {
+                "key": "A",
+                "text": "energia limpa é mais econômica, eficiente e competitiva que combustíveis fósseis"
+              },
+              {
+                "key": "B",
+                "text": "a maior cidade brasileira transformou parte da frota em veículos elétricos em novembro de 2019, reduzindo custos operacionais frente ao diesel"
+              },
+              {
+                "key": "C",
+                "text": "mobilidade urbana tornou-se a maior tendência mundial da indústria automotiva"
+              },
+              {
+                "key": "D",
+                "text": "uma cidade europeia com 75% do transporte público movido a renováveis ganhou prêmio ambiental em 2010"
+              },
+              {
+                "key": "E",
+                "text": "várias cidades europeias promovem energia limpa e baixa emissão de poluentes"
+              }
+            ],
+            "answerText": "B",
+            "answerKey": "B",
+            "commentary": "B. A questão cobra a sequência temática do texto: após mencionar a aceleração brasileira no desenvolvimento de veículos elétricos e sustentáveis, o texto exemplifica o movimento com a maior cidade brasileira, que transformou parte da frota em veículos elétricos e registrou redução de custos operacionais. As demais opções remetem a outros momentos ou generalizações do texto.",
+            "sourceUrl": "https://www.qconcursos.com/questoes-de-concursos/provas/cesgranrio-2024-caixa-tecnico-bancario-novo-tecnologia-da-informacao/questoes?discipline_ids%5B%5D=1",
+            "sourceValidated": true,
+            "status": "Pronta para estudo",
+            "updatedAt": "2026-10-01T01:03:00.000Z",
+            "revision": 1,
+            "contentHash": "e5c3aac662b06e40bb4e0e6bce438e5ed1e2ac8577d92d47d364aba0318c42bf"
+          },
+          {
+            "questionId": "Q2495343",
+            "occurrenceId": "Q05-020",
+            "ordinal": 20,
+            "notionPageId": "3e3cf5a2-6731-8132-930d-f75ccbb3dc49",
+            "setCode": "Q05",
+            "title": "CAIXA 2024 — Relação de exemplificação entre parágrafos",
+            "subject": "Português",
+            "topic": "Organização textual — exemplificação",
+            "exam": "CAIXA 2024 — TBN/TI",
+            "board": "Cesgranrio",
+            "year": 2024,
+            "stem": "Em texto sobre transporte movido a energia limpa, que função o segundo parágrafo desempenha em relação ao primeiro?",
+            "optionsSummary": "A) adição | B) condição | C) consequência | D) contraposição | E) exemplificação",
+            "options": [
+              {
+                "key": "A",
+                "text": "adição"
+              },
+              {
+                "key": "B",
+                "text": "condição"
+              },
+              {
+                "key": "C",
+                "text": "consequência"
+              },
+              {
+                "key": "D",
+                "text": "contraposição"
+              },
+              {
+                "key": "E",
+                "text": "exemplificação"
+              }
+            ],
+            "answerText": "E — exemplificação",
+            "answerKey": "E",
+            "commentary": "E. O segundo parágrafo apresenta caso concreto que materializa a ideia geral exposta no primeiro; portanto, sua função discursiva é exemplificar, não estabelecer condição, oposição ou consequência.",
+            "sourceUrl": "https://www.qconcursos.com/questoes-de-concursos/provas/cesgranrio-2024-caixa-tecnico-bancario-novo-tecnologia-da-informacao/questoes?discipline_ids%5B%5D=1",
+            "sourceValidated": true,
+            "status": "Pronta para estudo",
+            "updatedAt": "2026-09-30T23:58:00.000Z",
+            "revision": 1,
+            "contentHash": "9b7fa5ac14c13bdebfe6c712500d494fe79870762aa9a25c45efc871a52530e8"
           },
           {
             "questionId": "Q3048782",
@@ -47716,13 +48437,13 @@
             "contentHash": "75c81f6848e7df40eb77cbd40621ac242ef04b566056d66535b102278816f609"
           }
         ],
-        "revision": 2,
-        "contentHash": "b873f1da3c052dcd8db07c6727ebe1ad7e9e25e7b5a9867005a6c706cc73ff76"
+        "revision": 3,
+        "contentHash": "143a968c17437db05a84f986eaabcbd35bc30a7ea15583d5fd561733bcd0b380"
       },
       "reviewCode": "R01",
       "reviewPageId": "3dfcf5a2673181369e09cd5716d2eae0",
-      "revision": 2,
-      "contentHash": "dc5552391101c641c6ab87de7a3d293f65153f08c1d8d750215e1ab663c07f14"
+      "revision": 3,
+      "contentHash": "a7651ccac9cfd93ca2a165afce4426ee9ef0179ce77a0d446165bc039d805e8c"
     },
     {
       "code": "D06",
@@ -56726,47 +57447,19 @@
         "code": "Q06",
         "pageId": "3dfcf5a2-6731-8148-8e39-f27f23a17adc",
         "title": "Q06 — Questões | Algoritmos e estruturas de dados I + Sistema Financeiro Nacional",
-        "updatedAt": "2026-09-30T19:43:00.000Z",
+        "updatedAt": "2026-10-01T02:03:00.000Z",
         "composition": {
           "total": 15,
           "main": 11,
           "complementary": 4,
           "source": "regra-70-30"
         },
-        "sourceStatus": "partial",
-        "availableCount": 12,
+        "sourceStatus": "complete",
+        "availableCount": 15,
         "sourceRowCount": 15,
         "missingCount": 0,
         "extraCount": 0,
-        "unavailableItems": [
-          {
-            "questionId": "Q1824892",
-            "notionPageId": "3dfcf5a2-6731-8135-ba27-fe44d5e20e84",
-            "title": "BB 2021 — Busca em array e listas encadeadas",
-            "reasons": [
-              "unusable_options",
-              "status_not_ready"
-            ]
-          },
-          {
-            "questionId": "Q1824901",
-            "notionPageId": "3dfcf5a2-6731-81dd-a176-d0d1020fa236",
-            "title": "BB 2021 — Complexidade da busca binária",
-            "reasons": [
-              "unusable_options",
-              "status_not_ready"
-            ]
-          },
-          {
-            "questionId": "Q1824907",
-            "notionPageId": "3dfcf5a2-6731-814c-976d-cd76227e8412",
-            "title": "BB 2021 — Operações em pilha",
-            "reasons": [
-              "unusable_options",
-              "status_not_ready"
-            ]
-          }
-        ],
+        "unavailableItems": [],
         "items": [
           {
             "questionId": "Q54558",
@@ -56851,6 +57544,98 @@
             "updatedAt": "2026-09-22T18:44:00.000Z",
             "revision": 1,
             "contentHash": "090efe0030cf9fd0cbfd5b895ad0b25ce248d3835ef0c4ce1fcc81c6345fa9d2"
+          },
+          {
+            "questionId": "Q1824892",
+            "occurrenceId": "Q06-003",
+            "ordinal": 3,
+            "notionPageId": "3dfcf5a2-6731-8135-ba27-fe44d5e20e84",
+            "setCode": "Q06",
+            "title": "BB 2021 — Busca em array e listas encadeadas",
+            "subject": "Algoritmos e Estrutura de Dados",
+            "topic": "Busca binária x sequencial",
+            "exam": "BB 2021 — Agente de Tecnologia",
+            "board": "Cesgranrio",
+            "year": 2021,
+            "stem": "Considere três coleções com 1.000 elementos: I) array de inteiros ordenado em ordem decrescente; II) lista encadeada desordenada; III) lista encadeada de números decimais ordenada em ordem crescente. Considerando exequibilidade e eficiência, quais métodos de busca devem ser usados, respectivamente?",
+            "optionsSummary": "A) I sequencial; II sequencial; III binária | B) I binária; II sequencial; III sequencial | C) I binária; II sequencial; III binária | D) I sequencial; II sequencial; III sequencial | E) I sequencial; II binária; III binária",
+            "options": [
+              {
+                "key": "A",
+                "text": "I sequencial; II sequencial; III binária"
+              },
+              {
+                "key": "B",
+                "text": "I binária; II sequencial; III sequencial"
+              },
+              {
+                "key": "C",
+                "text": "I binária; II sequencial; III binária"
+              },
+              {
+                "key": "D",
+                "text": "I sequencial; II sequencial; III sequencial"
+              },
+              {
+                "key": "E",
+                "text": "I sequencial; II binária; III binária"
+              }
+            ],
+            "answerText": "B — binária no array; sequencial nas duas listas encadeadas",
+            "answerKey": "B",
+            "commentary": "B. O array ordenado oferece acesso aleatório eficiente ao elemento central, permitindo busca binária. Nas listas encadeadas, mesmo quando ordenadas, chegar ao elemento do meio exige percorrer nós; por isso a busca sequencial é a escolha exequível/eficiente no contexto da questão. Logo: binária, sequencial, sequencial.",
+            "sourceUrl": "https://www.qconcursos.com/questoes-de-concursos/provas/cesgranrio-2021-banco-do-brasil-agente-de-tecnologia/questoes?discipline_ids%5B%5D=98",
+            "sourceValidated": true,
+            "status": "Pronta para estudo",
+            "updatedAt": "2026-10-01T02:03:00.000Z",
+            "revision": 1,
+            "contentHash": "9c6b7c6e3d5774b4ea8dbf8ea577fcd130ab41108495bb953c683779f300d027"
+          },
+          {
+            "questionId": "Q1824901",
+            "occurrenceId": "Q06-004",
+            "ordinal": 4,
+            "notionPageId": "3dfcf5a2-6731-81dd-a176-d0d1020fa236",
+            "setCode": "Q06",
+            "title": "BB 2021 — Complexidade da busca binária",
+            "subject": "Algoritmos e Estrutura de Dados",
+            "topic": "Busca binária — pior caso",
+            "exam": "BB 2021 — Agente de Tecnologia",
+            "board": "Cesgranrio",
+            "year": 2021,
+            "stem": "Um vetor mantém N solicitações ordenadas por códigos numéricos crescentes. Para localizar um código com busca binária, qual expressão representa a quantidade de iterações necessária no pior caso? Considere piso(x) como o maior inteiro menor ou igual a x e teto(x) como o menor inteiro maior ou igual a x.",
+            "optionsSummary": "A) piso(log2 N) | B) 1 + piso(log2 N) | C) 1 + teto(log2 N) | D) 2^N | E) 2^(N−1)",
+            "options": [
+              {
+                "key": "A",
+                "text": "piso(log2 N)"
+              },
+              {
+                "key": "B",
+                "text": "1 + piso(log2 N)"
+              },
+              {
+                "key": "C",
+                "text": "1 + teto(log2 N)"
+              },
+              {
+                "key": "D",
+                "text": "2^N"
+              },
+              {
+                "key": "E",
+                "text": "2^(N−1)"
+              }
+            ],
+            "answerText": "B — 1 + piso(log2 N), conforme a convenção usada na questão",
+            "answerKey": "B",
+            "commentary": "B. A busca binária reduz o intervalo pela metade a cada iteração. Com a convenção da questão, o pior caso é 1 + piso(log2 N). Ex.: para N=1, há 1 iteração; para N=8, podem ocorrer 4 comparações no pior caso. D e E são exponenciais e incompatíveis com busca binária; A omite a iteração adicional prevista na contagem adotada pela banca; C usa teto em vez de piso.",
+            "sourceUrl": "https://www.qconcursos.com/questoes-de-concursos/provas/cesgranrio-2021-banco-do-brasil-agente-de-tecnologia/questoes?discipline_ids%5B%5D=98",
+            "sourceValidated": true,
+            "status": "Pronta para estudo",
+            "updatedAt": "2026-10-01T02:03:00.000Z",
+            "revision": 1,
+            "contentHash": "f10a85222e85ab5cf7882ad33de8f6ba4293efbad615fd298298f2d0d67c3722"
           },
           {
             "questionId": "Q1824902",
@@ -56943,6 +57728,52 @@
             "updatedAt": "2026-09-22T18:44:00.000Z",
             "revision": 1,
             "contentHash": "4582d0eb3eea68c1479d6aa8d316b7980358756d12c36a71965a968f69e3b33e"
+          },
+          {
+            "questionId": "Q1824907",
+            "occurrenceId": "Q06-007",
+            "ordinal": 7,
+            "notionPageId": "3dfcf5a2-6731-814c-976d-cd76227e8412",
+            "setCode": "Q06",
+            "title": "BB 2021 — Operações em pilha",
+            "subject": "Algoritmos e Estrutura de Dados",
+            "topic": "Pilha — LIFO",
+            "exam": "BB 2021 — Agente de Tecnologia",
+            "board": "Cesgranrio",
+            "year": 2021,
+            "stem": "No jogo de duas pilhas, P1 começa com as fichas empilhadas por push(P1,Zeus), push(P1,Hades), push(P1,Cibele), push(P1,Apolo), ficando Apolo no topo. Pode-se mover o topo de P1 para P2 e fazer pop de P2 para imprimir/descartar a ficha. Qual sequência pode ser produzida respeitando essas operações LIFO?",
+            "optionsSummary": "A) Apolo, Zeus, Cibele, Hades | B) Hades, Apolo, Zeus, Cibele | C) Zeus, Cibele, Apolo, Hades | D) Hades, Apolo, Cibele, Zeus | E) Cibele, Hades, Apolo, Zeus",
+            "options": [
+              {
+                "key": "A",
+                "text": "Apolo, Zeus, Cibele, Hades"
+              },
+              {
+                "key": "B",
+                "text": "Hades, Apolo, Zeus, Cibele"
+              },
+              {
+                "key": "C",
+                "text": "Zeus, Cibele, Apolo, Hades"
+              },
+              {
+                "key": "D",
+                "text": "Hades, Apolo, Cibele, Zeus"
+              },
+              {
+                "key": "E",
+                "text": "Cibele, Hades, Apolo, Zeus"
+              }
+            ],
+            "answerText": "E",
+            "answerKey": "E",
+            "commentary": "E. Uma execução válida é mover Apolo de P1 para P2; mover Cibele para P2 e imprimi-la; mover Hades e imprimi-lo; então imprimir Apolo, que permanecia em P2; por fim mover Zeus e imprimi-lo. A saída é Cibele, Hades, Apolo, Zeus. As demais ordens exigem retirar elemento que não está no topo de uma das pilhas.",
+            "sourceUrl": "https://www.qconcursos.com/questoes-de-concursos/provas/cesgranrio-2021-banco-do-brasil-agente-de-tecnologia/questoes?discipline_ids%5B%5D=98",
+            "sourceValidated": true,
+            "status": "Pronta para estudo",
+            "updatedAt": "2026-10-01T02:03:00.000Z",
+            "revision": 1,
+            "contentHash": "fac9c7af48c202fe09f17f045ba1503d790ce9b493e42692e4f9ea035157404c"
           },
           {
             "questionId": "Q1824908",
@@ -57313,13 +58144,13 @@
             "contentHash": "d030fe56ed5992b368c3f8468f745249ca350d38234191ad0f4b3a1da06e59cb"
           }
         ],
-        "revision": 3,
-        "contentHash": "ca277645ca81258c700739723fe011837bf7e6bdca0b3c538d886da8ffd53822"
+        "revision": 4,
+        "contentHash": "1f761bca73f91531a01482ef7dc675e754df11e607424eb9fbd0f7106c9d834f"
       },
       "reviewCode": "R02",
       "reviewPageId": "3dfcf5a26731815ca529c2248038e987",
-      "revision": 3,
-      "contentHash": "851e41a1deb5434aa0df3757a8474b55e0c8ce2d05025fdbfee7a8663069c603"
+      "revision": 4,
+      "contentHash": "1d7caf5b7fa0f2e0845bdabfeef22c45233136a0aa0ead4429506a9799bb8e27"
     },
     {
       "code": "D07",
@@ -67197,7 +68028,7 @@
         "code": "Q07",
         "pageId": "3dfcf5a2-6731-8155-acfd-fcb998489046",
         "title": "Q07 — Questões | SQL I — SELECT, filtros e ordenação + Estatística descritiva",
-        "updatedAt": "2026-09-22T19:03:00.000Z",
+        "updatedAt": "2026-10-01T03:04:00.000Z",
         "composition": {
           "total": 12,
           "main": 8,
@@ -67205,36 +68036,11 @@
           "source": "regra-70-30"
         },
         "sourceStatus": "partial",
-        "availableCount": 8,
+        "availableCount": 11,
         "sourceRowCount": 12,
         "missingCount": 0,
         "extraCount": 0,
         "unavailableItems": [
-          {
-            "questionId": "Q191290",
-            "notionPageId": "3e3cf5a2-6731-817c-99cf-f9d0661efc67",
-            "title": "Petrobras 2010 — Média, mediana e moda podem coincidir",
-            "reasons": [
-              "unusable_options"
-            ]
-          },
-          {
-            "questionId": "Q358009",
-            "notionPageId": "3e3cf5a2-6731-819f-a734-ea19ebcc3562",
-            "title": "Petrobras 2012 — Média maior que mediana com outlier alto",
-            "reasons": [
-              "unusable_options"
-            ]
-          },
-          {
-            "questionId": "Q692044",
-            "notionPageId": "3e3cf5a2-6731-81a2-b0ec-db4695744a0e",
-            "title": "IBGE 2016 — Média maior que mediana e assimetria",
-            "reasons": [
-              "missing_answer_key",
-              "unusable_options"
-            ]
-          },
           {
             "questionId": "Q1824884",
             "notionPageId": "3dfcf5a2-6731-810d-a7e6-ca8c13e59e10",
@@ -67290,6 +68096,144 @@
             "updatedAt": "2026-09-22T19:02:00.000Z",
             "revision": 1,
             "contentHash": "53a3373095ca0addc58426c4a9a59234adeba92ea71891a8447bfd006d3959d1"
+          },
+          {
+            "questionId": "Q191290",
+            "occurrenceId": "Q07-002",
+            "ordinal": 2,
+            "notionPageId": "3e3cf5a2-6731-817c-99cf-f9d0661efc67",
+            "setCode": "Q07",
+            "title": "Petrobras 2010 — Média, mediana e moda podem coincidir",
+            "subject": "Estatística",
+            "topic": "Estatística descritiva — média, mediana e moda",
+            "exam": "Petrobras 2010 — Analista de Comercialização e Logística Júnior — Transporte Marítimo",
+            "board": "Cesgranrio",
+            "year": 2010,
+            "stem": "Em estatística descritiva, qual afirmação geral sobre média, mediana e moda é válida?",
+            "optionsSummary": "A) moda sempre ≥ média | B) média sempre > mediana | C) média sempre > moda | D) mediana sempre ≥ moda | E) média, mediana e moda podem ser iguais",
+            "options": [
+              {
+                "key": "A",
+                "text": "moda sempre ≥ média"
+              },
+              {
+                "key": "B",
+                "text": "média sempre > mediana"
+              },
+              {
+                "key": "C",
+                "text": "média sempre > moda"
+              },
+              {
+                "key": "D",
+                "text": "mediana sempre ≥ moda"
+              },
+              {
+                "key": "E",
+                "text": "média, mediana e moda podem ser iguais"
+              }
+            ],
+            "answerText": "E — média, mediana e moda podem ser iguais",
+            "answerKey": "E",
+            "commentary": "E. Não existe uma ordem universal entre média, mediana e moda. Em distribuições adequadas — por exemplo, uma distribuição simétrica e unimodal — as três medidas podem coincidir. Por isso, as afirmações A–D, que impõem relações de ordem como regra geral, são falsas.",
+            "sourceUrl": "https://www.qconcursos.com/questoes-de-concursos/provas/cesgranrio-2010-petrobras-analista-de-comercializacao-e-logistica-junior-transporte-maritimo/questoes",
+            "sourceValidated": true,
+            "status": "Pronta para estudo",
+            "updatedAt": "2026-10-01T03:03:00.000Z",
+            "revision": 1,
+            "contentHash": "7f69f9fab675957b566f0d4019a5a4e6b95e7bba8dd2dafc8bfed5fd636c78fa"
+          },
+          {
+            "questionId": "Q358009",
+            "occurrenceId": "Q07-003",
+            "ordinal": 3,
+            "notionPageId": "3e3cf5a2-6731-819f-a734-ea19ebcc3562",
+            "setCode": "Q07",
+            "title": "Petrobras 2012 — Média maior que mediana com outlier alto",
+            "subject": "Estatística",
+            "topic": "Estatística descritiva — média e mediana",
+            "exam": "Petrobras 2012 — Analista de Comercialização e Logística Júnior — Transporte Marítimo",
+            "board": "Cesgranrio",
+            "year": 2012,
+            "stem": "Em qual situação a média aritmética tende a ficar maior que a mediana de um conjunto de dados?",
+            "optionsSummary": "A) conjunto bimodal | B) moda grande | C) variância maior que a média | D) valores atípicos extremamente pequenos | E) valores atípicos extremamente grandes",
+            "options": [
+              {
+                "key": "A",
+                "text": "conjunto bimodal"
+              },
+              {
+                "key": "B",
+                "text": "moda grande"
+              },
+              {
+                "key": "C",
+                "text": "variância maior que a média"
+              },
+              {
+                "key": "D",
+                "text": "valores atípicos extremamente pequenos"
+              },
+              {
+                "key": "E",
+                "text": "valores atípicos extremamente grandes"
+              }
+            ],
+            "answerText": "E — presença de valores atípicos extremamente grandes",
+            "answerKey": "E",
+            "commentary": "E. A média usa a magnitude de todos os valores e, por isso, é muito sensível a extremos. Valores atípicos muito altos puxam a média para cima, enquanto a mediana depende da posição central e se desloca bem menos. Outliers muito pequenos fariam o efeito oposto; bimodalidade, tamanho da moda e a comparação variância×média não garantem média maior que mediana.",
+            "sourceUrl": "https://www.qconcursos.com/questoes-de-concursos/provas/cesgranrio-2012-petrobras-analista-de-comercializacao-e-logistica-junior-transporte-maritimo-2012/questoes",
+            "sourceValidated": true,
+            "status": "Pronta para estudo",
+            "updatedAt": "2026-10-01T03:03:00.000Z",
+            "revision": 1,
+            "contentHash": "96b83f3be450fb4f91815d689f9367e89cd4139095d40c08ffbdb176c0a2db0d"
+          },
+          {
+            "questionId": "Q692044",
+            "occurrenceId": "Q07-004",
+            "ordinal": 4,
+            "notionPageId": "3e3cf5a2-6731-81a2-b0ec-db4695744a0e",
+            "setCode": "Q07",
+            "title": "IBGE 2016 — Média maior que mediana e assimetria",
+            "subject": "Estatística",
+            "topic": "Estatística descritiva — interpretação de média e mediana",
+            "exam": "IBGE 2016 — Supervisor de Pesquisas — Suporte Gerencial",
+            "board": "Cesgranrio",
+            "year": 2016,
+            "stem": "Uma amostra de número de quartos tem média 4 e mediana 2, sem outliers. Qual interpretação descreve corretamente a distribuição?",
+            "optionsSummary": "A) muitos domicílios têm poucos quartos; poucos têm muitos quartos; esses valores altos elevam a média acima da mediana | B) poucos têm poucos quartos; muitos têm muitos; os poucos valores baixos reduzem a mediana | C) metade tem mais de 4 quartos e metade menos de 4 | D) a maior parte tem 4 quartos | E) a maior parte tem 2 quartos",
+            "options": [
+              {
+                "key": "A",
+                "text": "muitos domicílios têm poucos quartos; poucos têm muitos quartos; esses valores altos elevam a média acima da mediana"
+              },
+              {
+                "key": "B",
+                "text": "poucos têm poucos quartos; muitos têm muitos; os poucos valores baixos reduzem a mediana"
+              },
+              {
+                "key": "C",
+                "text": "metade tem mais de 4 quartos e metade menos de 4"
+              },
+              {
+                "key": "D",
+                "text": "a maior parte tem 4 quartos"
+              },
+              {
+                "key": "E",
+                "text": "a maior parte tem 2 quartos"
+              }
+            ],
+            "answerText": "A — poucos domicílios com muitos quartos puxam a média para cima",
+            "answerKey": "A",
+            "commentary": "A. Mediana 2 significa que o centro posicional da amostra está em 2 quartos, enquanto a média 4 é bem maior. Sem outliers, isso é compatível com assimetria à direita: muitos domicílios concentram-se em valores baixos e uma parcela menor com valores mais altos eleva a média. C confunde média com mediana; D e E não decorrem das duas medidas; B descreve a direção oposta.",
+            "sourceUrl": "https://www.qconcursos.com/questoes-de-concursos/provas/cesgranrio-2016-ibge-supervisor-de-pesquisar-suporte-gerencial/questoes?discipline_ids%5B%5D=40",
+            "sourceValidated": true,
+            "status": "Pronta para estudo",
+            "updatedAt": "2026-10-01T03:03:00.000Z",
+            "revision": 1,
+            "contentHash": "d2f1695a560faf37f3732da8d93a92655dc8f133a5136b33d737c368436b97c1"
           },
           {
             "questionId": "Q1824877",
@@ -67574,13 +68518,13 @@
             "contentHash": "5373bc1f2be63d8d39129cc44bd32932ffe70139bb844ffcdb218bcb90d2fe91"
           }
         ],
-        "revision": 1,
-        "contentHash": "ff8246eef74a95195af9f1d07ce982711c289c5dea7f0b5d1ba74c112462a9e1"
+        "revision": 2,
+        "contentHash": "a64f6ae23470e96f56f9b0c1b1dfd545f3e2ac0a5ce1c4cda1608f69502834ab"
       },
       "reviewCode": "R02",
       "reviewPageId": "3dfcf5a26731815ca529c2248038e987",
-      "revision": 1,
-      "contentHash": "4f703e4c52125362d6867874b6c428460b39c1b67d69eb5fcfd7bf1a4589bf88"
+      "revision": 2,
+      "contentHash": "e8ea56daa6a7de30f4fa6fe5c3c992523d02c40401fe84752bf5f4b6a7b0c83f"
     },
     {
       "code": "D08",
@@ -78594,7 +79538,7 @@
         "code": "Q08",
         "pageId": "3dfcf5a2-6731-817b-acfe-c9ae4aec0902",
         "title": "Q08 — Questões | Scrum, Kanban, Lean e métodos ágeis I + Matemática financeira — juros",
-        "updatedAt": "2026-09-22T20:01:00.000Z",
+        "updatedAt": "2026-10-01T04:04:00.000Z",
         "composition": {
           "total": 15,
           "main": 11,
@@ -78851,26 +79795,38 @@
             "board": "Cesgranrio",
             "year": 2023,
             "stem": "Qual diferença marcante entre Scrum e Kanban é apresentada corretamente?",
-            "optionsSummary": "A) Scrum usa iterações temporais fixas; Kanban não exige timebox fixo | B-E) trocam práticas, artefatos ou pressupostos entre os métodos",
+            "optionsSummary": "A) Scrum utiliza iterações fixas de tempo (Sprints), enquanto Kanban não possui limite de tempo fixo | B) Scrum organiza tarefas em listas individuais, enquanto Kanban usa burndown charts | C) Scrum prioriza requisitos acordados em contrato, enquanto Kanban foca em iterações bem definidas | D) Kanban enfatiza reuniões diárias, enquanto Scrum não as utiliza | E) Kanban requer Product Owner, enquanto Scrum não possui essa função",
             "options": [
               {
                 "key": "A",
-                "text": "Scrum usa iterações temporais fixas; Kanban não exige timebox fixo"
+                "text": "Scrum utiliza iterações fixas de tempo (Sprints), enquanto Kanban não possui limite de tempo fixo"
               },
               {
                 "key": "B",
-                "text": "E) trocam práticas, artefatos ou pressupostos entre os métodos"
+                "text": "Scrum organiza tarefas em listas individuais, enquanto Kanban usa burndown charts"
+              },
+              {
+                "key": "C",
+                "text": "Scrum prioriza requisitos acordados em contrato, enquanto Kanban foca em iterações bem definidas"
+              },
+              {
+                "key": "D",
+                "text": "Kanban enfatiza reuniões diárias, enquanto Scrum não as utiliza"
+              },
+              {
+                "key": "E",
+                "text": "Kanban requer Product Owner, enquanto Scrum não possui essa função"
               }
             ],
             "answerText": "A",
             "answerKey": "A",
-            "commentary": "Scrum organiza o trabalho em Sprints timeboxed; Kanban é orientado a fluxo e não exige ciclos temporais fixos.",
+            "commentary": "A. Scrum organiza o trabalho em Sprints com duração fixa; Kanban gerencia fluxo contínuo e não exige timebox fixo. B inverte práticas; C atribui pressupostos incompatíveis aos métodos; D é falsa porque o Scrum possui Daily Scrum; E é falsa porque Product Owner é uma accountability do Scrum.",
             "sourceUrl": "https://www.qconcursos.com/questoes-de-concursos/questoes/e01e2e52-9e",
             "sourceValidated": true,
             "status": "Pronta para estudo",
-            "updatedAt": "2026-09-22T20:00:00.000Z",
-            "revision": 2,
-            "contentHash": "bbdf8ebbd9a2fe027d95d893846fe6035e4a33ddc308a38cd3466d2e8c3e1a1f"
+            "updatedAt": "2026-10-01T04:04:00.000Z",
+            "revision": 3,
+            "contentHash": "6683104c7f2d6c8072d4396b5487e17308dec0aecbcae6429d7f32770bb8faf7"
           },
           {
             "questionId": "Q2495351",
@@ -79287,13 +80243,13 @@
             "contentHash": "93d5b8d1aabc860143880bd1baba7a1a301be1741379970b7f9317188c64e824"
           }
         ],
-        "revision": 2,
-        "contentHash": "c35621370a87c31bc549b93cf2be47033930df350655c93efd387558fe5e35dc"
+        "revision": 3,
+        "contentHash": "f7da0c34cb712b6c16a3f74d1b0c107cbbcb9265ed216e6e4875e6d07a886342"
       },
       "reviewCode": "R02",
       "reviewPageId": "3dfcf5a26731815ca529c2248038e987",
-      "revision": 2,
-      "contentHash": "07ee8223099c18e2808d49157d24720264582318ac8d7b92a0093d2b437f33b5"
+      "revision": 3,
+      "contentHash": "46e96f35f069ff770306176a294353ff0bfe6d363a9037617f3dd52fc3422379"
     },
     {
       "code": "D09",
@@ -83988,7 +84944,7 @@
         "code": "Q09",
         "pageId": "3dfcf5a2-6731-81b1-9722-f48368d305e6",
         "title": "Q09 — Questões | Segurança da informação I + Ética e compliance — aprofundamento",
-        "updatedAt": "2026-09-22T22:04:00.000Z",
+        "updatedAt": "2026-10-01T05:00:00.000Z",
         "composition": {
           "total": 15,
           "main": 11,
@@ -83996,7 +84952,7 @@
           "source": "regra-70-30"
         },
         "sourceStatus": "partial",
-        "availableCount": 12,
+        "availableCount": 13,
         "sourceRowCount": 15,
         "missingCount": 0,
         "extraCount": 0,
@@ -84015,15 +84971,6 @@
             "notionPageId": "3e3cf5a2-6731-818f-aeb7-fe63986d499f",
             "title": "Petrobras 2014 — Propriedades de função hash",
             "reasons": [
-              "unusable_options"
-            ]
-          },
-          {
-            "questionId": "Q2217651",
-            "notionPageId": "3e3cf5a2-6731-8157-aabb-c37cddebedbb",
-            "title": "BB 2023 — Lei Anticorrupção e sanções administrativas",
-            "reasons": [
-              "missing_answer_key",
               "unusable_options"
             ]
           }
@@ -84225,27 +85172,39 @@
             "exam": "Liquigás 2018 — Profissional Júnior — Analista de Sistemas",
             "board": "Cesgranrio",
             "year": 2018,
-            "stem": "Segundo a ISO/IEC 27002, a política de uso de redes deve conceder acesso apenas às redes e serviços especificamente autorizados para cada usuário?",
-            "optionsSummary": "A/B) acesso parcialmente irrestrito | C) acesso restrito às redes e serviços autorizados | D) acesso interno irrestrito",
+            "stem": "Segundo a NBR ISO/IEC 27002, ao formular a política de uso de redes e serviços de rede, qual nível de acesso deve ser concedido aos usuários?",
+            "optionsSummary": "A) irrestrito às redes e restrito aos serviços especificamente autorizados | B) irrestrito aos serviços e restrito às redes especificamente autorizadas | C) restrito às redes e aos serviços especificamente autorizados | D) irrestrito às redes e serviços internos e restrito aos externos | E) irrestrito às redes e serviços internos e externos",
             "options": [
               {
+                "key": "A",
+                "text": "irrestrito às redes e restrito aos serviços especificamente autorizados"
+              },
+              {
+                "key": "B",
+                "text": "irrestrito aos serviços e restrito às redes especificamente autorizadas"
+              },
+              {
                 "key": "C",
-                "text": "acesso restrito às redes e serviços autorizados"
+                "text": "restrito às redes e aos serviços especificamente autorizados"
               },
               {
                 "key": "D",
-                "text": "acesso interno irrestrito"
+                "text": "irrestrito às redes e serviços internos e restrito aos externos"
+              },
+              {
+                "key": "E",
+                "text": "irrestrito às redes e serviços internos e externos"
               }
             ],
             "answerText": "C — restrito às redes e aos serviços especificamente autorizados",
             "answerKey": "C",
-            "commentary": "",
+            "commentary": "C. O princípio é conceder acesso somente às redes e aos serviços de rede para os quais o usuário tenha autorização específica. As demais opções ampliam indevidamente o acesso, tornando irrestrita ao menos uma categoria de rede ou serviço.",
             "sourceUrl": "https://www.qconcursos.com/questoes-de-concursos/disciplinas/tecnologia-da-informacao-seguranca-da-informacao/iso-27002/questoes?page=17",
             "sourceValidated": true,
             "status": "Pronta para estudo",
-            "updatedAt": "2026-09-22T22:03:00.000Z",
-            "revision": 1,
-            "contentHash": "370666bf1995daa5826a00e56202cffcb192de70aaf57c9969b32a3368824674"
+            "updatedAt": "2026-10-01T04:59:00.000Z",
+            "revision": 2,
+            "contentHash": "f6cce6bd6ba2b7de95bd157c9ca20626436a7dd02229bc1932a30bcdc56866df"
           },
           {
             "questionId": "Q1842529",
@@ -84384,6 +85343,52 @@
             "updatedAt": "2026-09-22T22:03:00.000Z",
             "revision": 1,
             "contentHash": "e8e49971ee8652a3faffa664977779f9a0d5f185d82cc6ca3ad4681773502ea3"
+          },
+          {
+            "questionId": "Q2217651",
+            "occurrenceId": "Q09-011",
+            "ordinal": 11,
+            "notionPageId": "3e3cf5a2-6731-8157-aabb-c37cddebedbb",
+            "setCode": "Q09",
+            "title": "BB 2023 — Lei Anticorrupção e sanções administrativas",
+            "subject": "Ética e Compliance",
+            "topic": "Compliance — Lei Anticorrupção",
+            "exam": "BB 2023 — Agente Comercial — Prova B",
+            "board": "Cesgranrio",
+            "year": 2023,
+            "stem": "Nos termos da Lei nº 12.846/2013, na esfera administrativa, qual é o limite máximo da multa calculada sobre o faturamento bruto do último exercício anterior à instauração do processo administrativo, excluídos os tributos, aplicável à pessoa jurídica responsável por ato lesivo?",
+            "optionsSummary": "A) até 5% | B) até 10% | C) até 15% | D) até 20% | E) até 25%",
+            "options": [
+              {
+                "key": "A",
+                "text": "até 5%"
+              },
+              {
+                "key": "B",
+                "text": "até 10%"
+              },
+              {
+                "key": "C",
+                "text": "até 15%"
+              },
+              {
+                "key": "D",
+                "text": "até 20%"
+              },
+              {
+                "key": "E",
+                "text": "até 25%"
+              }
+            ],
+            "answerText": "D — até 20% do faturamento bruto",
+            "answerKey": "D",
+            "commentary": "D. A Lei nº 12.846/2013 prevê, na esfera administrativa, multa de 0,1% a 20% do faturamento bruto do último exercício anterior ao da instauração do processo administrativo, excluídos os tributos, sem ser inferior à vantagem auferida quando esta puder ser estimada. A lei também prevê publicação extraordinária da decisão condenatória; nesta questão, as alternativas distinguem o teto percentual da multa.",
+            "sourceUrl": "https://www.qconcursos.com/questoes-de-concursos/questoes/b4dca39c-25",
+            "sourceValidated": true,
+            "status": "Pronta para estudo",
+            "updatedAt": "2026-10-01T05:00:00.000Z",
+            "revision": 1,
+            "contentHash": "fa90bb36907e5fcd5a0c4b947b458bfed1ec3b4e060ab99b844c3ebf4a0b4e6c"
           },
           {
             "questionId": "Q2217652",
@@ -84570,13 +85575,13 @@
             "contentHash": "83e1276a09b589cb83b374fc3ffe0e165ebc1b771593850aa33b9bf6f0b1e666"
           }
         ],
-        "revision": 1,
-        "contentHash": "1b9cbfab50102f63a66adcffe1a0a32622897c4b66f05dbd2eb92a0267f088f1"
+        "revision": 2,
+        "contentHash": "859bb03885a8e80398d8be4de95acb8d8e8ca857cff9ed96655c29cffbbcc7f3"
       },
       "reviewCode": "R02",
       "reviewPageId": "3dfcf5a26731815ca529c2248038e987",
-      "revision": 1,
-      "contentHash": "bef167a22ef25517a31d3ad4d4cb7f0f755b98195b5820526abe8ae119340540"
+      "revision": 2,
+      "contentHash": "655d28b50755447c993974f1d59d79556ba78c5351158dddb2dcc7478334642b"
     },
     {
       "code": "D10",
@@ -89422,7 +90427,7 @@
           "source": "regra-70-30"
         },
         "sourceStatus": "partial",
-        "availableCount": 16,
+        "availableCount": 19,
         "sourceRowCount": 25,
         "missingCount": 0,
         "extraCount": 0,
@@ -89446,34 +90451,9 @@
             ]
           },
           {
-            "questionId": "Q191290",
-            "notionPageId": "3e3cf5a2-6731-817c-99cf-f9d0661efc67",
-            "title": "Petrobras 2010 — Média, mediana e moda podem coincidir",
-            "reasons": [
-              "unusable_options"
-            ]
-          },
-          {
-            "questionId": "Q358009",
-            "notionPageId": "3e3cf5a2-6731-819f-a734-ea19ebcc3562",
-            "title": "Petrobras 2012 — Média maior que mediana com outlier alto",
-            "reasons": [
-              "unusable_options"
-            ]
-          },
-          {
             "questionId": "Q468696",
             "notionPageId": "3e3cf5a2-6731-81dc-885b-ea92d119393f",
             "title": "BASA 2013 — Razão entre comprimentos",
-            "reasons": [
-              "missing_answer_key",
-              "unusable_options"
-            ]
-          },
-          {
-            "questionId": "Q692044",
-            "notionPageId": "3e3cf5a2-6731-81a2-b0ec-db4695744a0e",
-            "title": "IBGE 2016 — Média maior que mediana e assimetria",
             "reasons": [
               "missing_answer_key",
               "unusable_options"
@@ -89508,6 +90488,98 @@
           }
         ],
         "items": [
+          {
+            "questionId": "Q191290",
+            "occurrenceId": "Q10-003",
+            "ordinal": 3,
+            "notionPageId": "3e3cf5a2-6731-817c-99cf-f9d0661efc67",
+            "setCode": "Q10",
+            "title": "Petrobras 2010 — Média, mediana e moda podem coincidir",
+            "subject": "Estatística",
+            "topic": "Estatística descritiva — média, mediana e moda",
+            "exam": "Petrobras 2010 — Analista de Comercialização e Logística Júnior — Transporte Marítimo",
+            "board": "Cesgranrio",
+            "year": 2010,
+            "stem": "Em estatística descritiva, qual afirmação geral sobre média, mediana e moda é válida?",
+            "optionsSummary": "A) moda sempre ≥ média | B) média sempre > mediana | C) média sempre > moda | D) mediana sempre ≥ moda | E) média, mediana e moda podem ser iguais",
+            "options": [
+              {
+                "key": "A",
+                "text": "moda sempre ≥ média"
+              },
+              {
+                "key": "B",
+                "text": "média sempre > mediana"
+              },
+              {
+                "key": "C",
+                "text": "média sempre > moda"
+              },
+              {
+                "key": "D",
+                "text": "mediana sempre ≥ moda"
+              },
+              {
+                "key": "E",
+                "text": "média, mediana e moda podem ser iguais"
+              }
+            ],
+            "answerText": "E — média, mediana e moda podem ser iguais",
+            "answerKey": "E",
+            "commentary": "E. Não existe uma ordem universal entre média, mediana e moda. Em distribuições adequadas — por exemplo, uma distribuição simétrica e unimodal — as três medidas podem coincidir. Por isso, as afirmações A–D, que impõem relações de ordem como regra geral, são falsas.",
+            "sourceUrl": "https://www.qconcursos.com/questoes-de-concursos/provas/cesgranrio-2010-petrobras-analista-de-comercializacao-e-logistica-junior-transporte-maritimo/questoes",
+            "sourceValidated": true,
+            "status": "Pronta para estudo",
+            "updatedAt": "2026-10-01T03:03:00.000Z",
+            "revision": 1,
+            "contentHash": "04318c33b0a17e3285582f6ce288da62079d1355fc1351929b103c26d9d0cb7e"
+          },
+          {
+            "questionId": "Q358009",
+            "occurrenceId": "Q10-004",
+            "ordinal": 4,
+            "notionPageId": "3e3cf5a2-6731-819f-a734-ea19ebcc3562",
+            "setCode": "Q10",
+            "title": "Petrobras 2012 — Média maior que mediana com outlier alto",
+            "subject": "Estatística",
+            "topic": "Estatística descritiva — média e mediana",
+            "exam": "Petrobras 2012 — Analista de Comercialização e Logística Júnior — Transporte Marítimo",
+            "board": "Cesgranrio",
+            "year": 2012,
+            "stem": "Em qual situação a média aritmética tende a ficar maior que a mediana de um conjunto de dados?",
+            "optionsSummary": "A) conjunto bimodal | B) moda grande | C) variância maior que a média | D) valores atípicos extremamente pequenos | E) valores atípicos extremamente grandes",
+            "options": [
+              {
+                "key": "A",
+                "text": "conjunto bimodal"
+              },
+              {
+                "key": "B",
+                "text": "moda grande"
+              },
+              {
+                "key": "C",
+                "text": "variância maior que a média"
+              },
+              {
+                "key": "D",
+                "text": "valores atípicos extremamente pequenos"
+              },
+              {
+                "key": "E",
+                "text": "valores atípicos extremamente grandes"
+              }
+            ],
+            "answerText": "E — presença de valores atípicos extremamente grandes",
+            "answerKey": "E",
+            "commentary": "E. A média usa a magnitude de todos os valores e, por isso, é muito sensível a extremos. Valores atípicos muito altos puxam a média para cima, enquanto a mediana depende da posição central e se desloca bem menos. Outliers muito pequenos fariam o efeito oposto; bimodalidade, tamanho da moda e a comparação variância×média não garantem média maior que mediana.",
+            "sourceUrl": "https://www.qconcursos.com/questoes-de-concursos/provas/cesgranrio-2012-petrobras-analista-de-comercializacao-e-logistica-junior-transporte-maritimo-2012/questoes",
+            "sourceValidated": true,
+            "status": "Pronta para estudo",
+            "updatedAt": "2026-10-01T03:03:00.000Z",
+            "revision": 1,
+            "contentHash": "f2496ca0ece38349fe9fde376fe212b2aea0189700243a5261c98f4ac714c0d6"
+          },
           {
             "questionId": "Q566892",
             "occurrenceId": "Q10-006",
@@ -89553,6 +90625,52 @@
             "updatedAt": "2026-09-22T22:58:00.000Z",
             "revision": 1,
             "contentHash": "ca7edb0a070118de850420059f9bcb7a4a6e65ffe24312fdfede65fe4407ea75"
+          },
+          {
+            "questionId": "Q692044",
+            "occurrenceId": "Q10-007",
+            "ordinal": 7,
+            "notionPageId": "3e3cf5a2-6731-81a2-b0ec-db4695744a0e",
+            "setCode": "Q10",
+            "title": "IBGE 2016 — Média maior que mediana e assimetria",
+            "subject": "Estatística",
+            "topic": "Estatística descritiva — interpretação de média e mediana",
+            "exam": "IBGE 2016 — Supervisor de Pesquisas — Suporte Gerencial",
+            "board": "Cesgranrio",
+            "year": 2016,
+            "stem": "Uma amostra de número de quartos tem média 4 e mediana 2, sem outliers. Qual interpretação descreve corretamente a distribuição?",
+            "optionsSummary": "A) muitos domicílios têm poucos quartos; poucos têm muitos quartos; esses valores altos elevam a média acima da mediana | B) poucos têm poucos quartos; muitos têm muitos; os poucos valores baixos reduzem a mediana | C) metade tem mais de 4 quartos e metade menos de 4 | D) a maior parte tem 4 quartos | E) a maior parte tem 2 quartos",
+            "options": [
+              {
+                "key": "A",
+                "text": "muitos domicílios têm poucos quartos; poucos têm muitos quartos; esses valores altos elevam a média acima da mediana"
+              },
+              {
+                "key": "B",
+                "text": "poucos têm poucos quartos; muitos têm muitos; os poucos valores baixos reduzem a mediana"
+              },
+              {
+                "key": "C",
+                "text": "metade tem mais de 4 quartos e metade menos de 4"
+              },
+              {
+                "key": "D",
+                "text": "a maior parte tem 4 quartos"
+              },
+              {
+                "key": "E",
+                "text": "a maior parte tem 2 quartos"
+              }
+            ],
+            "answerText": "A — poucos domicílios com muitos quartos puxam a média para cima",
+            "answerKey": "A",
+            "commentary": "A. Mediana 2 significa que o centro posicional da amostra está em 2 quartos, enquanto a média 4 é bem maior. Sem outliers, isso é compatível com assimetria à direita: muitos domicílios concentram-se em valores baixos e uma parcela menor com valores mais altos eleva a média. C confunde média com mediana; D e E não decorrem das duas medidas; B descreve a direção oposta.",
+            "sourceUrl": "https://www.qconcursos.com/questoes-de-concursos/provas/cesgranrio-2016-ibge-supervisor-de-pesquisar-suporte-gerencial/questoes?discipline_ids%5B%5D=40",
+            "sourceValidated": true,
+            "status": "Pronta para estudo",
+            "updatedAt": "2026-10-01T03:03:00.000Z",
+            "revision": 1,
+            "contentHash": "708f2ab8b81ee9af2d263f9ea6343cd1983d29db91aacdc7904f1ea58c4dfdc1"
           },
           {
             "questionId": "Q2128616",
@@ -90233,13 +91351,13 @@
             "contentHash": "bad4ca4e8201fddfc5be7b3fef3971da2b7dc532134af41db17343ea4aa151cd"
           }
         ],
-        "revision": 2,
-        "contentHash": "1f0fef613c42d96adc82c745e1ceb3cc2d6f5acf6bf7ecc72e23dddffa7949a2"
+        "revision": 3,
+        "contentHash": "f3545038e92539a0bb7a147634bb312d6836cd203d669cc2db4b2c1c956db930"
       },
       "reviewCode": "R02",
       "reviewPageId": "3dfcf5a26731815ca529c2248038e987",
-      "revision": 2,
-      "contentHash": "e0363113b1d9a9e27c706102f9a446e3d05439ca6abba3328d1b3f79ad37d9f2"
+      "revision": 3,
+      "contentHash": "8306d2036e06855eb369a437e406d14c7f3e87edd1466f707802a7fb1d20c557"
     },
     {
       "code": "D11",
