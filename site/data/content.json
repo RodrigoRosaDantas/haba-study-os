@@ -2,29 +2,29 @@
   "schemaVersion": 2,
   "rootPageId": "3dfcf5a2-6731-8119-9194-d4ab2ed5c26d",
   "meta": {
-    "generatedAt": "2026-10-01T06:06:57.251Z",
-    "sourceUpdatedAt": "2026-10-01T05:00:00.000Z",
+    "generatedAt": "2026-10-01T13:29:13.384Z",
+    "sourceUpdatedAt": "2026-10-01T10:05:00.000Z",
     "source": "Notion · HABA Study OS",
     "sourceRootUrl": "https://www.notion.so/3dfcf5a2673181199194d4ab2ed5c26d",
-    "contentVersion": "f7f6c88b9ff8fb37c7482536500496dd3afc0a1a257c25296107635296f05e49",
+    "contentVersion": "8f2fcf18c0b28ef285e6d22e6b7bf90776353034616a70fd8cdfefdc15265904",
     "counts": {
       "studyDays": 75,
       "reviews": 15,
       "restDays": 15,
       "cycles": 5,
-      "questions": 142,
+      "questions": 150,
       "plannedQuestions": 1603,
-      "completeQuestionSets": 4
+      "completeQuestionSets": 6
     },
     "questionCoverage": {
       "status": "partial",
-      "completeSets": 4,
-      "partialSets": 6,
+      "completeSets": 6,
+      "partialSets": 4,
       "unavailableSets": 65,
       "totalSets": 75,
-      "usableQuestions": 142,
+      "usableQuestions": 150,
       "plannedQuestions": 1603,
-      "excludedRows": 19,
+      "excludedRows": 11,
       "missingRows": 1442
     }
   },
@@ -84944,37 +84944,19 @@
         "code": "Q09",
         "pageId": "3dfcf5a2-6731-81b1-9722-f48368d305e6",
         "title": "Q09 — Questões | Segurança da informação I + Ética e compliance — aprofundamento",
-        "updatedAt": "2026-10-01T05:00:00.000Z",
+        "updatedAt": "2026-10-01T06:07:00.000Z",
         "composition": {
           "total": 15,
           "main": 11,
           "complementary": 4,
           "source": "regra-70-30"
         },
-        "sourceStatus": "partial",
-        "availableCount": 13,
+        "sourceStatus": "complete",
+        "availableCount": 15,
         "sourceRowCount": 15,
         "missingCount": 0,
         "extraCount": 0,
-        "unavailableItems": [
-          {
-            "questionId": "Q287830",
-            "notionPageId": "3e3cf5a2-6731-81cc-ab0b-defe9b81f32d",
-            "title": "BNDES 2008 — Hash de senhas e autenticação",
-            "reasons": [
-              "missing_answer_key",
-              "unusable_options"
-            ]
-          },
-          {
-            "questionId": "Q453468",
-            "notionPageId": "3e3cf5a2-6731-818f-aeb7-fe63986d499f",
-            "title": "Petrobras 2014 — Propriedades de função hash",
-            "reasons": [
-              "unusable_options"
-            ]
-          }
-        ],
+        "unavailableItems": [],
         "items": [
           {
             "questionId": "Q202381",
@@ -85014,13 +84996,13 @@
             ],
             "answerText": "B — ambas verdadeiras, mas a segunda não justifica integralmente a primeira",
             "answerKey": "B",
-            "commentary": "",
+            "commentary": "As duas afirmações são verdadeiras. Técnicas criptográficas podem proteger confidencialidade, integridade e autenticidade, e técnicas de chave pública podem oferecer autenticação segura. Porém, a segunda afirmação trata especificamente de autenticação e não explica, por si só, todo o alcance da primeira, que inclui também confidencialidade e integridade. Portanto, B.",
             "sourceUrl": "https://www.qconcursos.com/questoes-de-concursos/questoes/d06172fb-fe",
             "sourceValidated": true,
             "status": "Pronta para estudo",
-            "updatedAt": "2026-09-22T22:03:00.000Z",
-            "revision": 1,
-            "contentHash": "35c13d0303bfc1b8c6f258cb82d17bd7ffd15d930d529dd54449dcf84ce0a044"
+            "updatedAt": "2026-10-01T06:06:00.000Z",
+            "revision": 2,
+            "contentHash": "1ab5883536548e0f83ddb54691cabce6bb9116dc7a1a57cb276093441fb2be6c"
           },
           {
             "questionId": "Q237733",
@@ -85060,13 +85042,105 @@
             ],
             "answerText": "D — IPsec entre estações e servidores",
             "answerKey": "D",
-            "commentary": "",
+            "commentary": "O problema é confidencialidade: as mensagens estão sendo capturadas. A alternativa D protege o tráfego ao usar IPsec entre estações e servidores, criptografando a comunicação. Assinatura digital está ligada sobretudo à integridade/autenticidade; trocar POP3 por IMAP4, usar FTP ou apenas mudar a porta não fornece a confidencialidade exigida.",
             "sourceUrl": "https://www.qconcursos.com/questoes-de-concursos/provas/cesgranrio-2011-petrobras-analista-de-sistemas-junior-infra-estrutura/questoes?discipline_ids%5B%5D=97",
             "sourceValidated": true,
             "status": "Pronta para estudo",
-            "updatedAt": "2026-09-22T22:03:00.000Z",
+            "updatedAt": "2026-10-01T06:06:00.000Z",
+            "revision": 2,
+            "contentHash": "ffcbebfb4c20335fec4c378ae76125024e6f182194e9848b9a157728f353c0a3"
+          },
+          {
+            "questionId": "Q287830",
+            "occurrenceId": "Q09-003",
+            "ordinal": 3,
+            "notionPageId": "3e3cf5a2-6731-81cc-ab0b-defe9b81f32d",
+            "setCode": "Q09",
+            "title": "BNDES 2008 — Hash de senhas e autenticação",
+            "subject": "Segurança da Informação",
+            "topic": "Senhas, hash e autenticação",
+            "exam": "BNDES 2008 — Profissional Básico — Análise de Sistemas — Suporte",
+            "board": "Cesgranrio",
+            "year": 2008,
+            "stem": "Em sistema web com HTTPS, senhas armazenadas após hash forte e autenticação por login, senha e perguntas pessoais, quais propriedades e limitações de segurança decorrem dessas medidas?",
+            "optionsSummary": "A) autenticação seria forte por haver quatro dados perguntados | B) hashes permitiriam recuperar senhas com algoritmo e chave simétrica | C) acrescentar certificado digital ICP-Brasil na autenticação do cliente via HTTPS aumentaria a segurança | D) HTTPS não teria confidencialidade | E) RIJNDAEL e DSA seriam algoritmos de hash",
+            "options": [
+              {
+                "key": "A",
+                "text": "autenticação seria forte por haver quatro dados perguntados"
+              },
+              {
+                "key": "B",
+                "text": "hashes permitiriam recuperar senhas com algoritmo e chave simétrica"
+              },
+              {
+                "key": "C",
+                "text": "acrescentar certificado digital ICP-Brasil na autenticação do cliente via HTTPS aumentaria a segurança"
+              },
+              {
+                "key": "D",
+                "text": "HTTPS não teria confidencialidade"
+              },
+              {
+                "key": "E",
+                "text": "RIJNDAEL e DSA seriam algoritmos de hash"
+              }
+            ],
+            "answerText": "C — adicionar certificado digital ICP-Brasil à autenticação via HTTPS",
+            "answerKey": "C",
+            "commentary": "A alternativa C é a correta: autenticação do cliente por certificado digital acrescenta um mecanismo robusto ao HTTPS. A é falsa porque login, senha e perguntas pessoais não representam quatro fatores independentes de autenticação; são predominantemente conhecimento. B é falsa porque hash criptográfico é unidirecional e não usa uma 'chave simétrica' para permitir reversão. D é falsa porque HTTPS fornece confidencialidade do tráfego. E é falsa: Rijndael/AES é cifra simétrica e DSA é algoritmo de assinatura digital, não funções hash.",
+            "sourceUrl": "https://www.qconcursos.com/questoes-de-concursos/questoes/f020a44c-56",
+            "sourceValidated": true,
+            "status": "Pronta para estudo",
+            "updatedAt": "2026-10-01T06:07:00.000Z",
             "revision": 1,
-            "contentHash": "ba8419b4c5582d14d4845ec519cfcef87fd1e17abb92b30966c99cd59935c57e"
+            "contentHash": "8aad34d8e2cef8efd2cd71edbce1f43bf2aa82ce55582d763f67d6a77bd02623"
+          },
+          {
+            "questionId": "Q453468",
+            "occurrenceId": "Q09-004",
+            "ordinal": 4,
+            "notionPageId": "3e3cf5a2-6731-818f-aeb7-fe63986d499f",
+            "setCode": "Q09",
+            "title": "Petrobras 2014 — Propriedades de função hash",
+            "subject": "Segurança da Informação",
+            "topic": "Hash criptográfico — propriedades",
+            "exam": "Petrobras 2014 — Técnico de Informática Júnior",
+            "board": "Cesgranrio",
+            "year": 2014,
+            "stem": "Quais propriedades distinguem uma função hash criptográfica adequada a assinaturas digitais quanto ao cálculo do resumo, inversão e colisões?",
+            "optionsSummary": "A) somente I | B) somente II | C) somente III | D) I e II | E) II e III",
+            "options": [
+              {
+                "key": "A",
+                "text": "somente I"
+              },
+              {
+                "key": "B",
+                "text": "somente II"
+              },
+              {
+                "key": "C",
+                "text": "somente III"
+              },
+              {
+                "key": "D",
+                "text": "I e II"
+              },
+              {
+                "key": "E",
+                "text": "II e III"
+              }
+            ],
+            "answerText": "E — II e III",
+            "answerKey": "E",
+            "commentary": "Uma função hash criptográfica deve ser eficiente no sentido direto: conhecida a mensagem M, é fácil calcular h = H(M), então II é verdadeira. Já inverter o hash — obter M a partir de h — deve ser computacionalmente difícil, tornando I falsa. Também deve haver resistência à segunda pré-imagem: dada M, é difícil achar M' diferente com o mesmo hash, portanto III é verdadeira. Corretas apenas II e III: alternativa E.",
+            "sourceUrl": "https://www.qconcursos.com/questoes-de-concursos/questoes/814c58c2-83",
+            "sourceValidated": true,
+            "status": "Pronta para estudo",
+            "updatedAt": "2026-10-01T06:07:00.000Z",
+            "revision": 1,
+            "contentHash": "d807b2031bff24304499960785cc52d073d4def71a3b56cbc36a87374ffe0162"
           },
           {
             "questionId": "Q878393",
@@ -85106,13 +85180,13 @@
             ],
             "answerText": "B — assegurar a integridade do conteúdo digital",
             "answerKey": "B",
-            "commentary": "",
+            "commentary": "O hash gera um resumo do documento. Na validação da assinatura, a comparação desse resumo permite detectar alteração do conteúdo: se o documento mudar, o hash esperado deixa de coincidir. Por isso, a finalidade cobrada é assegurar a integridade do conteúdo digital, alternativa B. Hash não serve para recuperar o documento original nem, sozinho, para criptografá-lo.",
             "sourceUrl": "https://www.qconcursos.com/questoes-de-concursos/questoes/5a60aa2f-33",
             "sourceValidated": true,
             "status": "Pronta para estudo",
-            "updatedAt": "2026-09-22T22:03:00.000Z",
-            "revision": 1,
-            "contentHash": "63bd857273c1ea0cbfc8ce9eed24dad0acbedfe1b4df2e620526d60e815efd39"
+            "updatedAt": "2026-10-01T06:06:00.000Z",
+            "revision": 2,
+            "contentHash": "80eb3ea6a210de71967f420d0477b5e7d1216ae6363449ccef660b5a60537c58"
           },
           {
             "questionId": "Q933787",
@@ -85152,13 +85226,13 @@
             ],
             "answerText": "D — métodos apropriados de autenticação para usuários remotos",
             "answerKey": "D",
-            "commentary": "",
+            "commentary": "A recomendação que trata diretamente do acesso de usuários remotos é empregar métodos apropriados de autenticação para controlar esse acesso, alternativa D. As demais opções tratam de privilégios, isolamento de sistemas, encerramento de sessões ou reporte de eventos, controles relevantes, mas não especificamente da autenticação do acesso remoto.",
             "sourceUrl": "https://www.qconcursos.com/questoes-de-concursos/provas/cesgranrio-2018-transpetro-analista-de-sistemas-junior-processos-de-negocio/questoes?discipline_ids%5B%5D=97",
             "sourceValidated": true,
             "status": "Pronta para estudo",
-            "updatedAt": "2026-09-22T22:03:00.000Z",
-            "revision": 1,
-            "contentHash": "da891be4a8f097b6fac0d9ea7fdd1298509a57409ff596654a3437c47baab855"
+            "updatedAt": "2026-10-01T06:06:00.000Z",
+            "revision": 2,
+            "contentHash": "50e25249350a03133e42e974e297db0eff1eb4e2aea621d1f844f050cc04fc55"
           },
           {
             "questionId": "Q954237",
@@ -85244,13 +85318,13 @@
             ],
             "answerText": "C — conflito de interesses",
             "answerKey": "C",
-            "commentary": "",
+            "commentary": "O gerente usa informação interna ainda não divulgada para favorecer um parente na disputa por financiamento. Há colisão entre o dever funcional de imparcialidade/sigilo e um interesse privado, caracterizando conflito de interesses. Portanto, a alternativa C é a correta.",
             "sourceUrl": "https://www.qconcursos.com/questoes-de-concursos/questoes/881e4a1b-42",
             "sourceValidated": true,
             "status": "Pronta para estudo",
-            "updatedAt": "2026-09-22T22:03:00.000Z",
-            "revision": 1,
-            "contentHash": "995961fb21c4b0cd818d2b24b6223a805ac193321c5d662c560a5e2de84f4e2a"
+            "updatedAt": "2026-10-01T06:06:00.000Z",
+            "revision": 2,
+            "contentHash": "59ebb37a2235f27749bfa01496f3e2fca4f59b13f18e1d3ab6a0b7e5034cf114"
           },
           {
             "questionId": "Q2128624",
@@ -85428,13 +85502,13 @@
             ],
             "answerText": "C — assédio",
             "answerKey": "C",
-            "commentary": "",
+            "commentary": "O Código de Ética do Banco do Brasil repudia o assédio. Diálogo, respeito, cordialidade, liberdade de associação sindical e colaboração são condutas/valores compatíveis com o ambiente ético, não a prática repudiada. Portanto, a alternativa C é a correta.",
             "sourceUrl": "https://www.qconcursos.com/questoes-de-concursos/questoes/b4df9cc8-25",
             "sourceValidated": true,
             "status": "Pronta para estudo",
-            "updatedAt": "2026-09-22T22:03:00.000Z",
-            "revision": 1,
-            "contentHash": "be9f2f59ee8ea4132df925a59e88ba5ac77d855307e4c5dfa8653de6917292de"
+            "updatedAt": "2026-10-01T06:05:00.000Z",
+            "revision": 2,
+            "contentHash": "b5f540ab76cfec9f72585915c8e484f1c9134ebf024349bda7ce1317a5683ece"
           },
           {
             "questionId": "Q2217936",
@@ -85474,13 +85548,13 @@
             ],
             "answerText": "C — desautorizada por ser prejudicial à imagem",
             "answerKey": "C",
-            "commentary": "",
+            "commentary": "Ataques ofensivos publicados em mídias sociais ligadas ao banco ou a colegas extrapolam uma divergência privada e podem atingir a reputação institucional. Pelo Código de Ética do BB, essa conduta é desautorizada por ser prejudicial à imagem. Logo, a alternativa C é a correta.",
             "sourceUrl": "https://www.qconcursos.com/questoes-de-concursos/questoes/29fd6250-25",
             "sourceValidated": true,
             "status": "Pronta para estudo",
-            "updatedAt": "2026-09-22T22:03:00.000Z",
-            "revision": 1,
-            "contentHash": "b411711f955e29020063b53596af4f3b50c7a5244721829de5b09d3d3eff7c7e"
+            "updatedAt": "2026-10-01T06:06:00.000Z",
+            "revision": 2,
+            "contentHash": "aeb844153d249b882c55b2eedab6278e375cd70cf45a3e628b14356d507ce368"
           },
           {
             "questionId": "Q2325483",
@@ -85520,13 +85594,13 @@
             ],
             "answerText": "A — ABAC",
             "answerKey": "A",
-            "commentary": "",
+            "commentary": "ABAC (Attribute-Based Access Control) decide o acesso com base em atributos do sujeito, do recurso, da ação e do contexto/ambiente. Como o enunciado combina localização, recurso, contexto da requisição e condições ambientais, o modelo adequado é ABAC. RBAC se baseia primariamente em papéis; DAC e MAC usam outros critérios de autorização; ACL é uma lista de permissões associada ao recurso.",
             "sourceUrl": "https://www.qconcursos.com/questoes-de-concursos/questoes/dfdc8a1d-9e",
             "sourceValidated": true,
             "status": "Pronta para estudo",
-            "updatedAt": "2026-09-22T22:03:00.000Z",
-            "revision": 1,
-            "contentHash": "655239d14aed03f8c560387995c310810e054f1289b81a88e66c8c2d2e661ea5"
+            "updatedAt": "2026-10-01T06:06:00.000Z",
+            "revision": 2,
+            "contentHash": "5c890f305d029178ea33b112f070491dfe62ae0cbd5902529dff252015cbb066"
           },
           {
             "questionId": "Q2495505",
@@ -85575,13 +85649,13 @@
             "contentHash": "83e1276a09b589cb83b374fc3ffe0e165ebc1b771593850aa33b9bf6f0b1e666"
           }
         ],
-        "revision": 2,
-        "contentHash": "859bb03885a8e80398d8be4de95acb8d8e8ca857cff9ed96655c29cffbbcc7f3"
+        "revision": 3,
+        "contentHash": "7d7ed3b07fdea2796c94f7238ee29b314dbb2cdacd1b78ea3fdbb1dfbf44dede"
       },
       "reviewCode": "R02",
       "reviewPageId": "3dfcf5a26731815ca529c2248038e987",
-      "revision": 2,
-      "contentHash": "655d28b50755447c993974f1d59d79556ba78c5351158dddb2dcc7478334642b"
+      "revision": 3,
+      "contentHash": "963dccc3083c1548cca93a12065d06ba44aaf1b413ba547a26d79988142fa011"
     },
     {
       "code": "D10",
@@ -90419,75 +90493,112 @@
         "code": "Q10",
         "pageId": "3dfcf5a2-6731-8101-b665-cf6edbdf1a48",
         "title": "Q10 — Questões | Matemática + Estatística intensivas + Matemática financeira",
-        "updatedAt": "2026-09-22T23:00:00.000Z",
+        "updatedAt": "2026-10-01T08:59:00.000Z",
         "composition": {
           "total": 25,
           "main": 18,
           "complementary": 7,
           "source": "regra-70-30"
         },
-        "sourceStatus": "partial",
-        "availableCount": 19,
+        "sourceStatus": "complete",
+        "availableCount": 25,
         "sourceRowCount": 25,
         "missingCount": 0,
         "extraCount": 0,
-        "unavailableItems": [
+        "unavailableItems": [],
+        "items": [
           {
             "questionId": "Q187071",
+            "occurrenceId": "Q10-001",
+            "ordinal": 1,
             "notionPageId": "3e3cf5a2-6731-8194-81e3-d0150060b459",
+            "setCode": "Q10",
             "title": "Salvador 2010 — Variações percentuais sucessivas",
-            "reasons": [
-              "missing_answer_key",
-              "unusable_options"
-            ]
+            "subject": "Matemática",
+            "topic": "Porcentagem — variações sucessivas",
+            "exam": "Prefeitura de Salvador 2010 — Professor de Matemática",
+            "board": "Cesgranrio",
+            "year": 2010,
+            "stem": "O preço de uma ação aumenta 12% em janeiro, cai 8% em fevereiro e cai 4% em março, sempre em relação ao mês anterior. Ao fim do trimestre, como o preço se compara ao original?",
+            "optionsSummary": "A) diminuiu aproximadamente 1% | B) diminuiu aproximadamente 10% | C) aumentou aproximadamente 26% | D) aumentou aproximadamente 10% | E) permaneceu igual",
+            "options": [
+              {
+                "key": "A",
+                "text": "diminuiu aproximadamente 1%"
+              },
+              {
+                "key": "B",
+                "text": "diminuiu aproximadamente 10%"
+              },
+              {
+                "key": "C",
+                "text": "aumentou aproximadamente 26%"
+              },
+              {
+                "key": "D",
+                "text": "aumentou aproximadamente 10%"
+              },
+              {
+                "key": "E",
+                "text": "permaneceu igual"
+              }
+            ],
+            "answerText": "A — diminuiu aproximadamente 1%",
+            "answerKey": "A",
+            "commentary": "Use fatores sucessivos: 1,12×0,92×0,96=0,989184. O preço final equivale a 98,9184% do inicial, redução de 1,0816%, aproximadamente 1%. Alternativa A.",
+            "sourceUrl": "https://www.qconcursos.com/questoes-de-concursos/disciplinas/matematica-matematica/porcentagem/questoes?from_omniauth=true&page=387",
+            "sourceValidated": true,
+            "status": "Pronta para estudo",
+            "updatedAt": "2026-10-01T07:59:00.000Z",
+            "revision": 1,
+            "contentHash": "98fc5dd0ea844d6b2f3df6e996a7f9bf08c7215e89f131ac9390bea6c62c59dc"
           },
           {
             "questionId": "Q187786",
+            "occurrenceId": "Q10-002",
+            "ordinal": 2,
             "notionPageId": "3e3cf5a2-6731-8102-91a2-e0cd7761d190",
+            "setCode": "Q10",
             "title": "Petrobras 2010 — Média, mediana e moda em amostra",
-            "reasons": [
-              "missing_answer_key",
-              "unusable_options"
-            ]
+            "subject": "Estatística",
+            "topic": "Estatística descritiva — média, mediana e moda",
+            "exam": "Petrobras 2010 — Analista de Comercialização e Logística Júnior / Engenheiro de Petróleo Júnior",
+            "board": "Cesgranrio",
+            "year": 2010,
+            "stem": "Considere a amostra de dez observações: 36, 38, 26, 40, 40, 28, 46, 40, 38, 28. Sobre essa amostra, assinale a afirmação correta.",
+            "optionsSummary": "A) a média é igual à mediana | B) a média é maior que a moda | C) retirando qualquer valor, a média necessariamente será alterada | D) a mediana é maior que a moda | E) a mediana é maior que a média",
+            "options": [
+              {
+                "key": "A",
+                "text": "a média é igual à mediana"
+              },
+              {
+                "key": "B",
+                "text": "a média é maior que a moda"
+              },
+              {
+                "key": "C",
+                "text": "retirando qualquer valor, a média necessariamente será alterada"
+              },
+              {
+                "key": "D",
+                "text": "a mediana é maior que a moda"
+              },
+              {
+                "key": "E",
+                "text": "a mediana é maior que a média"
+              }
+            ],
+            "answerText": "E — a mediana é maior que a média",
+            "answerKey": "E",
+            "commentary": "Ordenando: 26, 28, 28, 36, 38, 38, 40, 40, 40, 46. A mediana é (38+38)/2 = 38. A média é 358/10 = 35,8 e a moda é 40. Logo, mediana > média, tornando E correta. A é falsa (38 ≠ 35,8); B é falsa (35,8 < 40); C é falsa porque retirar um valor igual à média preservaria a média, portanto a afirmação de necessidade não é válida; D é falsa (38 < 40).",
+            "sourceUrl": "https://www.qconcursos.com/questoes-de-concursos/questoes/f0d2abb1-d9",
+            "sourceValidated": true,
+            "status": "Pronta para estudo",
+            "updatedAt": "2026-10-01T06:57:00.000Z",
+            "revision": 1,
+            "contentHash": "8e8f84f08a186b82959a3301e5c76c1a5c063db1ff30aa4e83f23443c9c64bc0"
           },
-          {
-            "questionId": "Q468696",
-            "notionPageId": "3e3cf5a2-6731-81dc-885b-ea92d119393f",
-            "title": "BASA 2013 — Razão entre comprimentos",
-            "reasons": [
-              "missing_answer_key",
-              "unusable_options"
-            ]
-          },
-          {
-            "questionId": "Q884950",
-            "notionPageId": "3e3cf5a2-6731-8127-a9d8-fbcd78e846bf",
-            "title": "Transpetro 2018 — Média e mediana de linhas móveis",
-            "reasons": [
-              "missing_answer_key",
-              "unusable_options"
-            ]
-          },
-          {
-            "questionId": "Q2879874",
-            "notionPageId": "3e3cf5a2-6731-8137-ba1a-c144dbcaab48",
-            "title": "CAPES 2008 — Assimetria positiva, média e mediana",
-            "reasons": [
-              "missing_answer_key",
-              "unusable_options"
-            ]
-          },
-          {
-            "questionId": "Q3285684",
-            "notionPageId": "3e3cf5a2-6731-810e-ab80-fabf80b0f337",
-            "title": "BANESE 2025 — Percentual de mulheres após contratações",
-            "reasons": [
-              "missing_answer_key",
-              "unusable_options"
-            ]
-          }
-        ],
-        "items": [
           {
             "questionId": "Q191290",
             "occurrenceId": "Q10-003",
@@ -90581,6 +90692,52 @@
             "contentHash": "f2496ca0ece38349fe9fde376fe212b2aea0189700243a5261c98f4ac714c0d6"
           },
           {
+            "questionId": "Q468696",
+            "occurrenceId": "Q10-005",
+            "ordinal": 5,
+            "notionPageId": "3e3cf5a2-6731-81dc-885b-ea92d119393f",
+            "setCode": "Q10",
+            "title": "BASA 2013 — Razão entre comprimentos",
+            "subject": "Matemática",
+            "topic": "Razão e proporção — conversão de unidades",
+            "exam": "Banco da Amazônia 2013 — Técnico Bancário — 1",
+            "board": "Cesgranrio",
+            "year": 2013,
+            "stem": "Uma mesa mede 204 cm e uma bancada mede 7,5 m. Escrevendo ambos os comprimentos na mesma unidade, qual é a razão entre o comprimento da mesa e o da bancada?",
+            "optionsSummary": "A) 17/625 | B) 5/136 | C) 68/125 | D) 34/125 | E) 136/5",
+            "options": [
+              {
+                "key": "A",
+                "text": "17/625"
+              },
+              {
+                "key": "B",
+                "text": "5/136"
+              },
+              {
+                "key": "C",
+                "text": "68/125"
+              },
+              {
+                "key": "D",
+                "text": "34/125"
+              },
+              {
+                "key": "E",
+                "text": "136/5"
+              }
+            ],
+            "answerText": "D — 34/125",
+            "answerKey": "D",
+            "commentary": "Converta 7,5 m para 750 cm. A razão mesa/bancada é 204/750. Simplificando por 6: 34/125. Portanto, alternativa D.",
+            "sourceUrl": "https://www.qconcursos.com/questoes-de-concursos/disciplinas/matematica-matematica/razao-e-proporcao-e-numeros-proporcionais/questoes?page=205",
+            "sourceValidated": true,
+            "status": "Pronta para estudo",
+            "updatedAt": "2026-10-01T07:59:00.000Z",
+            "revision": 1,
+            "contentHash": "93cddf3036047fd1545598f7349dfa4baa5c87e06f955550e7c59951277d7fd3"
+          },
+          {
             "questionId": "Q566892",
             "occurrenceId": "Q10-006",
             "ordinal": 6,
@@ -90592,8 +90749,8 @@
             "exam": "Banco do Brasil 2015 — Escriturário",
             "board": "Cesgranrio",
             "year": 2015,
-            "stem": "Determinar o capital inicial necessário para obter determinado rendimento em seis meses, com taxa nominal anual e capitalização trimestral.",
-            "optionsSummary": "A 6.460; B 10.000; C 3.138; D 4.852; E 7.271",
+            "stem": "Um investimento rende juros compostos à taxa nominal de 12% ao ano, com capitalização trimestral. Qual capital deve ser aplicado hoje para produzir R$ 609,00 de rendimento em 6 meses?",
+            "optionsSummary": "A) 6.460 | B) 10.000 | C) 3.138 | D) 4.852 | E) 7.271",
             "options": [
               {
                 "key": "A",
@@ -90616,15 +90773,15 @@
                 "text": "7.271"
               }
             ],
-            "answerText": "B — 10.000",
+            "answerText": "B — R$ 10.000",
             "answerKey": "B",
-            "commentary": "",
+            "commentary": "A taxa trimestral é 12%/4=3%. Em 6 meses há 2 trimestres. O rendimento é C[(1,03)^2−1]=C×0,0609. Igualando a R$609: C=609/0,0609=10.000. Alternativa B.",
             "sourceUrl": "https://www.qconcursos.com/questoes-de-concursos/questoes/d729846a-76",
             "sourceValidated": true,
             "status": "Pronta para estudo",
-            "updatedAt": "2026-09-22T22:58:00.000Z",
-            "revision": 1,
-            "contentHash": "ca7edb0a070118de850420059f9bcb7a4a6e65ffe24312fdfede65fe4407ea75"
+            "updatedAt": "2026-10-01T07:59:00.000Z",
+            "revision": 2,
+            "contentHash": "57b20ee471407b6ba94fd141b836a0cd6704ea63947bf26a761b2f2281be8904"
           },
           {
             "questionId": "Q692044",
@@ -90671,6 +90828,52 @@
             "updatedAt": "2026-10-01T03:03:00.000Z",
             "revision": 1,
             "contentHash": "708f2ab8b81ee9af2d263f9ea6343cd1983d29db91aacdc7904f1ea58c4dfdc1"
+          },
+          {
+            "questionId": "Q884950",
+            "occurrenceId": "Q10-008",
+            "ordinal": 8,
+            "notionPageId": "3e3cf5a2-6731-8127-a9d8-fbcd78e846bf",
+            "setCode": "Q10",
+            "title": "Transpetro 2018 — Média e mediana de linhas móveis",
+            "subject": "Estatística",
+            "topic": "Estatística descritiva — média e mediana",
+            "exam": "Transpetro 2018 — Economista Júnior",
+            "board": "Cesgranrio",
+            "year": 2018,
+            "stem": "Dados da Anatel mostram a evolução, em milhões de linhas, de julho/2017 a janeiro/2018. Pré-paga: 159,2; 158,5; 156,3; 155,0; 152,0; 148,5; 147,4. Pós-paga: 82,8; 83,6; 84,7; 85,8; 87,0; 87,9; 88,8. Total: 242,0; 242,1; 241,0; 240,8; 239,0; 236,4; 236,2. Taxas mensais aproximadas da pré-paga (ago→jan): -0,44%; -1,39%; -0,83%; -1,94%; -2,30%; -0,74%. Pós-paga: 0,97%; 1,32%; 1,30%; 1,40%; 1,03%; 1,02%. Considerando os sete meses, assinale a conclusão correta.",
+            "optionsSummary": "A) mediana pré-paga = 155,0 milhões | B) média e mediana pós-paga = 85,8 e 87,0 milhões | C) redução pré-paga de janeiro/2018 ante dezembro/2017 = 2,3% | D) aumento pós-pago de outubro/2017 ante setembro/2017 = 30% | E) houve aumento, ao longo dos 7 meses, tanto no pré quanto no pós-pago",
+            "options": [
+              {
+                "key": "A",
+                "text": "mediana pré-paga = 155,0 milhões"
+              },
+              {
+                "key": "B",
+                "text": "média e mediana pós-paga = 85,8 e 87,0 milhões"
+              },
+              {
+                "key": "C",
+                "text": "redução pré-paga de janeiro/2018 ante dezembro/2017 = 2,3%"
+              },
+              {
+                "key": "D",
+                "text": "aumento pós-pago de outubro/2017 ante setembro/2017 = 30%"
+              },
+              {
+                "key": "E",
+                "text": "houve aumento, ao longo dos 7 meses, tanto no pré quanto no pós-pago"
+              }
+            ],
+            "answerText": "A",
+            "answerKey": "A",
+            "commentary": "Gabarito A. Os sete valores pré-pagos já estão em ordem decrescente; com 7 observações, a mediana é o 4º valor: 155,0 milhões. B é falsa: na série pós-paga a mediana é 85,8 milhões (4º valor), não 87,0. C é falsa: de dezembro/2017 para janeiro/2018 a queda pré-paga é aproximadamente 0,74%; os 2,30% referem-se a novembro→dezembro. D é falsa: setembro→outubro no pós-pago cresce cerca de 1,30%, não 30%. E é falsa porque o pré-pago cai ao longo do período, enquanto o pós-pago sobe.",
+            "sourceUrl": "https://arquivos.qconcursos.com/prova/arquivo_prova/56879/cesgranrio-2018-transpetro-economista-junior-prova.pdf",
+            "sourceValidated": true,
+            "status": "Pronta para estudo",
+            "updatedAt": "2026-10-01T08:58:00.000Z",
+            "revision": 1,
+            "contentHash": "70dd1adc25c5d7152d2ad45f23c6a051ee7004dbb252351c27970f41bc8e89f4"
           },
           {
             "questionId": "Q2128616",
@@ -91213,6 +91416,52 @@
             "contentHash": "98aba886cbf1e0cfed9ed91b30b4b9744036531fcd25bc76ccfef3370658b5e6"
           },
           {
+            "questionId": "Q2879874",
+            "occurrenceId": "Q10-021",
+            "ordinal": 21,
+            "notionPageId": "3e3cf5a2-6731-8137-ba1a-c144dbcaab48",
+            "setCode": "Q10",
+            "title": "CAPES 2008 — Assimetria positiva, média e mediana",
+            "subject": "Estatística",
+            "topic": "Estatística descritiva — assimetria, média e mediana",
+            "exam": "CAPES 2008 — Analista — Estatística",
+            "board": "Cesgranrio",
+            "year": 2008,
+            "stem": "Avalie as asserções: I) em distribuições assimétricas à direita, a mediana é sempre maior que a média; II) em distribuições com assimetria positiva, a média é afetada por valores extremos. Julgue a veracidade e a relação entre elas.",
+            "optionsSummary": "A) ambas verdadeiras, e II justifica I | B) ambas verdadeiras, mas II não justifica I | C) I verdadeira e II falsa | D) I falsa e II verdadeira | E) ambas falsas",
+            "options": [
+              {
+                "key": "A",
+                "text": "ambas verdadeiras, e II justifica I"
+              },
+              {
+                "key": "B",
+                "text": "ambas verdadeiras, mas II não justifica I"
+              },
+              {
+                "key": "C",
+                "text": "I verdadeira e II falsa"
+              },
+              {
+                "key": "D",
+                "text": "I falsa e II verdadeira"
+              },
+              {
+                "key": "E",
+                "text": "ambas falsas"
+              }
+            ],
+            "answerText": "D — primeira falsa e segunda verdadeira",
+            "answerKey": "D",
+            "commentary": "Na assimetria positiva (cauda à direita), valores extremos altos puxam a média para a direita; em geral, média > mediana. Assim, a primeira asserção é falsa. A segunda é verdadeira porque a média é sensível a valores extremos. Alternativa D.",
+            "sourceUrl": "https://www.qconcursos.com/questoes-de-concursos/questoes/4e912782e32",
+            "sourceValidated": true,
+            "status": "Pronta para estudo",
+            "updatedAt": "2026-10-01T07:59:00.000Z",
+            "revision": 1,
+            "contentHash": "c660fbdd2c1b937aa76d3e5d0314beca49587d8b380dd749ba03289302ae3836"
+          },
+          {
             "questionId": "Q3048796",
             "occurrenceId": "Q10-022",
             "ordinal": 22,
@@ -91349,15 +91598,61 @@
             "updatedAt": "2026-09-30T20:01:00.000Z",
             "revision": 1,
             "contentHash": "bad4ca4e8201fddfc5be7b3fef3971da2b7dc532134af41db17343ea4aa151cd"
+          },
+          {
+            "questionId": "Q3285684",
+            "occurrenceId": "Q10-025",
+            "ordinal": 25,
+            "notionPageId": "3e3cf5a2-6731-810e-ab80-fabf80b0f337",
+            "setCode": "Q10",
+            "title": "BANESE 2025 — Percentual de mulheres após contratações",
+            "subject": "Matemática",
+            "topic": "Porcentagem — composição percentual",
+            "exam": "BANESE 2025 — Técnico Bancário I",
+            "board": "Cesgranrio",
+            "year": 2025,
+            "stem": "Em uma empresa há 200 funcionários, dos quais 20% são mulheres. Se x mulheres forem contratadas, elas passarão a representar 50% do total de funcionários. Qual é a soma dos algarismos de x?",
+            "optionsSummary": "A) 3 | B) 5 | C) 6 | D) 8 | E) 9",
+            "options": [
+              {
+                "key": "A",
+                "text": "3"
+              },
+              {
+                "key": "B",
+                "text": "5"
+              },
+              {
+                "key": "C",
+                "text": "6"
+              },
+              {
+                "key": "D",
+                "text": "8"
+              },
+              {
+                "key": "E",
+                "text": "9"
+              }
+            ],
+            "answerText": "A — 3",
+            "answerKey": "A",
+            "commentary": "Há 40 mulheres inicialmente (20% de 200). Após contratar x mulheres: (40+x)/(200+x)=1/2. Então 80+2x=200+x, logo x=120. A soma dos algarismos é 1+2+0=3. Portanto, alternativa A.",
+            "sourceUrl": "https://www.qconcursos.com/questoes-de-concursos/disciplinas/matematica-matematica/razao-e-proporcao-e-numeros-proporcionais/questoes?has_professor_commentaries=true&page=4",
+            "sourceValidated": true,
+            "status": "Pronta para estudo",
+            "updatedAt": "2026-10-01T07:59:00.000Z",
+            "revision": 1,
+            "contentHash": "4f2dec18b685ec46eb3137117a58e833f70d5dc80128786b7e5beb8ef5b3f030"
           }
         ],
-        "revision": 3,
-        "contentHash": "f3545038e92539a0bb7a147634bb312d6836cd203d669cc2db4b2c1c956db930"
+        "revision": 4,
+        "contentHash": "36bdf61c183c5bf4db02d058294a33f31e1ab6c2c877953b853ef72991e25ee9"
       },
       "reviewCode": "R02",
       "reviewPageId": "3dfcf5a26731815ca529c2248038e987",
-      "revision": 3,
-      "contentHash": "8306d2036e06855eb369a437e406d14c7f3e87edd1466f707802a7fb1d20c557"
+      "revision": 4,
+      "contentHash": "2cbb2f7f4dfb7d70a34df2506852841921f4db8f8016ed7ffbf6fb3e29ae9731"
     },
     {
       "code": "D11",
@@ -101906,7 +102201,7 @@
         "code": "Q11",
         "pageId": "3dfcf5a2-6731-81a7-9a30-cef4cdc9e54b",
         "title": "Q11 — Questões | Python I — fundamentos + Português — gramática aplicada",
-        "updatedAt": "2026-09-21T13:45:00.000Z",
+        "updatedAt": "2026-10-01T10:05:00.000Z",
         "composition": {
           "total": 12,
           "main": 8,
@@ -101920,13 +102215,13 @@
         "extraCount": 0,
         "unavailableItems": [],
         "items": [],
-        "revision": 1,
-        "contentHash": "2c4a694ce2dd4a8975c9fda01c7da4194ad9c6c4e898efb631400118c0452be3"
+        "revision": 2,
+        "contentHash": "c588affac4b5fc7b67d4fab7d09915ac5cf18f7b46c70236bc912dce7a09f69d"
       },
       "reviewCode": "R03",
       "reviewPageId": "3dfcf5a267318158ae1ae3f94f2e7b5a",
-      "revision": 1,
-      "contentHash": "d7c2c1bf801fb15bb84c7f2aca40b18f9b48e9de7d17f1e2663b9e4fc1cbb97e"
+      "revision": 2,
+      "contentHash": "97a149d6ebb9efdf537e47c0f3d5a86c75bff1db5cba552411d8553c79b8ae58"
     },
     {
       "code": "D12",
